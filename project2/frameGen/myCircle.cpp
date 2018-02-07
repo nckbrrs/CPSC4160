@@ -8,7 +8,7 @@ MyCircle::MyCircle(SDL_Renderer* rend, SDL_Point cen, int rad, SDL_Color col) :
   radius(rad),
   color(col)
 {
-  std::cout << "New MyCircle constructed" << std::endl;
+  std::cout << "New MyCircle constructed!" << std::endl;
 }
 
 void MyCircle::drawCircle() {
