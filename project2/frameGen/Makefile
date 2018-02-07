@@ -7,7 +7,10 @@ LDFLAGS = `sdl2-config --libs` -lm
 
 OBJS = \
   frameGenerator.o \
-  main.o
+  main.o \
+	vector2f.o \
+	myCircle.o \
+	myTriangle.o
 
 EXEC = run
 

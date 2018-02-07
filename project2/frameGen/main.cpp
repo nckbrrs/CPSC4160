@@ -1,23 +1,29 @@
 #include <SDL2/SDL.h>
 #include "frameGenerator.h"
+#include "myCircle.h"
+#include "vector2f.h"
+#include "myTriangle.h"
 
-const std::string NAME = "malloy";
+const std::string NAME = "nbarrs";
 const int WIDTH = 640;
 const int HEIGHT = 480;
 
-void drawCircle(SDL_Renderer* renderer,
-  SDL_Point center, int radius, SDL_Color color) {
-  SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-  for (int w = 0; w < radius * 2; w++) {
-    for (int h = 0; h < radius * 2; h++) {
-      int dx = radius - w; // horizontal offset
-      int dy = radius - h; // vertical offset
-      if ((dx*dx + dy*dy) <= (radius * radius)) {
-        SDL_RenderDrawPoint(renderer, center.x + dx, center.y + dy);
-      }
-    }
-  }
+/*
+std::ostream& operator<<(std::ostream& out, const MyCircle& c) {
+  out << "CIRCLE -- Center: " << c.getCenter() << ", ";
+  out << "Radius: " << c.getRadius() << ", ";
+  out << "Color: " << c.getColor() << std::endl;
+  return out;
 }
+
+std::ostream& operator<<(std::ostream& out, const MyTriangle& t) {
+  out << "TRIANGLE -- Vec0: " << t.getVec0() << ", ";
+  out << "Vec1: " << t.getVec1() << ", ";
+  out << "Vec2: " << t.getVec2() << ", ";
+  out << "Color: " << t.getColor() << std::endl;
+  return out;
+}
+*/
 
 int main(void) {
   SDL_Renderer *renderer;
@@ -28,11 +34,28 @@ int main(void) {
 
   SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255 );
   SDL_RenderClear(renderer);
-  SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-  SDL_Point center = {320, 240};
-  SDL_Color color = {255,0,0,255};
-  drawCircle(renderer, center, 50, color);
+  SDL_Color red = {255,0,0,255};
+  SDL_Color black = {0, 0, 0, 255};
+  SDL_Color blue = {0, 0, 255, 255};
+
+  SDL_Point headCenter = {320, 240};
+  MyCircle head(renderer, headCenter, 200, red);
+  head.drawCircle();
+
+  SDL_Point leftEyeCenter = {260, 180};
+  MyCircle leftEye(renderer, leftEyeCenter, 10, black);
+  leftEye.drawCircle();
+
+  SDL_Point rightEyeCenter = {380, 180};
+  MyCircle rightEye(renderer, rightEyeCenter, 10, black);
+  rightEye.drawCircle();
+
+  Vector2f v0(0, 0);
+  Vector2f v1(320, 480);
+  Vector2f v2(640, 0);
+  MyTriangle triangle(renderer, v0, v1, v2, blue);
+  triangle.drawTriangle();
 
   SDL_RenderPresent(renderer);
   FrameGenerator frameGen(renderer, window, WIDTH, HEIGHT, NAME);
