@@ -49,9 +49,19 @@ int main(void) {
   SDL_Init(SDL_INIT_VIDEO);
   SDL_CreateWindowAndRenderer( WIDTH, HEIGHT, 0, &window, &renderer);
 
-  // clear with white background
-  SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255 );
+  // clear with purple background
+  SDL_SetRenderDrawColor( renderer, 123, 104, 238, 255);
   SDL_RenderClear(renderer);
+
+  // draw white rectangle
+  SDL_SetRenderDrawColor( renderer, 255, 255, 255, 255);
+  const SDL_Rect r1 = {5, 5, 625, 465};
+  SDL_RenderDrawRect(renderer, &r1);
+  for (int x=5; x<635; x++) {
+    for (int y=5; y<475; y++) {
+      SDL_RenderDrawPoint(renderer, x, y);
+    }
+  }
 
   // draw concentric background circles
   MyCircle c1(renderer, trueCenter, 225, sky);

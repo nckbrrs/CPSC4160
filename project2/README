@@ -1,15 +1,26 @@
-Name: Nick Barrs
+Name:
+ - Nick Barrs
 
-Course: CPSC 4160
+Course:
+ - CPSC 4160
 
-Clemson Email Address: nbarrs@g.clemson.edu
+Clemson Email Address:
+ - nbarrs@g.clemson.edu
 
-Project no: 2
+Project no:
+ - 2
 
-Project due date: Feb. 8, 2018
+Project due date:
+ - Feb. 8, 2018
 
-Project description: (Also, what image did you draw?) FILL IN 
+Project description: (Also, what image did you draw?)
+ - Get familiar with SDL and C++ classes and make a simple drawing. I drew the "Impossible Triangle"
 
-The easiest part of this project: FILL IN
+The easiest part of this project:
+ - Actually drawing the shapes once I had the classes built
 
-Problems that I had in completing this project:FILL IN
+Problems that I had in completing this project:
+ - Figuring out where to start (i.e. what kind of class am I supposed to make?)
+ - Still a little confused about what is a renderer, what is a window, what is a frame, etc.
+ - Generated Bitmap is all-black despite rendering correctly when running the program
+    - I tried using the new FrameGenerator that you sent us but it caused my program to have a segfault...
