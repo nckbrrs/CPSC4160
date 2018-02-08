@@ -10,12 +10,10 @@ public:
   float triangle(Vector2f, float);
   int smallest(int, int, int);
   int largest(int, int, int);
-  /* IMPLEMENT THESE
-  void getVec0();
-  void getVec1();
-  void getVec2();
-  void getColor();
-  */
+  Vector2f getVec0() const;
+  Vector2f getVec1() const;
+  Vector2f getVec2() const;
+  SDL_Color getColor() const;
 private:
   SDL_Renderer* const renderer;
   const Vector2f vec0;

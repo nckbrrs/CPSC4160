@@ -6,10 +6,7 @@ MyCircle::MyCircle(SDL_Renderer* rend, SDL_Point cen, int rad, SDL_Color col) :
   renderer(rend),
   center(cen),
   radius(rad),
-  color(col)
-{
-  std::cout << "New MyCircle constructed!" << std::endl;
-}
+  color(col) {}
 
 void MyCircle::drawCircle() {
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
@@ -22,4 +19,16 @@ void MyCircle::drawCircle() {
       }
     }
   }
+}
+
+SDL_Point MyCircle::getCenter() const {
+  return center;
+}
+
+int MyCircle::getRadius() const {
+  return radius;
+}
+
+SDL_Color MyCircle::getColor() const {
+  return color;
 }

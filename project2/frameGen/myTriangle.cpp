@@ -7,10 +7,7 @@ MyTriangle::MyTriangle(SDL_Renderer* rend, Vector2f v0, Vector2f v1, Vector2f v2
   vec0(v0),
   vec1(v1),
   vec2(v2),
-  color(col)
-{
-  std::cout << "New MyTriangle constructed!" << std::endl;
-}
+  color(col) {}
 
 void MyTriangle::drawTriangle() {
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
@@ -70,4 +67,20 @@ int MyTriangle::smallest(int a, int b, int c) {
 int MyTriangle::largest(int a, int b, int c) {
   int temp = std::max(a, b);
   return std::max(temp, c);
+}
+
+Vector2f MyTriangle::getVec0() const {
+  return vec0;
+}
+
+Vector2f MyTriangle::getVec1() const {
+  return vec1;
+}
+
+Vector2f MyTriangle::getVec2() const {
+  return vec2;
+}
+
+SDL_Color MyTriangle::getColor() const {
+  return color;
 }
