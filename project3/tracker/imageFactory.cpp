@@ -10,12 +10,29 @@ ImageFactory* ImageFactory::getInstance() {
 ImageFactory::~ImageFactory() {
   std::cout << "Deleting images in Factory" << std::endl;
   // Free single image containers
+  std::map<std::string, SDL_Surface*>::const_iterator si = surfaces.begin();
+  while (si != surfaces.end()) {
+    SDL_FreeSurface(si->second);
+  }
+
+  std::map<std::string, SDL_Texture*>::const_iterator ti = textures.begin();
+  while (ti != textures.end()) {
+    SDL_DestroyTexture(ti->second);
+  }
+
+  std::map<std::string, Image*>::const_iterator fi = images.begin();
+  while (fi != images.end()) {
+    std::cout << "deleting " << fi->first << std::endl;
+    delete fi->second;
+  }
+
+  /* converted to while loops for project 3
   for(auto& si : surfaces) SDL_FreeSurface(si.second);
   for(auto& ti : textures) SDL_DestroyTexture(ti.second);
   for(auto& fi : images  ) {
     std::cout << "deleting " << fi.first << std::endl;
     delete fi.second;
-  }
+  } */
 
   // Free multi-image containers
   for ( auto& surfaces : multiSurfaces ) {
@@ -38,7 +55,7 @@ ImageFactory::~ImageFactory() {
 }
 
 Image* ImageFactory::getImage(const std::string& name) {
-    std::map<std::string, Image*>::const_iterator it = images.find(name); 
+    std::map<std::string, Image*>::const_iterator it = images.find(name);
   if ( it == images.end() ) {
     SDL_Surface * const surface =
       IoMod::getInstance().readSurface( gdata.getXmlStr(name+"/file"));
@@ -60,8 +77,8 @@ Image* ImageFactory::getImage(const std::string& name) {
 
 std::vector<Image*> ImageFactory::getImages(const std::string& name) {
   // First search map to see if we've already made it:
-  std::map<std::string, std::vector<Image*> >::const_iterator 
-    pos = multiImages.find(name); 
+  std::map<std::string, std::vector<Image*> >::const_iterator
+    pos = multiImages.find(name);
   if ( pos != multiImages.end() ) {
     return pos->second;
   }
@@ -84,7 +101,7 @@ std::vector<Image*> ImageFactory::getImages(const std::string& name) {
   int width = spriteSurface->w/numberOfFrames;
   int height = spriteSurface->h;
 
-  if(  gdata.checkTag(name+"/imageWidth") 
+  if(  gdata.checkTag(name+"/imageWidth")
     && gdata.checkTag(name+"/imageHeight") ){
     width  = gdata.getXmlInt(name+"/imageWidth");
     height = gdata.getXmlInt(name+"/imageHeight");
@@ -98,7 +115,7 @@ std::vector<Image*> ImageFactory::getImages(const std::string& name) {
       int keyColor = SDL_MapRGBA(spriteSurface->format, 255, 0, 255, 255);
       SDL_SetColorKey(surface, SDL_TRUE, keyColor);
     }
-    SDL_Texture* texture = 
+    SDL_Texture* texture =
       SDL_CreateTextureFromSurface(renderContext->getRenderer(),surface);
     surfaces.push_back( surface );
     textures.push_back( texture );
@@ -109,4 +126,3 @@ std::vector<Image*> ImageFactory::getImages(const std::string& name) {
   multiImages[name] = images;
   return images;
 }
-
