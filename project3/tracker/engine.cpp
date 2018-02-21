@@ -10,7 +10,7 @@
 #include "engine.h"
 #include "frameGenerator.h"
 
-Engine::~Engine() { 
+Engine::~Engine() {
   delete star;
   delete spinningStar;
   std::cout << "Terminating program" << std::endl;
@@ -28,7 +28,7 @@ Engine::Engine() :
   currentSprite(0),
   makeVideo( false )
 {
-  
+
   Viewport::getInstance().setObjectToTrack(star);
   std::cout << "Loading complete" << std::endl;
 }
@@ -38,6 +38,10 @@ void Engine::draw() const {
 
   star->draw();
   spinningStar->draw();
+
+  std::ostringstream os;
+  os << "FPS: " << clock.getFps() << std::endl;
+  io.writeText(os.str(), 20, 20);
 
   viewport.draw();
   SDL_RenderPresent(renderer);

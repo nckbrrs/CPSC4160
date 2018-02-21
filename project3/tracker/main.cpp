@@ -1,7 +1,10 @@
 // Brian Malloy        Data-Driven Object oriented Game Construction
 #include "engine.h"
 
+/* no longer needed since converted to Meyers singleton
 ImageFactory*  ImageFactory::instance = NULL;
+*/
+
 RenderContext* RenderContext::instance = NULL;
 
 int main(int, char*[]) {
