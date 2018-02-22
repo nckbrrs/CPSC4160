@@ -40,8 +40,8 @@ private:
     multiTextures(),
     multiImages()
   {}
-  ImageFactory(const ImageFactory&);
-  
+  ImageFactory(const ImageFactory&) = delete;
+
   /* changed from pointer to reference since converted to Meyers singleton */
-  ImageFactory& operator=(const ImageFactory&);
+  ImageFactory& operator=(const ImageFactory&) = delete;
 };

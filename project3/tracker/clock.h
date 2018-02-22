@@ -10,6 +10,7 @@ public:
 
 private:
   friend class Engine;
+  friend class Viewport; // added in order to write FPS to screen in Viewport
 
   bool started;
   bool paused;

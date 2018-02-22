@@ -8,12 +8,12 @@ IoMod& IoMod::getInstance() {
   return instance;
 }
 
-IoMod::~IoMod() { 
+IoMod::~IoMod() {
   TTF_CloseFont(font);
-  TTF_Quit(); 
+  TTF_Quit();
 }
 
-IoMod::IoMod() : 
+IoMod::IoMod() :
   init(TTF_Init()),
   renderer( RenderContext::getInstance()->getRenderer() ),
   font(TTF_OpenFont(Gamedata::getInstance().getXmlStr("font/file").c_str(),
@@ -35,7 +35,7 @@ IoMod::IoMod() :
 SDL_Texture* IoMod::readTexture(const std::string& filename) {
   SDL_Texture *texture = IMG_LoadTexture(renderer, filename.c_str());
   if ( texture == NULL ) {
-    throw std::string("Couldn't load ") + filename;
+    throw std::string("Couldn't load texture: ") + filename;
   }
   return texture;
 }
@@ -43,14 +43,31 @@ SDL_Texture* IoMod::readTexture(const std::string& filename) {
 SDL_Surface* IoMod::readSurface(const std::string& filename) {
   SDL_Surface *surface = IMG_Load(filename.c_str());
   if ( !surface ) {
-    throw std::string("Couldn't load ") + filename;
+    throw std::string("Couldn't load surface: ") + filename;
   }
   return surface;
 }
 
 void IoMod::writeText(const std::string& msg, int x, int y) const {
-  SDL_Surface* surface = 
+  SDL_Surface* surface =
     TTF_RenderText_Solid(font, msg.c_str(), textColor);
+
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+  int textWidth = surface->w;
+  int textHeight = surface->h;
+  SDL_FreeSurface(surface);
+  SDL_Rect dst = {x, y, textWidth, textHeight};
+
+  SDL_RenderCopy(renderer, texture, NULL, &dst);
+  SDL_DestroyTexture(texture);
+}
+
+// overload writeText to accept an additional parameter,
+// allowing user to specify custom text color
+void IoMod::writeText(const std::string& msg, int x, int y, SDL_Color customColor) const {
+  SDL_Surface* surface =
+    TTF_RenderText_Solid(font, msg.c_str(), customColor);
 
   SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 

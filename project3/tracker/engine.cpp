@@ -21,7 +21,9 @@ Engine::Engine() :
   io( IoMod::getInstance() ),
   clock( Clock::getInstance() ),
   renderer( rc->getRenderer() ),
-  world("back", Gamedata::getInstance().getXmlInt("back/factor") ),
+  sky("sky", Gamedata::getInstance().getXmlInt("sky/factor") ),
+  backMtns("backMtns", Gamedata::getInstance().getXmlInt("backMtns/factor") ),
+  frontMtns("frontMtns", Gamedata::getInstance().getXmlInt("frontMtns/factor") ),
   viewport( Viewport::getInstance() ),
   star(new Sprite("YellowStar")),
   spinningStar(new MultiSprite("SpinningStar")),
@@ -34,14 +36,12 @@ Engine::Engine() :
 }
 
 void Engine::draw() const {
-  world.draw();
+  sky.draw();
+  backMtns.draw();
+  frontMtns.draw();
 
   star->draw();
   spinningStar->draw();
-
-  std::ostringstream os;
-  os << "FPS: " << clock.getFps() << std::endl;
-  io.writeText(os.str(), 20, 20);
 
   viewport.draw();
   SDL_RenderPresent(renderer);
@@ -50,7 +50,9 @@ void Engine::draw() const {
 void Engine::update(Uint32 ticks) {
   star->update(ticks);
   spinningStar->update(ticks);
-  world.update();
+  sky.update();
+  backMtns.update();
+  frontMtns.update();
   viewport.update(); // always update viewport last
 }
 
