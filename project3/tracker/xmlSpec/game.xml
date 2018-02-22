@@ -1,8 +1,7 @@
 <?xml version = "1.0"?>
 <GameData>
-<!-- screenTitle is also used to identify you and your animation.
-     So make sure to include your name as part of the screenTitle -->
-<title>The Tracker Framework</title>
+
+<title>Nick Barrs's Tracker Framework</title>
 <maxStringSize>50</maxStringSize>
 
 <frameCapOn>true</frameCapOn>
@@ -60,13 +59,16 @@
   <transparency>false</transparency>
 </SpinningStar>
 
-<YellowStar>
-  <file>assets/yellowstar32.png</file>
-  <startLoc x="227" y="240"/>
-  <speedX>300</speedX>
-  <speedY>300</speedY>
+<Arrow>
+  <file>assets/arrow.png</file>
+  <startLoc x="50" y="140"/>
+  <frames>2</frames>
+  <imageWidth>32</imageWidth>
+  <imageHeight>32</imageHeight>
+  <speedX>200</speedX>
+  <speedY>200</speedY>
   <transparency>false</transparency>
-</YellowStar>
+</Arrow>
 
 <Smiley>
   <file>assets/smiley.png</file>

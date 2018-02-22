@@ -5,13 +5,14 @@
 #include <random>
 #include <iomanip>
 #include "sprite.h"
-#include "multisprite.h"
+#include "multiSprite.h"
+#include "twoWaySprite.h"
 #include "gamedata.h"
 #include "engine.h"
 #include "frameGenerator.h"
 
 Engine::~Engine() {
-  delete smiley;
+  sprites.clear();
   std::cout << "Terminating program" << std::endl;
 }
 
@@ -24,11 +25,15 @@ Engine::Engine() :
   backMtns("backMtns", Gamedata::getInstance().getXmlInt("backMtns/factor") ),
   frontMtns("frontMtns", Gamedata::getInstance().getXmlInt("frontMtns/factor") ),
   viewport( Viewport::getInstance() ),
-  smiley(new Sprite("Smiley")),
+  sprites(),
   currentSprite(0),
   makeVideo( false )
 {
-  Viewport::getInstance().setObjectToTrack(smiley);
+  for (int i = 0; i < 7; i++) {
+    sprites.push_back(new Sprite("Smiley"));
+  }
+  sprites.push_back(new TwoWaySprite("Arrow"));
+  Viewport::getInstance().setObjectToTrack(sprites[0]);
   std::cout << "Loading complete" << std::endl;
 }
 
@@ -37,14 +42,20 @@ void Engine::draw() const {
   backMtns.draw();
   frontMtns.draw();
 
-  smiley->draw();
+
+  for (int i = 0; i < (int)sprites.size(); i++) {
+    sprites[i]->draw();
+  }
 
   viewport.draw();
   SDL_RenderPresent(renderer);
 }
 
 void Engine::update(Uint32 ticks) {
-  smiley->update(ticks);
+  for (int i = 0; i < (int)sprites.size(); i++) {
+    sprites[i]->update(ticks);
+  }
+
   sky.update();
   backMtns.update();
   frontMtns.update();
@@ -53,13 +64,8 @@ void Engine::update(Uint32 ticks) {
 
 void Engine::switchSprite(){
   ++currentSprite;
-  currentSprite = currentSprite % 2;
-  if ( currentSprite ) {
-    Viewport::getInstance().setObjectToTrack(smiley);
-  }
-  else {
-    Viewport::getInstance().setObjectToTrack(smiley);
-  }
+  currentSprite = currentSprite % sprites.size();
+  Viewport::getInstance().setObjectToTrack(sprites[currentSprite]);
 }
 
 void Engine::play() {
@@ -98,7 +104,6 @@ void Engine::play() {
     }
 
     // In this section of the event loop we allow key bounce:
-
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
       clock.incrFrame();

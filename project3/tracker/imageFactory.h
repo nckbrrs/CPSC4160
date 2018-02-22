@@ -8,7 +8,6 @@
 class ImageFactory {
 public:
 
-  /* changed from pointer to reference since converted to Meyers singleton */
   static ImageFactory& getInstance();
   ~ImageFactory();
 
@@ -16,11 +15,6 @@ public:
   std::vector<Image*> getImages(const std::string&);
 
 private:
-
-  /* no longer needed since converted to Meyers singleton
-  static ImageFactory* instance;
-  */
-
   const Gamedata& gdata;
 
   std::map<std::string, SDL_Surface*> surfaces;
@@ -40,8 +34,7 @@ private:
     multiTextures(),
     multiImages()
   {}
-  ImageFactory(const ImageFactory&) = delete;
 
-  /* changed from pointer to reference since converted to Meyers singleton */
+  ImageFactory(const ImageFactory&) = delete;
   ImageFactory& operator=(const ImageFactory&) = delete;
 };

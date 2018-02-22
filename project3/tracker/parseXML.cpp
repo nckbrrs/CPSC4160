@@ -37,15 +37,6 @@ void ParseXML::displayData() const {
   for (auto& ptr : xmlData) {
     std::cout << '(' << ptr.first << ", " << ptr.second << ')' << std::endl;
   }
-
-  /* converted to ranged for loop above for project 3
-  std::map<string, string>::const_iterator ptr = xmlData.begin();
-
-  while ( ptr != xmlData.end() ) {
-    std::cout << '(' << ptr->first << ", "
-                     << ptr->second << ')' << std::endl;
-    ++ptr;
-  } */
 }
 
 std::string ParseXML::makeTag(const std::string& name) const {

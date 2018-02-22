@@ -63,8 +63,6 @@ void IoMod::writeText(const std::string& msg, int x, int y) const {
   SDL_DestroyTexture(texture);
 }
 
-// overload writeText to accept an additional parameter,
-// allowing user to specify custom text color
 void IoMod::writeText(const std::string& msg, int x, int y, SDL_Color customColor) const {
   SDL_Surface* surface =
     TTF_RenderText_Solid(font, msg.c_str(), customColor);

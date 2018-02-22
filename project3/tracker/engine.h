@@ -19,13 +19,13 @@ private:
   Clock& clock;
 
   SDL_Renderer * const renderer;
-  //World world;
+
   World sky;
   World backMtns;
   World frontMtns;
   Viewport& viewport;
 
-  Drawable* smiley;
+  std::vector<Drawable*> sprites;
   int currentSprite;
 
   bool makeVideo;

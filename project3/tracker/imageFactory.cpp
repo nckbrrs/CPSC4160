@@ -2,11 +2,7 @@
 #include "vector2f.h"
 #include "renderContext.h"
 
-/* changed from pointer to reference since converted to Meyers singleton */
 ImageFactory& ImageFactory::getInstance() {
-  /* no longer needed since converted to Meyers singleton
-  if ( !instance ) instance = new ImageFactory;
-  */
   static ImageFactory instance;
   return instance;
 }
@@ -33,14 +29,6 @@ ImageFactory::~ImageFactory() {
     delete fi->second;
     ++fi;
   }
-
-  /* converted to while loops above for project 3
-  for(auto& si : surfaces) SDL_FreeSurface(si.second);
-  for(auto& ti : textures) SDL_DestroyTexture(ti.second);
-  for(auto& fi : images  ) {
-    std::cout << "deleting " << fi.first << std::endl;
-    delete fi.second;
-  } */
 
   // Free multi-image containers
   for ( auto& surfaces : multiSurfaces ) {
