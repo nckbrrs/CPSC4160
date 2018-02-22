@@ -25,7 +25,6 @@ private:
   World frontMtns;
   Viewport& viewport;
 
-  //Drawable* smiley;
   std::vector<Drawable*> sprites;
   int currentSprite;
 

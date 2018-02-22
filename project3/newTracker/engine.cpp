@@ -12,7 +12,6 @@
 #include "frameGenerator.h"
 
 Engine::~Engine() {
-  //delete smiley;
   sprites.clear();
   std::cout << "Terminating program" << std::endl;
 }
@@ -105,7 +104,6 @@ void Engine::play() {
     }
 
     // In this section of the event loop we allow key bounce:
-
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
       clock.incrFrame();

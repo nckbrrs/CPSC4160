@@ -2,9 +2,6 @@
 #include <SDL.h>
 #include "imageFactory.h"
 
-// These global constants should be eliminated; they
-// should be read from xmlSpec/game.xml
-
 class RenderContext{
 public:
   static RenderContext* getInstance();
@@ -23,7 +20,6 @@ private:
   SDL_Window* window;
   SDL_Renderer* renderer;
 
-  /* changed from pointer to reference since converted to Meyers singleton */
   ImageFactory& factory;
 
   SDL_Window* initWindow();

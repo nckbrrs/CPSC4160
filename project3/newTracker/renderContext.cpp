@@ -14,9 +14,6 @@ RenderContext::RenderContext() :
 }
 
 RenderContext::~RenderContext() {
-  /* no longer needed since converted to Meyers singleton
-  delete ImageFactory::getInstance();
-  */
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow( window );
   SDL_Quit();

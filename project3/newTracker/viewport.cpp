@@ -26,18 +26,17 @@ void Viewport::setObjectToTrack(const Drawable *obj) {
 }
 
 void Viewport::draw() const {
+  SDL_Color orange = {255, 165, 0, 255};
+
   IoMod::getInstance().
-    writeText("Tracking: "+objectToTrack->getName(), 30, 30);
+    writeText("Tracking: "+objectToTrack->getName(), 30, 30, orange);
 
     // write FPS to screen
     std::ostringstream fpsStream;
     fpsStream << "FPS: " << Clock::getInstance().getFps() << std::endl;
 
-    SDL_Color orange = {255, 165, 0, 255};
-
     IoMod::getInstance().
       writeText(fpsStream.str(), 30, 60, orange);
-
 
     // write name in bottom left of screen
     IoMod::getInstance().

@@ -2,7 +2,6 @@
 #include "vector2f.h"
 #include "renderContext.h"
 
-/* changed from pointer to reference since converted to Meyers singleton */
 ImageFactory& ImageFactory::getInstance() {
   static ImageFactory instance;
   return instance;
