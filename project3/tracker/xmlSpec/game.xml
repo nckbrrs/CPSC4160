@@ -68,4 +68,12 @@
   <transparency>false</transparency>
 </YellowStar>
 
+<Smiley>
+  <file>assets/smiley.png</file>
+  <startLoc x="227" y="240"/>
+  <speedX>300</speedX>
+  <speedY>300</speedY>
+  <transparency>false</transparency>
+</Smiley>
+
 </GameData>

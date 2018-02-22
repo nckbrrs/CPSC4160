@@ -25,8 +25,7 @@ private:
   World frontMtns;
   Viewport& viewport;
 
-  Drawable* star;
-  Drawable* spinningStar;
+  Drawable* smiley;
   int currentSprite;
 
   bool makeVideo;

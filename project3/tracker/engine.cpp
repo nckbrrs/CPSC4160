@@ -11,8 +11,7 @@
 #include "frameGenerator.h"
 
 Engine::~Engine() {
-  delete star;
-  delete spinningStar;
+  delete smiley;
   std::cout << "Terminating program" << std::endl;
 }
 
@@ -25,13 +24,11 @@ Engine::Engine() :
   backMtns("backMtns", Gamedata::getInstance().getXmlInt("backMtns/factor") ),
   frontMtns("frontMtns", Gamedata::getInstance().getXmlInt("frontMtns/factor") ),
   viewport( Viewport::getInstance() ),
-  star(new Sprite("YellowStar")),
-  spinningStar(new MultiSprite("SpinningStar")),
+  smiley(new Sprite("Smiley")),
   currentSprite(0),
   makeVideo( false )
 {
-
-  Viewport::getInstance().setObjectToTrack(star);
+  Viewport::getInstance().setObjectToTrack(smiley);
   std::cout << "Loading complete" << std::endl;
 }
 
@@ -40,16 +37,14 @@ void Engine::draw() const {
   backMtns.draw();
   frontMtns.draw();
 
-  star->draw();
-  spinningStar->draw();
+  smiley->draw();
 
   viewport.draw();
   SDL_RenderPresent(renderer);
 }
 
 void Engine::update(Uint32 ticks) {
-  star->update(ticks);
-  spinningStar->update(ticks);
+  smiley->update(ticks);
   sky.update();
   backMtns.update();
   frontMtns.update();
@@ -60,10 +55,10 @@ void Engine::switchSprite(){
   ++currentSprite;
   currentSprite = currentSprite % 2;
   if ( currentSprite ) {
-    Viewport::getInstance().setObjectToTrack(spinningStar);
+    Viewport::getInstance().setObjectToTrack(smiley);
   }
   else {
-    Viewport::getInstance().setObjectToTrack(star);
+    Viewport::getInstance().setObjectToTrack(smiley);
   }
 }
 
