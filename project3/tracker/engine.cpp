@@ -29,11 +29,11 @@ Engine::Engine() :
   currentSprite(0),
   makeVideo( false )
 {
-  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numSmileys"); i++) {
-    sprites.push_back(new Sprite("Smiley"));
+  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numStars"); i++) {
+    sprites.push_back(new Sprite("Star"));
   }
-  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numArrows"); i++) {
-    sprites.push_back(new TwoWaySprite("Arrow"));
+  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numClouds"); i++) {
+    sprites.push_back(new TwoWaySprite("Cloud"));
   }
   Viewport::getInstance().setObjectToTrack(sprites[0]);
   std::cout << "Loading complete" << std::endl;

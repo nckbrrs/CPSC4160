@@ -10,8 +10,8 @@
 <maxFrames>300</maxFrames>
 <username>nbarrs</username>
 
-<numSmileys>7</numSmileys>
-<numArrows>1</numArrows>
+<numStars>7</numStars>
+<numClouds>1</numClouds>
 
 <view>
   <width>640</width>
@@ -89,16 +89,16 @@
   <transparency>false</transparency>
 </frontMtns>
 
-<Smiley>
-  <file>assets/smiley.png</file>
+<Star>
+  <file>assets/star.png</file>
   <startLoc x="227" y="240"/>
   <speedX>300</speedX>
   <speedY>300</speedY>
   <transparency>false</transparency>
-</Smiley>
+</Star>
 
-<Arrow>
-  <file>assets/arrow.png</file>
+<Cloud>
+  <file>assets/cloud.png</file>
   <startLoc x="50" y="140"/>
   <frames>2</frames>
   <imageWidth>32</imageWidth>
@@ -106,6 +106,6 @@
   <speedX>200</speedX>
   <speedY>200</speedY>
   <transparency>false</transparency>
-</Arrow>
+</Cloud>
 
 </GameData>
