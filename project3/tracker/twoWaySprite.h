@@ -35,5 +35,7 @@ protected:
 
   void switchFrame();
   TwoWaySprite& operator=(const TwoWaySprite&);
+
+  Vector2f makeVelocity(int, int) const;
 };
 #endif

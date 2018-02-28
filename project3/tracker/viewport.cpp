@@ -26,21 +26,40 @@ void Viewport::setObjectToTrack(const Drawable *obj) {
 }
 
 void Viewport::draw() const {
-  SDL_Color orange = {255, 165, 0, 255};
+  SDL_Color trackingColor = {static_cast<Uint8>(gdata.getXmlInt("text/tracking/font/red")),
+                        static_cast<Uint8>(gdata.getXmlInt("text/tracking/font/green")),
+                        static_cast<Uint8>(gdata.getXmlInt("text/tracking/font/blue")),
+                        static_cast<Uint8>(gdata.getXmlInt("text/tracking/font/alpha"))};
+
+  SDL_Color fpsColor = {static_cast<Uint8>(gdata.getXmlInt("text/fps/font/red")),
+                        static_cast<Uint8>(gdata.getXmlInt("text/fps/font/green")),
+                        static_cast<Uint8>(gdata.getXmlInt("text/fps/font/blue")),
+                        static_cast<Uint8>(gdata.getXmlInt("text/fps/font/alpha"))};
+
+  SDL_Color nameColor = {static_cast<Uint8>(gdata.getXmlInt("text/name/font/red")),
+                        static_cast<Uint8>(gdata.getXmlInt("text/name/font/green")),
+                        static_cast<Uint8>(gdata.getXmlInt("text/name/font/blue")),
+                        static_cast<Uint8>(gdata.getXmlInt("text/name/font/alpha"))};
 
   IoMod::getInstance().
-    writeText("Tracking: "+objectToTrack->getName(), 30, 30, orange);
+    writeText("Tracking: "+objectToTrack->getName(),
+              gdata.getXmlInt("text/tracking/locX"),
+              gdata.getXmlInt("text/tracking/locY"),
+              trackingColor);
 
-    // write FPS to screen
-    std::ostringstream fpsStream;
-    fpsStream << "FPS: " << Clock::getInstance().getFps() << std::endl;
+  std::ostringstream fpsStream;
+  fpsStream << "FPS: " << Clock::getInstance().getFps() << std::endl;
+  IoMod::getInstance().
+    writeText(fpsStream.str(),
+              gdata.getXmlInt("text/fps/locX"),
+              gdata.getXmlInt("text/fps/locY"),
+              fpsColor);
 
-    IoMod::getInstance().
-      writeText(fpsStream.str(), 30, 60, orange);
-
-    // write name in bottom left of screen
-    IoMod::getInstance().
-      writeText("Nick Barrs", 30, viewHeight-50, orange);
+  IoMod::getInstance().
+    writeText("Nick Barrs",
+              gdata.getXmlInt("text/name/locX"),
+              gdata.getXmlInt("text/name/locY"),
+              nameColor);
 }
 
 void Viewport::update() {

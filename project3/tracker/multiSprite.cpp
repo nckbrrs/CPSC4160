@@ -22,7 +22,7 @@ MultiSprite::MultiSprite( const std::string& name) :
   currentFrame(0),
   numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
   frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval")),
-  timeSinceLastFrame( 0 ),
+  timeSinceLastFrame(0),
   worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
   worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
 { }
@@ -31,22 +31,22 @@ MultiSprite::MultiSprite(const MultiSprite& s) :
   Drawable(s),
   images(s.images),
   currentFrame(s.currentFrame),
-  numberOfFrames( s.numberOfFrames ),
-  frameInterval( s.frameInterval ),
-  timeSinceLastFrame( s.timeSinceLastFrame ),
-  worldWidth( s.worldWidth ),
-  worldHeight( s.worldHeight )
-  { }
+  numberOfFrames(s.numberOfFrames),
+  frameInterval(s.frameInterval),
+  timeSinceLastFrame( s.timeSinceLastFrame),
+  worldWidth(s.worldWidth),
+  worldHeight(s.worldHeight)
+{ }
 
 MultiSprite& MultiSprite::operator=(const MultiSprite& s) {
   Drawable::operator=(s);
   images = (s.images);
   currentFrame = (s.currentFrame);
-  numberOfFrames = ( s.numberOfFrames );
-  frameInterval = ( s.frameInterval );
-  timeSinceLastFrame = ( s.timeSinceLastFrame );
-  worldWidth = ( s.worldWidth );
-  worldHeight = ( s.worldHeight );
+  numberOfFrames = (s.numberOfFrames);
+  frameInterval = (s.frameInterval);
+  timeSinceLastFrame = (s.timeSinceLastFrame);
+  worldWidth = (s.worldWidth);
+  worldHeight = (s.worldHeight);
   return *this;
 }
 

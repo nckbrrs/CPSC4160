@@ -8,7 +8,10 @@
 <period>17</period>
 
 <maxFrames>300</maxFrames>
-<username>malloy</username>
+<username>nbarrs</username>
+
+<numSmileys>7</numSmileys>
+<numArrows>1</numArrows>
 
 <view>
   <width>640</width>
@@ -19,6 +22,54 @@
   <width>1000</width>
   <height>400</height>
 </world>
+
+<defaultFont>
+  <file>fonts/arial.ttf</file>
+  <size>24</size>
+  <red>255</red>
+  <green>255</green>
+  <blue>255</blue>
+  <alpha>255</alpha>
+</defaultFont>
+
+<text>
+  <tracking>
+    <locX>30</locX>
+    <locY>30</locY>
+    <font>
+      <file>fonts/arial.ttf</file>
+      <size>24</size>
+      <red>255</red>
+      <green>165</green>
+      <blue>0</blue>
+      <alpha>255</alpha>
+    </font>
+  </tracking>
+  <fps>
+    <locX>30</locX>
+    <locY>60</locY>
+    <font>
+      <file>fonts/arial.ttf</file>
+      <size>24</size>
+      <red>255</red>
+      <green>165</green>
+      <blue>0</blue>
+      <alpha>255</alpha>
+    </font>
+  </fps>
+  <name>
+    <locX>30</locX>
+    <locY>350</locY>
+    <font>
+      <file>fonts/arial.ttf</file>
+      <size>24</size>
+      <red>255</red>
+      <green>165</green>
+      <blue>0</blue>
+      <alpha>255</alpha>
+    </font>
+  </name>
+</text>
 
 <sky>
   <file>assets/sky.bmp</file>
@@ -38,26 +89,13 @@
   <transparency>false</transparency>
 </frontMtns>
 
-<font name="font">
-  <file>fonts/arial.ttf</file>
-  <size>24</size>
-  <red>255</red>
-  <green>0</green>
-  <blue>0</blue>
-  <alpha>0</alpha>
-</font>
-
-<SpinningStar>
-  <file>assets/spinstar.png</file>
-  <startLoc x="50" y="140"/>
-  <frames>4</frames>
-  <imageWidth>32</imageWidth>
-  <imageHeight>32</imageHeight>
-  <frameInterval>50</frameInterval>
-  <speedX>200</speedX>
-  <speedY>200</speedY>
+<Smiley>
+  <file>assets/smiley.png</file>
+  <startLoc x="227" y="240"/>
+  <speedX>300</speedX>
+  <speedY>300</speedY>
   <transparency>false</transparency>
-</SpinningStar>
+</Smiley>
 
 <Arrow>
   <file>assets/arrow.png</file>
@@ -69,13 +107,5 @@
   <speedY>200</speedY>
   <transparency>false</transparency>
 </Arrow>
-
-<Smiley>
-  <file>assets/smiley.png</file>
-  <startLoc x="227" y="240"/>
-  <speedX>300</speedX>
-  <speedY>300</speedY>
-  <transparency>false</transparency>
-</Smiley>
 
 </GameData>

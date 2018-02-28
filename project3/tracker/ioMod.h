@@ -15,7 +15,7 @@ public:
 private:
   int init;
   SDL_Renderer* renderer;
-  TTF_Font* font;
+  TTF_Font* defaultFont;
   SDL_Color textColor;
   IoMod();
   IoMod(const IoMod&);

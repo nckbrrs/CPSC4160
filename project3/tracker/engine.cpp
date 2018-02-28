@@ -29,10 +29,12 @@ Engine::Engine() :
   currentSprite(0),
   makeVideo( false )
 {
-  for (int i = 0; i < 7; i++) {
+  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numSmileys"); i++) {
     sprites.push_back(new Sprite("Smiley"));
   }
-  sprites.push_back(new TwoWaySprite("Arrow"));
+  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numArrows"); i++) {
+    sprites.push_back(new TwoWaySprite("Arrow"));
+  }
   Viewport::getInstance().setObjectToTrack(sprites[0]);
   std::cout << "Loading complete" << std::endl;
 }
@@ -41,7 +43,6 @@ void Engine::draw() const {
   sky.draw();
   backMtns.draw();
   frontMtns.draw();
-
 
   for (int i = 0; i < (int)sprites.size(); i++) {
     sprites[i]->draw();

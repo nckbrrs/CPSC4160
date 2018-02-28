@@ -9,27 +9,27 @@ IoMod& IoMod::getInstance() {
 }
 
 IoMod::~IoMod() {
-  TTF_CloseFont(font);
+  TTF_CloseFont(defaultFont);
   TTF_Quit();
 }
 
 IoMod::IoMod() :
   init(TTF_Init()),
   renderer( RenderContext::getInstance()->getRenderer() ),
-  font(TTF_OpenFont(Gamedata::getInstance().getXmlStr("font/file").c_str(),
-                    Gamedata::getInstance().getXmlInt("font/size"))),
+  defaultFont(TTF_OpenFont(Gamedata::getInstance().getXmlStr("defaultFont/file").c_str(),
+                          Gamedata::getInstance().getXmlInt("defaultFont/size"))),
   textColor({0xff, 0, 0, 0})
 {
   if ( init == -1 ) {
-    throw std::string("error: Couldn't init font");
+    throw std::string("error: Couldn't init default font");
   }
-  if (font == NULL) {
+  if (defaultFont == NULL) {
     throw std::string("error: font not found");
   }
-  textColor.r = Gamedata::getInstance().getXmlInt("font/red");
-  textColor.g = Gamedata::getInstance().getXmlInt("font/green");
-  textColor.b = Gamedata::getInstance().getXmlInt("font/blue");
-  textColor.a = Gamedata::getInstance().getXmlInt("font/alpha");
+  textColor.r = Gamedata::getInstance().getXmlInt("defaultFont/red");
+  textColor.g = Gamedata::getInstance().getXmlInt("defaultFont/green");
+  textColor.b = Gamedata::getInstance().getXmlInt("defaultFont/blue");
+  textColor.a = Gamedata::getInstance().getXmlInt("defaultFont/alpha");
 }
 
 SDL_Texture* IoMod::readTexture(const std::string& filename) {
@@ -50,7 +50,7 @@ SDL_Surface* IoMod::readSurface(const std::string& filename) {
 
 void IoMod::writeText(const std::string& msg, int x, int y) const {
   SDL_Surface* surface =
-    TTF_RenderText_Solid(font, msg.c_str(), textColor);
+    TTF_RenderText_Solid(defaultFont, msg.c_str(), textColor);
 
   SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
@@ -65,7 +65,7 @@ void IoMod::writeText(const std::string& msg, int x, int y) const {
 
 void IoMod::writeText(const std::string& msg, int x, int y, SDL_Color customColor) const {
   SDL_Surface* surface =
-    TTF_RenderText_Solid(font, msg.c_str(), customColor);
+    TTF_RenderText_Solid(defaultFont, msg.c_str(), customColor);
 
   SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
