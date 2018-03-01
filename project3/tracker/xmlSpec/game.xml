@@ -11,7 +11,7 @@
 <username>nbarrs</username>
 
 <numStars>7</numStars>
-<numClouds>1</numClouds>
+<numFireballs>1</numFireballs>
 
 <view>
   <width>640</width>
@@ -97,8 +97,8 @@
   <transparency>false</transparency>
 </Star>
 
-<Cloud>
-  <file>assets/cloud.png</file>
+<Fireball>
+  <file>assets/fireball.png</file>
   <startLoc x="50" y="140"/>
   <frames>2</frames>
   <imageWidth>32</imageWidth>
@@ -106,6 +106,6 @@
   <speedX>200</speedX>
   <speedY>200</speedY>
   <transparency>false</transparency>
-</Cloud>
+</Fireball>
 
 </GameData>

@@ -32,8 +32,8 @@ Engine::Engine() :
   for (int i = 0; i < Gamedata::getInstance().getXmlInt("numStars"); i++) {
     sprites.push_back(new Sprite("Star"));
   }
-  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numClouds"); i++) {
-    sprites.push_back(new TwoWaySprite("Cloud"));
+  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numFireballs"); i++) {
+    sprites.push_back(new TwoWaySprite("Fireball"));
   }
   Viewport::getInstance().setObjectToTrack(sprites[0]);
   std::cout << "Loading complete" << std::endl;
