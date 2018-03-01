@@ -15,7 +15,7 @@
 
 <view>
   <width>640</width>
-  <height>400</height>
+  <height>360</height>
 </view>
 
 <world>
@@ -59,7 +59,7 @@
   </fps>
   <name>
     <locX>30</locX>
-    <locY>350</locY>
+    <locY>300</locY>
     <font>
       <file>fonts/arial.ttf</file>
       <size>24</size>

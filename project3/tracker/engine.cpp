@@ -29,11 +29,11 @@ Engine::Engine() :
   currentSprite(0),
   makeVideo( false )
 {
-  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numStars"); i++) {
-    sprites.push_back(new Sprite("Star"));
-  }
   for (int i = 0; i < Gamedata::getInstance().getXmlInt("numFireballs"); i++) {
     sprites.push_back(new TwoWaySprite("Fireball"));
+  }
+  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numStars"); i++) {
+    sprites.push_back(new Sprite("Star"));
   }
   Viewport::getInstance().setObjectToTrack(sprites[0]);
   std::cout << "Loading complete" << std::endl;
