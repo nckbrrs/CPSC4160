@@ -34,8 +34,8 @@ protected:
   unsigned numRightFrames;
   unsigned frameInterval;
   float timeSinceLastFrame;
-  int worldWidth;
-  int worldHeight;
+  int backgroundWidth;
+  int backgroundHeight;
 
   void advanceFrame(Uint32 ticks);
   TwoWayMultiSprite& operator=(const TwoWayMultiSprite&);

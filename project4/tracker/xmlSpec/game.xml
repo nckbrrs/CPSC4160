@@ -13,10 +13,10 @@
   <height>360</height>
 </view>
 
-<world>
+<background>
   <width>1000</width>
   <height>400</height>
-</world>
+</background>
 
 <defaultFont>
   <file>fonts/arial.ttf</file>
@@ -72,23 +72,23 @@
   <transparency>false</transparency>
 </Sky>
 
-<backMtns>
+<BackMtns>
   <file>assets/backMtns.bmp</file>
   <factor>3</factor>
   <transparency>false</transparency>
-</backMtns>
+</BackMtns>
 
-<frontMtns>
+<FrontMtns>
   <file>assets/frontMtns.bmp</file>
   <factor>2</factor>
   <transparency>false</transparency>
-</frontMtns>
+</FrontMtns>
 
-<road>
+<Road>
   <file>assets/road.bmp</file>
   <factor>1</factor>
   <transparency>false</transparency>
-</road>
+</Road>
 
 <Cloud>
   <file>assets/cloud.png</file>

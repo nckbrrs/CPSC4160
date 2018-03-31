@@ -3,7 +3,7 @@
 #include "ioMod.h"
 #include "renderContext.h"
 #include "clock.h"
-#include "world.h"
+#include "background.h"
 #include "viewport.h"
 
 class Engine {
@@ -20,10 +20,10 @@ private:
 
   SDL_Renderer * const renderer;
 
-  World Sky;
-  World BackMtns;
-  World FrontMtns;
-  World Road;
+  Background Sky;
+  Background BackMtns;
+  Background FrontMtns;
+  Background Road;
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;

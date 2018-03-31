@@ -18,8 +18,8 @@ Sprite::Sprite(const string& n, const Vector2f& pos, const Vector2f& vel,
                const Image* img):
   Drawable(n, pos, vel),
   image( img ),
-  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
-  worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
+  backgroundWidth(Gamedata::getInstance().getXmlInt("background/width")),
+  backgroundHeight(Gamedata::getInstance().getXmlInt("background/height"))
 { }
 
 Sprite::Sprite(const std::string& name) :
@@ -31,22 +31,22 @@ Sprite::Sprite(const std::string& name) :
                     Gamedata::getInstance().getXmlInt(name+"/speedY"))
            ),
   image( RenderContext::getInstance()->getImage(name) ),
-  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
-  worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
+  backgroundWidth(Gamedata::getInstance().getXmlInt("background/width")),
+  backgroundHeight(Gamedata::getInstance().getXmlInt("background/height"))
 { }
 
 Sprite::Sprite(const Sprite& s) :
   Drawable(s),
   image(s.image),
-  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
-  worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
+  backgroundWidth(Gamedata::getInstance().getXmlInt("background/width")),
+  backgroundHeight(Gamedata::getInstance().getXmlInt("background/height"))
 { }
 
 Sprite& Sprite::operator=(const Sprite& rhs) {
   Drawable::operator=( rhs );
   image = rhs.image;
-  worldWidth = rhs.worldWidth;
-  worldHeight = rhs.worldHeight;
+  backgroundWidth = rhs.backgroundWidth;
+  backgroundHeight = rhs.backgroundHeight;
   return *this;
 }
 
@@ -66,14 +66,14 @@ void Sprite::update(Uint32 ticks) {
   if ( getY() < 0) {
     setVelocityY( std::abs( getVelocityY() ) );
   }
-  if ( getY() > worldHeight-getScaledHeight()) {
+  if ( getY() > backgroundHeight-getScaledHeight()) {
     setVelocityY( -std::abs( getVelocityY() ) );
   }
 
   if ( getX() < 0) {
     setVelocityX( std::abs( getVelocityX() ) );
   }
-  if ( getX() > worldWidth-getScaledWidth()) {
+  if ( getX() > backgroundWidth-getScaledWidth()) {
     setVelocityX( -std::abs( getVelocityX() ) );
   }
 }

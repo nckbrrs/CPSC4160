@@ -11,8 +11,8 @@ Viewport& Viewport::getInstance() {
 Viewport::Viewport() :
   gdata(Gamedata::getInstance()),
   position(0, 0),
-  worldWidth(gdata.getXmlInt("world/width")),
-  worldHeight(gdata.getXmlInt("world/height")),
+  backgroundWidth(gdata.getXmlInt("background/width")),
+  backgroundHeight(gdata.getXmlInt("background/height")),
   viewWidth(gdata.getXmlInt("view/width")),
   viewHeight(gdata.getXmlInt("view/height")),
   objWidth(0), objHeight(0),
@@ -70,10 +70,10 @@ void Viewport::update() {
   position[1] = (y + objHeight/2) - viewHeight/2;
   if (position[0] < 0) position[0] = 0;
   if (position[1] < 0) position[1] = 0;
-  if (position[0] > (worldWidth - viewWidth)) {
-    position[0] = worldWidth-viewWidth;
+  if (position[0] > (backgroundWidth - viewWidth)) {
+    position[0] = backgroundWidth-viewWidth;
   }
-  if (position[1] > (worldHeight - viewHeight)) {
-    position[1] = worldHeight-viewHeight;
+  if (position[1] > (backgroundHeight - viewHeight)) {
+    position[1] = backgroundHeight-viewHeight;
   }
 }

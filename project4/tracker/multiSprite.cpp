@@ -23,8 +23,8 @@ MultiSprite::MultiSprite( const std::string& name) :
   numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
   frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval")),
   timeSinceLastFrame(0),
-  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
-  worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
+  backgroundWidth(Gamedata::getInstance().getXmlInt("background/width")),
+  backgroundHeight(Gamedata::getInstance().getXmlInt("background/height"))
 { }
 
 MultiSprite::MultiSprite(const MultiSprite& s) :
@@ -34,8 +34,8 @@ MultiSprite::MultiSprite(const MultiSprite& s) :
   numberOfFrames(s.numberOfFrames),
   frameInterval(s.frameInterval),
   timeSinceLastFrame( s.timeSinceLastFrame),
-  worldWidth(s.worldWidth),
-  worldHeight(s.worldHeight)
+  backgroundWidth(s.backgroundWidth),
+  backgroundHeight(s.backgroundHeight)
 { }
 
 MultiSprite& MultiSprite::operator=(const MultiSprite& s) {
@@ -45,8 +45,8 @@ MultiSprite& MultiSprite::operator=(const MultiSprite& s) {
   numberOfFrames = (s.numberOfFrames);
   frameInterval = (s.frameInterval);
   timeSinceLastFrame = (s.timeSinceLastFrame);
-  worldWidth = (s.worldWidth);
-  worldHeight = (s.worldHeight);
+  backgroundWidth = (s.backgroundWidth);
+  backgroundHeight = (s.backgroundHeight);
   return *this;
 }
 
@@ -63,14 +63,14 @@ void MultiSprite::update(Uint32 ticks) {
   if ( getY() < 0) {
     setVelocityY( fabs( getVelocityY() ) );
   }
-  if ( getY() > worldHeight-getScaledHeight()) {
+  if ( getY() > backgroundHeight-getScaledHeight()) {
     setVelocityY( -fabs( getVelocityY() ) );
   }
 
   if ( getX() < 0) {
     setVelocityX( fabs( getVelocityX() ) );
   }
-  if ( getX() > worldWidth-getScaledWidth()) {
+  if ( getX() > backgroundWidth-getScaledWidth()) {
     setVelocityX( -fabs( getVelocityX() ) );
   }
 

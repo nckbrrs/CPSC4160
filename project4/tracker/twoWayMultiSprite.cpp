@@ -28,24 +28,24 @@ TwoWayMultiSprite::TwoWayMultiSprite( const std::string& name) :
 	numLeftFrames( Gamedata::getInstance().getXmlInt(name+"/leftFrames") ),
 	numRightFrames( Gamedata::getInstance().getXmlInt(name+"/rightFrames") ),
   frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval")),
-  worldWidth(Gamedata::getInstance().getXmlInt("world/width")),
-  worldHeight(Gamedata::getInstance().getXmlInt("world/height"))
+  backgroundWidth(Gamedata::getInstance().getXmlInt("background/width")),
+  backgroundHeight(Gamedata::getInstance().getXmlInt("background/height"))
 { }
 
 TwoWayMultiSprite::TwoWayMultiSprite(const TwoWayMultiSprite& s) :
   Drawable(s),
   images(s.images),
   currentFrame(s.currentFrame),
-  worldWidth( s.worldWidth ),
-  worldHeight( s.worldHeight )
+  backgroundWidth( s.backgroundWidth ),
+  backgroundHeight( s.backgroundHeight )
   { }
 
 TwoWayMultiSprite& TwoWayMultiSprite::operator=(const TwoWayMultiSprite& s) {
   Drawable::operator=(s);
   images = (s.images);
   currentFrame = (s.currentFrame);
-  worldWidth = ( s.worldWidth );
-  worldHeight = ( s.worldHeight );
+  backgroundWidth = ( s.backgroundWidth );
+  backgroundHeight = ( s.backgroundHeight );
   return *this;
 }
 
@@ -62,14 +62,14 @@ void TwoWayMultiSprite::update(Uint32 ticks) {
   if ( getY() < 0) {
     setVelocityY( fabs( getVelocityY() ) );
   }
-  if ( getY() > worldHeight-getScaledHeight()) {
+  if ( getY() > backgroundHeight-getScaledHeight()) {
     setVelocityY( -fabs( getVelocityY() ) );
   }
 
   if ( getX() < 0) {
     setVelocityX( fabs( getVelocityX() ) );
   }
-  if ( getX() > worldWidth-getScaledWidth()) {
+  if ( getX() > backgroundWidth-getScaledWidth()) {
     setVelocityX( -fabs( getVelocityX() ) );
   }
 

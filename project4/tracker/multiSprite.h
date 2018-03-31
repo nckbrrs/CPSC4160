@@ -33,8 +33,8 @@ protected:
   unsigned numberOfFrames;
   unsigned frameInterval;
   float timeSinceLastFrame;
-  int worldWidth;
-  int worldHeight;
+  int backgroundWidth;
+  int backgroundHeight;
 
   void advanceFrame(Uint32 ticks);
   MultiSprite& operator=(const MultiSprite&);

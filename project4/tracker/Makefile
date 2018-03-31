@@ -11,7 +11,7 @@ OBJS = \
 	parseXML.o \
 	gamedata.o \
 	viewport.o \
-	world.o \
+	background.o \
 	spriteSheet.o \
 	image.o \
 	imageFactory.o \
