@@ -9,7 +9,6 @@
 #include "twoWayMultiSprite.h"
 #include "gamedata.h"
 #include "engine.h"
-#include "frameGenerator.h"
 
 Engine::~Engine() {
   sprites.clear();
@@ -21,10 +20,10 @@ Engine::Engine() :
   io( IoMod::getInstance() ),
   clock( Clock::getInstance() ),
   renderer( rc->getRenderer() ),
-  sky("sky", Gamedata::getInstance().getXmlInt("sky/factor") ),
-  backMtns("backMtns", Gamedata::getInstance().getXmlInt("backMtns/factor") ),
-  frontMtns("frontMtns", Gamedata::getInstance().getXmlInt("frontMtns/factor") ),
-  road("road", Gamedata::getInstance().getXmlInt("road/factor") ),
+  Sky("Sky", Gamedata::getInstance().getXmlInt("Sky/factor") ),
+  BackMtns("BackMtns", Gamedata::getInstance().getXmlInt("BackMtns/factor") ),
+  FrontMtns("FrontMtns", Gamedata::getInstance().getXmlInt("FrontMtns/factor") ),
+  Road("Road", Gamedata::getInstance().getXmlInt("Road/factor") ),
   viewport( Viewport::getInstance() ),
   sprites(),
   currentSprite(0),
@@ -41,10 +40,10 @@ Engine::Engine() :
 }
 
 void Engine::draw() const {
-  sky.draw();
-  backMtns.draw();
-  frontMtns.draw();
-  road.draw();
+  Sky.draw();
+  BackMtns.draw();
+  FrontMtns.draw();
+  Road.draw();
 
   for (int i = 0; i < (int)sprites.size(); i++) {
     sprites[i]->draw();
@@ -59,10 +58,10 @@ void Engine::update(Uint32 ticks) {
     sprites[i]->update(ticks);
   }
 
-  sky.update();
-  backMtns.update();
-  frontMtns.update();
-  road.update();
+  Sky.update();
+  BackMtns.update();
+  FrontMtns.update();
+  Road.update();
   viewport.update(); // always update viewport last
 }
 
@@ -77,7 +76,6 @@ void Engine::play() {
   const Uint8* keystate;
   bool done = false;
   Uint32 ticks = clock.getElapsedTicks();
-  FrameGenerator frameGen;
 
   while ( !done ) {
     // The next loop polls for events, guarding against key bounce:
@@ -96,14 +94,6 @@ void Engine::play() {
         if ( keystate[SDL_SCANCODE_T] ) {
           switchSprite();
         }
-        if (keystate[SDL_SCANCODE_F4] && !makeVideo) {
-          std::cout << "Initiating frame capture" << std::endl;
-          makeVideo = true;
-        }
-        else if (keystate[SDL_SCANCODE_F4] && makeVideo) {
-          std::cout << "Terminating frame capture" << std::endl;
-          makeVideo = false;
-        }
       }
     }
 
@@ -113,9 +103,6 @@ void Engine::play() {
       clock.incrFrame();
       draw();
       update(ticks);
-      if ( makeVideo ) {
-        frameGen.makeFrame();
-      }
     }
   }
 }

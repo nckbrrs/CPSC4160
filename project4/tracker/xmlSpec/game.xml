@@ -2,13 +2,8 @@
 <GameData>
 
 <title>Nick Barrs's Tracker Framework</title>
-<maxStringSize>50</maxStringSize>
-
 <frameCapOn>true</frameCapOn>
 <period>17</period>
-
-<maxFrames>300</maxFrames>
-<username>nbarrs</username>
 
 <numClouds>7</numClouds>
 <numStickmans>1</numStickmans>
@@ -71,11 +66,11 @@
   </name>
 </text>
 
-<sky>
-  <file>assets/sky.bmp</file>
+<Sky>
+  <file>assets/Sky.bmp</file>
   <factor>1</factor>
   <transparency>false</transparency>
-</sky>
+</Sky>
 
 <backMtns>
   <file>assets/backMtns.bmp</file>

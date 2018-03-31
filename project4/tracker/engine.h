@@ -20,10 +20,10 @@ private:
 
   SDL_Renderer * const renderer;
 
-  World sky;
-  World backMtns;
-  World frontMtns;
-  World road;
+  World Sky;
+  World BackMtns;
+  World FrontMtns;
+  World Road;
   Viewport& viewport;
 
   std::vector<Drawable*> sprites;
