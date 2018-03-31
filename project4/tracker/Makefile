@@ -15,7 +15,6 @@ OBJS = \
 	spriteSheet.o \
 	image.o \
 	imageFactory.o \
-	frameGenerator.o \
 	sprite.o \
 	multiSprite.o \
 	twoWayMultiSprite.o \
