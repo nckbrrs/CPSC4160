@@ -28,6 +28,7 @@ TwoWayMultiSprite::TwoWayMultiSprite( const std::string& name) :
 	numLeftFrames( Gamedata::getInstance().getXmlInt(name+"/leftFrames") ),
 	numRightFrames( Gamedata::getInstance().getXmlInt(name+"/rightFrames") ),
   frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval")),
+	timeSinceLastFrame(0),
   backgroundWidth(Gamedata::getInstance().getXmlInt("background/width")),
   backgroundHeight(Gamedata::getInstance().getXmlInt("background/height"))
 { }
@@ -36,6 +37,10 @@ TwoWayMultiSprite::TwoWayMultiSprite(const TwoWayMultiSprite& s) :
   Drawable(s),
   images(s.images),
   currentFrame(s.currentFrame),
+	numLeftFrames(s.numLeftFrames),
+	numRightFrames(s.numRightFrames),
+	frameInterval(s.frameInterval),
+	timeSinceLastFrame(s.timeSinceLastFrame),
   backgroundWidth( s.backgroundWidth ),
   backgroundHeight( s.backgroundHeight )
   { }
@@ -44,6 +49,10 @@ TwoWayMultiSprite& TwoWayMultiSprite::operator=(const TwoWayMultiSprite& s) {
   Drawable::operator=(s);
   images = (s.images);
   currentFrame = (s.currentFrame);
+	numLeftFrames = (s.numLeftFrames);
+	numRightFrames = (s.numRightFrames);
+	frameInterval = (s.frameInterval);
+	timeSinceLastFrame = (s.timeSinceLastFrame);
   backgroundWidth = ( s.backgroundWidth );
   backgroundHeight = ( s.backgroundHeight );
   return *this;
