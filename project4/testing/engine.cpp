@@ -9,7 +9,10 @@
 #include "engine.h"
 
 Engine::~Engine() {
-  sprites.clear();
+  for (int i=0; i<sprites.size(); i++) {
+    delete sprites[i];
+  }
+  delete sprites;
   std::cout << "Terminating program" << std::endl;
 }
 
