@@ -9,10 +9,7 @@
 #include "engine.h"
 
 Engine::~Engine() {
-  for (int i=0; i<sprites.size(); i++) {
-    delete sprites[i];
-  }
-  delete sprites;
+  std::vector<Sprite*>().swap(sprites);
   std::cout << "Terminating program" << std::endl;
 }
 

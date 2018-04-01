@@ -73,25 +73,25 @@
 </Sky>
 
 <BackMtns>
-  <file>assets/backMtns.bmp</file>
+  <file>assets/BackMtns.bmp</file>
   <factor>3</factor>
   <transparency>false</transparency>
 </BackMtns>
 
 <FrontMtns>
-  <file>assets/frontMtns.bmp</file>
+  <file>assets/FrontMtns.bmp</file>
   <factor>2</factor>
   <transparency>false</transparency>
 </FrontMtns>
 
 <Road>
-  <file>assets/road.bmp</file>
+  <file>assets/Road.bmp</file>
   <factor>1</factor>
   <transparency>false</transparency>
 </Road>
 
 <Cloud>
-  <file>assets/cloud.png</file>
+  <file>assets/Cloud.png</file>
   <startLoc x="50" y="50"/>
   <speedX>50</speedX>
   <speedY>50</speedY>
@@ -99,7 +99,7 @@
 </Cloud>
 
 <Stickman>
-  <file>assets/stickman.png</file>
+  <file>assets/Stickman.png</file>
   <startLoc x="50" y="320"/>
   <frames>16</frames>
   <rightFrames>8</rightFrames>
