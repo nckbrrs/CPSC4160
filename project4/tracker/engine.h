@@ -11,7 +11,6 @@ public:
   Engine ();
   ~Engine ();
   void play();
-  void switchSprite();
 
 private:
   const RenderContext* rc;
@@ -26,8 +25,8 @@ private:
   Background Road;
   Viewport& viewport;
 
-  std::vector<Drawable*> sprites;
-  int currentSprite;
+  std::vector<Drawable*> nonPlayerSprites;
+  Drawable* player;
 
   bool makeVideo;
 

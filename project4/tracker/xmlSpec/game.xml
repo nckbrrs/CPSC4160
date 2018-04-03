@@ -92,23 +92,26 @@
 
 <Cloud>
   <file>assets/Cloud.png</file>
-  <startLoc x="50" y="50"/>
-  <speedX>50</speedX>
-  <speedY>50</speedY>
+  <startPos x="50" y="50"/>
+  <startVel x="50" y="50"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="1000" y="200"/>
   <transparency>false</transparency>
 </Cloud>
 
 <Stickman>
   <file>assets/Stickman.png</file>
-  <startLoc x="50" y="320"/>
+  <startPos x="50" y="320"/>
+  <startVel x="200" y="200"/>
+  <minPosBoundary x="0" y="100"/>
+  <maxPosBoundary x="1000" y="400"/>
   <frames>16</frames>
   <rightFrames>8</rightFrames>
   <leftFrames>8</leftFrames>
   <frameInterval>75</frameInterval>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
-  <speedX>200</speedX>
-  <speedY>0</speedY>
+  <slowDownFactor>0.5</slowDownFactor>
   <transparency>false</transparency>
 </Stickman>
 

@@ -2,44 +2,39 @@
 #include <random>
 #include <functional>
 #include "sprite.h"
-#include "gamedata.h"
+#include "gameData.h"
 #include "renderContext.h"
 
 Vector2f Sprite::makeVelocity(int vx, int vy) const {
-  float newvx = Gamedata::getInstance().getRandFloat(vx-50,vx+50);;
-  float newvy = Gamedata::getInstance().getRandFloat(vy-50,vy+50);;
+  float newvx = GameData::getInstance().getRandFloat(vx-50,vx+50);;
+  float newvy = GameData::getInstance().getRandFloat(vy-50,vy+50);;
   newvx *= [](){ if(rand()%2) return -1; else return 1; }();
   newvy *= [](){ if(rand()%2) return -1; else return 1; }();
 
   return Vector2f(newvx, newvy);
 }
 
-Sprite::Sprite(const string& n, const Vector2f& pos, const Vector2f& vel,
-               const Image* img):
-  Drawable(n, pos, vel),
-  image( img ),
-  backgroundWidth(Gamedata::getInstance().getXmlInt("background/width")),
-  backgroundHeight(Gamedata::getInstance().getXmlInt("background/height"))
-{ }
-
 Sprite::Sprite(const std::string& name) :
   Drawable(name,
-           Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"),
-                    Gamedata::getInstance().getXmlInt(name+"/startLoc/y")),
-           makeVelocity(
-                    Gamedata::getInstance().getXmlInt(name+"/speedX"),
-                    Gamedata::getInstance().getXmlInt(name+"/speedY"))
+           Vector2f(GameData::getInstance().getXmlInt(name+"/startPos/x"),
+                    GameData::getInstance().getXmlInt(name+"/startPos/y")),
+           Vector2f(GameData::getInstance().getXmlInt(name+"/startVel/x"),
+                    GameData::getInstance().getXmlInt(name+"/startVel/y")),
+           Vector2f(GameData::getInstance().getXmlInt(name+"/minPosBoundary/x"),
+                    GameData::getInstance().getXmlInt(name+"/minPosBoundary/y")),
+           Vector2f(GameData::getInstance().getXmlInt(name+"/maxPosBoundary/x"),
+                    GameData::getInstance().getXmlInt(name+"/maxPosBoundary/y"))
            ),
   image( RenderContext::getInstance()->getImage(name) ),
-  backgroundWidth(Gamedata::getInstance().getXmlInt("background/width")),
-  backgroundHeight(Gamedata::getInstance().getXmlInt("background/height"))
+  backgroundWidth(GameData::getInstance().getXmlInt("background/width")),
+  backgroundHeight(GameData::getInstance().getXmlInt("background/height"))
 { }
 
 Sprite::Sprite(const Sprite& s) :
   Drawable(s),
   image(s.image),
-  backgroundWidth(Gamedata::getInstance().getXmlInt("background/width")),
-  backgroundHeight(Gamedata::getInstance().getXmlInt("background/height"))
+  backgroundWidth(GameData::getInstance().getXmlInt("background/width")),
+  backgroundHeight(GameData::getInstance().getXmlInt("background/height"))
 { }
 
 Sprite& Sprite::operator=(const Sprite& rhs) {
@@ -56,24 +51,24 @@ inline namespace{
 
 void Sprite::draw() const {
   if(getScale() < SCALE_EPSILON) return;
-  image->draw(getX(), getY(), getScale());
+  image->draw(getPositionX(), getPositionY(), getScale());
 }
 
 void Sprite::update(Uint32 ticks) {
   Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
   setPosition(getPosition() + incr);
 
-  if ( getY() < 0) {
+  if ( getPositionY() < getMinPosBoundaryY()) {
     setVelocityY( std::abs( getVelocityY() ) );
   }
-  if ( getY() > backgroundHeight-getScaledHeight()) {
+  if ( getPositionY() > getMaxPosBoundaryY()-getScaledHeight()) {
     setVelocityY( -std::abs( getVelocityY() ) );
   }
 
-  if ( getX() < 0) {
+  if ( getPositionX() < getMinPosBoundaryX()) {
     setVelocityX( std::abs( getVelocityX() ) );
   }
-  if ( getX() > backgroundWidth-getScaledWidth()) {
+  if ( getPositionX() > getMaxPosBoundaryX()-getScaledWidth()) {
     setVelocityX( -std::abs( getVelocityX() ) );
   }
 }

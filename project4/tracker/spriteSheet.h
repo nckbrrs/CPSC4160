@@ -29,32 +29,31 @@ public:
   SpriteSheet(SpriteSheet&&)=default;
   SpriteSheet& operator=(SpriteSheet&&)=default;
 
-  SpriteSheet(SDL_Surface* _src, int w, int h, const NonOwningT)
-             :src(_src),view{0,0,w,h}
-             ,Nr(_src->h/h),Nc(_src->w/w),N(Nr*Nc)
-             ,owning(false)
-             {
-             }
-  SpriteSheet(SDL_Surface* _src, int w, int h)
-             :SpriteSheet(_src,w,h,NonOwning)
-             {
-               owning = true;
-             }
-  ~SpriteSheet(){
+  SpriteSheet(SDL_Surface* _src, int w, int h, const NonOwningT) :
+             src(_src),view{0,0,w,h},
+             Nr(_src->h/h),Nc(_src->w/w),N(Nr*Nc),
+             owning(false)
+  { }
+
+  SpriteSheet(SDL_Surface* _src, int w, int h) :
+             SpriteSheet(_src,w,h,NonOwning)
+  { owning = true; }
+
+  ~SpriteSheet() {
     if(owning) SDL_FreeSurface(src);
   }
 
-  unsigned getRows()const{ return Nr; }
-  unsigned getColumns()const{ return Nc; }
-  unsigned getFrames()const{ return N; }
+  unsigned getRows() const { return Nr; }
+  unsigned getColumns() const { return Nc; }
+  unsigned getFrames() const { return N; }
 
   SDL_Surface* get(unsigned, unsigned);
-
   SDL_Surface* get(unsigned);
 
-  inline SDL_Surface* operator()(unsigned i, unsigned j){
+  inline SDL_Surface* operator()(unsigned i, unsigned j) {
     return get(i,j);
   }
+  
   inline SDL_Surface* operator[](unsigned c){
     return get(c);
   }

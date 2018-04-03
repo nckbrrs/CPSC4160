@@ -9,7 +9,7 @@ OBJS = \
   renderContext.o \
 	ioMod.o \
 	parseXML.o \
-	gamedata.o \
+	gameData.o \
 	viewport.o \
 	background.o \
 	spriteSheet.o \
@@ -18,6 +18,7 @@ OBJS = \
 	sprite.o \
 	multiSprite.o \
 	twoWayMultiSprite.o \
+	player.o \
 	vector2f.o \
 	clock.o \
 	engine.o \

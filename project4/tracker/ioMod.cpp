@@ -1,6 +1,6 @@
 #include <SDL_image.h>
 #include "ioMod.h"
-#include "gamedata.h"
+#include "gameData.h"
 #include "renderContext.h"
 
 IoMod& IoMod::getInstance() {
@@ -16,8 +16,8 @@ IoMod::~IoMod() {
 IoMod::IoMod() :
   init(TTF_Init()),
   renderer( RenderContext::getInstance()->getRenderer() ),
-  defaultFont(TTF_OpenFont(Gamedata::getInstance().getXmlStr("defaultFont/file").c_str(),
-                          Gamedata::getInstance().getXmlInt("defaultFont/size"))),
+  defaultFont(TTF_OpenFont(GameData::getInstance().getXmlStr("defaultFont/file").c_str(),
+                          GameData::getInstance().getXmlInt("defaultFont/size"))),
   textColor({0xff, 0, 0, 0})
 {
   if ( init == -1 ) {
@@ -26,10 +26,10 @@ IoMod::IoMod() :
   if (defaultFont == NULL) {
     throw std::string("error: font not found");
   }
-  textColor.r = Gamedata::getInstance().getXmlInt("defaultFont/red");
-  textColor.g = Gamedata::getInstance().getXmlInt("defaultFont/green");
-  textColor.b = Gamedata::getInstance().getXmlInt("defaultFont/blue");
-  textColor.a = Gamedata::getInstance().getXmlInt("defaultFont/alpha");
+  textColor.r = GameData::getInstance().getXmlInt("defaultFont/red");
+  textColor.g = GameData::getInstance().getXmlInt("defaultFont/green");
+  textColor.b = GameData::getInstance().getXmlInt("defaultFont/blue");
+  textColor.a = GameData::getInstance().getXmlInt("defaultFont/alpha");
 }
 
 SDL_Texture* IoMod::readTexture(const std::string& filename) {

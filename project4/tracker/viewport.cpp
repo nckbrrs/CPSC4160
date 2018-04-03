@@ -9,7 +9,7 @@ Viewport& Viewport::getInstance() {
 }
 
 Viewport::Viewport() :
-  gdata(Gamedata::getInstance()),
+  gdata(GameData::getInstance()),
   position(0, 0),
   backgroundWidth(gdata.getXmlInt("background/width")),
   backgroundHeight(gdata.getXmlInt("background/height")),
@@ -63,8 +63,8 @@ void Viewport::draw() const {
 }
 
 void Viewport::update() {
-  const float x = objectToTrack->getX();
-  const float y = objectToTrack->getY();
+  const float x = objectToTrack->getPositionX();
+  const float y = objectToTrack->getPositionY();
 
   position[0] = (x + objWidth/2) - viewWidth/2;
   position[1] = (y + objHeight/2) - viewHeight/2;

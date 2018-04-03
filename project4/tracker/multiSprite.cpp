@@ -1,30 +1,26 @@
 #include "multiSprite.h"
-#include "gamedata.h"
+#include "gameData.h"
 #include "renderContext.h"
-
-void MultiSprite::advanceFrame(Uint32 ticks) {
-	timeSinceLastFrame += ticks;
-	if (timeSinceLastFrame > frameInterval) {
-    currentFrame = (currentFrame+1) % numberOfFrames;
-		timeSinceLastFrame = 0;
-	}
-}
 
 MultiSprite::MultiSprite( const std::string& name) :
   Drawable(name,
-           Vector2f(Gamedata::getInstance().getXmlInt(name+"/startLoc/x"),
-                    Gamedata::getInstance().getXmlInt(name+"/startLoc/y")),
-           Vector2f(Gamedata::getInstance().getXmlInt(name+"/speedX"),
-                    Gamedata::getInstance().getXmlInt(name+"/speedY"))
-           ),
+         Vector2f(GameData::getInstance().getXmlInt(name+"/startPos/x"),
+                  GameData::getInstance().getXmlInt(name+"/startPos/y")),
+         Vector2f(GameData::getInstance().getXmlInt(name+"/startVel/x"),
+                  GameData::getInstance().getXmlInt(name+"/startVel/y")),
+         Vector2f(GameData::getInstance().getXmlInt(name+"/minPosBoundary/x"),
+                  GameData::getInstance().getXmlInt(name+"/minPosBoundary/y")),
+         Vector2f(GameData::getInstance().getXmlInt(name+"/maxPosBoundary/x"),
+                  GameData::getInstance().getXmlInt(name+"/maxPosBoundary/y"))
+         ),
   images( RenderContext::getInstance()->getImages(name) ),
 
   currentFrame(0),
-  numberOfFrames( Gamedata::getInstance().getXmlInt(name+"/frames") ),
-  frameInterval( Gamedata::getInstance().getXmlInt(name+"/frameInterval")),
+  numberOfFrames( GameData::getInstance().getXmlInt(name+"/frames") ),
+  frameInterval( GameData::getInstance().getXmlInt(name+"/frameInterval")),
   timeSinceLastFrame(0),
-  backgroundWidth(Gamedata::getInstance().getXmlInt("background/width")),
-  backgroundHeight(Gamedata::getInstance().getXmlInt("background/height"))
+  backgroundWidth(GameData::getInstance().getXmlInt("background/width")),
+  backgroundHeight(GameData::getInstance().getXmlInt("background/height"))
 { }
 
 MultiSprite::MultiSprite(const MultiSprite& s) :
@@ -51,7 +47,7 @@ MultiSprite& MultiSprite::operator=(const MultiSprite& s) {
 }
 
 void MultiSprite::draw() const {
-  images[currentFrame]->draw(getX(), getY(), getScale());
+  images[currentFrame]->draw(getPositionX(), getPositionY(), getScale());
 }
 
 void MultiSprite::update(Uint32 ticks) {
@@ -60,18 +56,25 @@ void MultiSprite::update(Uint32 ticks) {
   Vector2f incr = getVelocity() * static_cast<float>(ticks) * 0.001;
   setPosition(getPosition() + incr);
 
-  if ( getY() < 0) {
+  if ( getPositionY() < 0) {
     setVelocityY( fabs( getVelocityY() ) );
   }
-  if ( getY() > backgroundHeight-getScaledHeight()) {
+  if ( getPositionY() > backgroundHeight-getScaledHeight()) {
     setVelocityY( -fabs( getVelocityY() ) );
   }
 
-  if ( getX() < 0) {
+  if ( getPositionX() < 0) {
     setVelocityX( fabs( getVelocityX() ) );
   }
-  if ( getX() > backgroundWidth-getScaledWidth()) {
+  if ( getPositionX() > backgroundWidth-getScaledWidth()) {
     setVelocityX( -fabs( getVelocityX() ) );
   }
+}
 
+void MultiSprite::advanceFrame(Uint32 ticks) {
+	timeSinceLastFrame += ticks;
+	if (timeSinceLastFrame > frameInterval) {
+    currentFrame = (currentFrame+1) % numberOfFrames;
+		timeSinceLastFrame = 0;
+	}
 }

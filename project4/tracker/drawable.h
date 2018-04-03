@@ -5,17 +5,32 @@
 #include <string>
 #include "vector2f.h"
 #include "image.h"
- 
+
 // Drawable is an Abstract Base Class (ABC) that specifies the methods
 // that derived classes may or must have.
 class Drawable {
 public:
-  Drawable(const std::string& n, const Vector2f& pos, const Vector2f& vel): 
-    name(n), position(pos), velocity(vel), scale(1.0) {}
+  Drawable(const std::string& n,
+           const Vector2f& pos,
+           const Vector2f& vel,
+           const Vector2f& minPosB,
+           const Vector2f& maxPosB):
+    name(n),
+    position(pos),
+    velocity(vel),
+    minPosBoundary(minPosB),
+    maxPosBoundary(maxPosB),
+    scale(1.0)
+  { }
 
-  Drawable(const Drawable& s) : 
-    name(s.name), position(s.position), velocity(s.velocity), scale(s.scale)
-    { }
+  Drawable(const Drawable& s):
+    name(s.name),
+    position(s.position),
+    velocity(s.velocity),
+    minPosBoundary(s.minPosBoundary),
+    maxPosBoundary(s.maxPosBoundary),
+    scale(1.0)
+  { }
 
   virtual ~Drawable() {}
 
@@ -33,25 +48,37 @@ public:
 
   virtual const Image* getImage() const = 0;
 
-  float getX() const  { return position[0]; }
-  void  setX(float x) { position[0] = x;    }
-
-  float getY() const  { return position[1]; }
-  void  setY(float y) { position[1] = y;    }
-
   const Vector2f& getVelocity() const    { return velocity; }
   void  setVelocity(const Vector2f& vel) { velocity = vel;  }
   const Vector2f& getPosition() const    { return position; }
   void  setPosition(const Vector2f& pos) { position = pos;  }
 
+  float getPositionX() const  { return position[0]; }
+  void  setPositionX(float x) { position[0] = x;    }
+  float getPositionY() const  { return position[1]; }
+  void  setPositionY(float y) { position[1] = y;    }
+
   float getVelocityX() const   { return velocity[0]; }
   void  setVelocityX(float vx) { velocity[0] = vx;   }
   float getVelocityY() const   { return velocity[1]; }
   void  setVelocityY(float vy) { velocity[1] = vy;   }
+
+  int  getMinPosBoundaryX() const  { return minPosBoundary[0]; }
+  void setMinPosBoundaryX(float x) { minPosBoundary[0] = x;    }
+  int  getMinPosBoundaryY() const  { return minPosBoundary[1]; }
+  void setMinPosBoundaryY(float y) { minPosBoundary[1] = y;    }
+
+  int  getMaxPosBoundaryX() const  { return maxPosBoundary[0]; }
+  void setMaxPosBoundaryX(float x) { maxPosBoundary[0] = x;    }
+  int  getMaxPosBoundaryY() const  { return maxPosBoundary[1]; }
+  void setMaxPosBoundaryY(float y) { maxPosBoundary[1] = y;    }
+
 private:
   std::string name;
   Vector2f position;
   Vector2f velocity;
+  Vector2f minPosBoundary;
+  Vector2f maxPosBoundary;
   float scale;
 };
 #endif

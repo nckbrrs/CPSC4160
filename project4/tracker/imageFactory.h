@@ -2,7 +2,7 @@
 #include <vector>
 #include <map>
 #include "image.h"
-#include "gamedata.h"
+#include "gameData.h"
 #include "spriteSheet.h"
 
 class ImageFactory {
@@ -15,7 +15,7 @@ public:
   std::vector<Image*> getImages(const std::string&);
 
 private:
-  const Gamedata& gdata;
+  const GameData& gdata;
 
   std::map<std::string, SDL_Surface*> surfaces;
   std::map<std::string, SDL_Texture*> textures;
@@ -26,7 +26,7 @@ private:
   std::map<std::string, std::vector<Image*> > multiImages;
 
   ImageFactory() :
-    gdata( Gamedata::getInstance() ),
+    gdata( GameData::getInstance() ),
     surfaces(),
     textures(),
     images(),

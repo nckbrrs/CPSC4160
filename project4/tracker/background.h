@@ -7,6 +7,7 @@ public:
   Background(const std::string& name, int fact);
   void update();
   void draw() const;
+
 private:
   Image* const image;
   int factor;

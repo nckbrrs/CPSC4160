@@ -4,18 +4,18 @@
 #include "viewport.h"
 #include "renderContext.h"
 
-Image::Image( SDL_Surface* surf) : 
+Image::Image( SDL_Surface* surf) :
   renderer(RenderContext::getInstance()->getRenderer()),
   surface( surf ),
   texture( nullptr ),
   view{0,0,surf->w,surf->h}
-{ 
+{
   regenerateTexture();
 }
 
 Image::Image( const Image& image ) :
   renderer(image.renderer),
-  surface(image.surface), 
+  surface(image.surface),
   texture(image.texture),
   view(image.view)
 { }
@@ -39,8 +39,8 @@ void Image::draw(int x, int y) const {
 }
 
 void Image::draw(int x, int y, float scale) const {
-  x -= Viewport::getInstance().getX();
-  y -= Viewport::getInstance().getY();
+  x -= Viewport::getInstance().getPositionX();
+  y -= Viewport::getInstance().getPositionY();
   int tempHeight = scale*view.h;
   int tempWidth =  scale*view.w;
   SDL_Rect dest =  {x, y, tempWidth, tempHeight};
@@ -48,7 +48,7 @@ void Image::draw(int x, int y, float scale) const {
 }
 
 void Image::draw(int sx, int sy, int dx, int dy) const {
-  SDL_Rect src = { sx, sy, view.w, view.h };    
+  SDL_Rect src = { sx, sy, view.w, view.h };
   SDL_Rect dst = { dx, dy, getWidth(), getHeight() };
   SDL_RenderCopy(renderer, texture, &src, &dst);
 }
@@ -70,4 +70,3 @@ Image* Image::crop(SDL_Rect sub)const{
 
   return cloned;
 }
-

@@ -7,11 +7,13 @@
 #include "sprite.h"
 #include "multiSprite.h"
 #include "twoWayMultiSprite.h"
-#include "gamedata.h"
+#include "player.h"
+#include "gameData.h"
 #include "engine.h"
 
 Engine::~Engine() {
-  sprites.clear();
+  nonPlayerSprites.clear();
+  delete player;
   std::cout << "Terminating program" << std::endl;
 }
 
@@ -20,22 +22,20 @@ Engine::Engine() :
   io( IoMod::getInstance() ),
   clock( Clock::getInstance() ),
   renderer( rc->getRenderer() ),
-  Sky("Sky", Gamedata::getInstance().getXmlInt("Sky/factor") ),
-  BackMtns("BackMtns", Gamedata::getInstance().getXmlInt("BackMtns/factor") ),
-  FrontMtns("FrontMtns", Gamedata::getInstance().getXmlInt("FrontMtns/factor") ),
-  Road("Road", Gamedata::getInstance().getXmlInt("Road/factor") ),
+  Sky("Sky", GameData::getInstance().getXmlInt("Sky/factor") ),
+  BackMtns("BackMtns", GameData::getInstance().getXmlInt("BackMtns/factor") ),
+  FrontMtns("FrontMtns", GameData::getInstance().getXmlInt("FrontMtns/factor") ),
+  Road("Road", GameData::getInstance().getXmlInt("Road/factor") ),
   viewport( Viewport::getInstance() ),
-  sprites(),
-  currentSprite(0),
+  nonPlayerSprites(),
   makeVideo( false )
 {
-  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numStickmans"); i++) {
-    sprites.push_back(new TwoWayMultiSprite("Stickman"));
+  player = new Player("Stickman");
+
+  for (int i = 0; i < GameData::getInstance().getXmlInt("numClouds"); i++) {
+    nonPlayerSprites.push_back(new Sprite("Cloud"));
   }
-  for (int i = 0; i < Gamedata::getInstance().getXmlInt("numClouds"); i++) {
-    sprites.push_back(new Sprite("Cloud"));
-  }
-  Viewport::getInstance().setObjectToTrack(sprites[0]);
+  Viewport::getInstance().setObjectToTrack(player);
   std::cout << "Loading complete" << std::endl;
 }
 
@@ -45,8 +45,10 @@ void Engine::draw() const {
   FrontMtns.draw();
   Road.draw();
 
-  for (int i = 0; i < (int)sprites.size(); i++) {
-    sprites[i]->draw();
+  player->draw();
+
+  for (int i = 0; i < (int)nonPlayerSprites.size(); i++) {
+    nonPlayerSprites[i]->draw();
   }
 
   viewport.draw();
@@ -54,8 +56,10 @@ void Engine::draw() const {
 }
 
 void Engine::update(Uint32 ticks) {
-  for (int i = 0; i < (int)sprites.size(); i++) {
-    sprites[i]->update(ticks);
+  player->update(ticks);
+
+  for (int i = 0; i < (int)nonPlayerSprites.size(); i++) {
+    nonPlayerSprites[i]->update(ticks);
   }
 
   Sky.update();
@@ -63,12 +67,6 @@ void Engine::update(Uint32 ticks) {
   FrontMtns.update();
   Road.update();
   viewport.update(); // always update viewport last
-}
-
-void Engine::switchSprite(){
-  ++currentSprite;
-  currentSprite = currentSprite % sprites.size();
-  Viewport::getInstance().setObjectToTrack(sprites[currentSprite]);
 }
 
 void Engine::play() {
@@ -91,9 +89,6 @@ void Engine::play() {
           if ( clock.isPaused() ) clock.unpause();
           else clock.pause();
         }
-        if ( keystate[SDL_SCANCODE_T] ) {
-          switchSprite();
-        }
       }
     }
 
@@ -101,6 +96,18 @@ void Engine::play() {
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
       clock.incrFrame();
+      if (keystate[SDL_SCANCODE_A]) {
+        static_cast<Player*>(player)->left();
+      }
+      if (keystate[SDL_SCANCODE_D]) {
+        static_cast<Player*>(player)->right();
+      }
+      if (keystate[SDL_SCANCODE_W]) {
+        static_cast<Player*>(player)->up();
+      }
+      if (keystate[SDL_SCANCODE_S]) {
+        static_cast<Player*>(player)->down();
+      }
       draw();
       update(ticks);
     }

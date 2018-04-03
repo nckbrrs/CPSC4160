@@ -1,5 +1,5 @@
 #include "renderContext.h"
-#include "gamedata.h"
+#include "gameData.h"
 
 RenderContext::RenderContext() :
   window(nullptr),
@@ -25,9 +25,9 @@ RenderContext* RenderContext::getInstance() {
 }
 
 SDL_Window* RenderContext::initWindow( ) {
-  std::string title = Gamedata::getInstance().getXmlStr("title");
-  int width = Gamedata::getInstance().getXmlInt("view/width");
-  int height = Gamedata::getInstance().getXmlInt("view/height");
+  std::string title = GameData::getInstance().getXmlStr("title");
+  int width = GameData::getInstance().getXmlInt("view/width");
+  int height = GameData::getInstance().getXmlInt("view/height");
 	window = SDL_CreateWindow( title.c_str(), SDL_WINDOWPOS_CENTERED,
              SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN );
   if( window == NULL ) {
