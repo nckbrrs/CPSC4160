@@ -67,49 +67,17 @@ void IoMod::writeText(const std::string& msg, int x, int y, SDL_Color customColo
   SDL_Surface* surface =
     TTF_RenderText_Solid(defaultFont, msg.c_str(), customColor);
 
-      std::cout << "surface created" << std::endl;
   SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-  std::cout << "texture created" << std::endl;
-  int textWidth = surface->w;
-  int textHeight = surface->h;
-  std::cout << "text width and height initialized" << std::endl;
-
-  SDL_FreeSurface(surface);
-  std::cout << "surface freed" << std::endl;
-
-  SDL_Rect dst = {x, y, textWidth, textHeight};
-  std::cout << "dst initialized" << std::endl;
-
-
-  SDL_RenderCopy(renderer, texture, NULL, &dst);
-  std::cout << "render copied" << std::endl;
-
-  SDL_DestroyTexture(texture);
-  std::cout << "texture destroyed" << std::endl;
-
-}
-
-void IoMod::writeText(const std::string& msg, int x, int y, TTF_Font* customFont) const {
-  SDL_Surface* surface =
-    TTF_RenderText_Solid(customFont, msg.c_str(), textColor);
-
-  std::cout << "surface created" << std::endl;
-
-  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-
-  std::cout << "texture created" << std::endl;
-
   int textWidth = surface->w;
   int textHeight = surface->h;
 
-  std::cout << "text width and height initialized" << std::endl;
   SDL_FreeSurface(surface);
-  std::cout << "surface freed" << std::endl;
+
   SDL_Rect dst = {x, y, textWidth, textHeight};
-  std::cout << "dst initialized" << std::endl;
+
 
   SDL_RenderCopy(renderer, texture, NULL, &dst);
-  std::cout << "render copied" << std::endl;
+
   SDL_DestroyTexture(texture);
-  std::cout << "texture destroyed" << std::endl;
+
 }

@@ -20,7 +20,7 @@
 
 <defaultFont>
   <file>fonts/arial.ttf</file>
-  <size>24</size>
+  <size>16</size>
   <red>255</red>
   <green>255</green>
   <blue>255</blue>
@@ -30,7 +30,7 @@
 <text>
   <name>
     <locX>30</locX>
-    <locY>320</locY>
+    <locY>330</locY>
     <font>
       <file>fonts/arial.ttf</file>
       <size>20</size>
