@@ -2,33 +2,33 @@
 #include <iostream>
 #include <limits>
 #include <cmath>
-#include "gamedata.h"
+#include "gameData.h"
 
-Gamedata& Gamedata::getInstance() {
-  static Gamedata gamedata;
-  return gamedata;
+GameData& GameData::getInstance() {
+  static GameData gameData;
+  return gameData;
 }
 
-Gamedata::~Gamedata( ) { }
+GameData::~GameData( ) { }
 
-Gamedata::Gamedata(const string& fn ) :
+GameData::GameData(const string& fn ) :
   parser(fn),
   gameData(parser.getXmlData())
 { }
 
-float Gamedata::getRandInRange(int min, int max) const {
+float GameData::getRandInRange(int min, int max) const {
   return min + (rand()/(std::numeric_limits<int>::max()+1.0f))*(max-min);
 }
 
-float Gamedata::getRandFloat(float min, float max) const {
+float GameData::getRandFloat(float min, float max) const {
   return min + (rand() / (RAND_MAX + 1.0f)) * (max - min);
 }
 
-bool  Gamedata::checkTag(const std::string& tag)const{
+bool  GameData::checkTag(const std::string& tag)const{
   return gameData.count(tag)!=0;
 }
 
-bool Gamedata::getXmlBool(const string& tag) const {
+bool GameData::getXmlBool(const string& tag) const {
   std::map<string, string>::const_iterator ptr = gameData.find(tag);
   if ( ptr == gameData.end() )
     throw string("Game: Didn't find boolean tag ")+tag+string(" in xml");
@@ -38,7 +38,7 @@ bool Gamedata::getXmlBool(const string& tag) const {
   }
 }
 
-int Gamedata::getXmlInt(const string& tag) const {
+int GameData::getXmlInt(const string& tag) const {
   std::map<string, string>::const_iterator ptr = gameData.find(tag);
   if ( ptr == gameData.end() )
     throw string("Game: Didn't find integer tag ")+tag+string(" in xml");
@@ -51,7 +51,7 @@ int Gamedata::getXmlInt(const string& tag) const {
   }
 }
 
-float Gamedata::getXmlFloat(const string& tag) const {
+float GameData::getXmlFloat(const string& tag) const {
   std::map<string, string>::const_iterator ptr = gameData.find(tag);
   if ( ptr == gameData.end() )
     throw string("Game: Didn't find float tag ")+tag+string(" in xml");
@@ -64,14 +64,14 @@ float Gamedata::getXmlFloat(const string& tag) const {
   }
 }
 
-const string& Gamedata::getXmlStr(const string& tag) const {
+const string& GameData::getXmlStr(const string& tag) const {
   std::map<string, string>::const_iterator ptr = gameData.find(tag);
   if ( ptr == gameData.end() )
     throw string("Game: Didn't find string tag ")+tag+string(" in xml");
   else return ptr->second;
 }
 
-void Gamedata::displayData() const {
+void GameData::displayData() const {
   for (auto& ptr : gameData) {
     std::cout << ptr.first << ", " << ptr.second << std::endl;
   }

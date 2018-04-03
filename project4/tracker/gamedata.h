@@ -5,10 +5,10 @@
 #include "vector2f.h"
 #include "parseXML.h"
 
-class Gamedata {
+class GameData {
 public:
-  static Gamedata& getInstance();
-  ~Gamedata();
+  static GameData& getInstance();
+  ~GameData();
   void displayData() const;
 
   bool getXmlBool(const std::string&) const;
@@ -23,8 +23,8 @@ private:
   ParseXML parser;
   const map<std::string, std::string> gameData;
 
-  Gamedata(const std::string& fn = "xmlSpec/game.xml");
-  Gamedata(const Gamedata&);
-  Gamedata& operator=(const Gamedata&);
+  GameData(const std::string& fn = "xmlSpec/game.xml");
+  GameData(const GameData&);
+  GameData& operator=(const GameData&);
 };
 #endif
