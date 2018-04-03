@@ -39,11 +39,14 @@ void Viewport::draw() const {
                         static_cast<Uint8>(gdata.getXmlInt("text/fps/font/blue")),
                         static_cast<Uint8>(gdata.getXmlInt("text/fps/font/alpha"))};
   */
-  
+/*
   SDL_Color nameColor = {static_cast<Uint8>(gdata.getXmlInt("text/name/font/red")),
                         static_cast<Uint8>(gdata.getXmlInt("text/name/font/green")),
                         static_cast<Uint8>(gdata.getXmlInt("text/name/font/blue")),
-                        static_cast<Uint8>(gdata.getXmlInt("text/name/font/alpha"))};
+                        static_cast<Uint8>(gdata.getXmlInt("text/name/font/alpha"))};*/
+
+  TTF_Font* nameFont = TTF_OpenFont(GameData::getInstance().getXmlStr("text/name/font/file").c_str(),
+                          GameData::getInstance().getXmlInt("text/name/font/size"));
 
   /* print which object is being tracked
   IoMod::getInstance().
@@ -69,7 +72,15 @@ void Viewport::draw() const {
     writeText("Nick Barrs",
               gdata.getXmlInt("text/name/locX"),
               gdata.getXmlInt("text/name/locY"),
+              nameFont);
+  /*
+  IoMod::getInstance().
+    writeText("Nick Barrs",
+              gdata.getXmlInt("text/name/locX"),
+              gdata.getXmlInt("text/name/locY"),
               nameColor);
+*/
+
 }
 
 void Viewport::update() {

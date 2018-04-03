@@ -30,10 +30,10 @@
 <text>
   <name>
     <locX>30</locX>
-    <locY>300</locY>
+    <locY>320</locY>
     <font>
       <file>fonts/arial.ttf</file>
-      <size>24</size>
+      <size>20</size>
       <red>255</red>
       <green>165</green>
       <blue>0</blue>
@@ -101,7 +101,7 @@
 
 <Stickman>
   <file>assets/Stickman.png</file>
-  <startPos x="50" y="330"/>
+  <startPos x="30" y="280"/>
   <startVel x="200" y="200"/>
   <minPosBoundary x="0" y="290"/>
   <maxPosBoundary x="1000" y="400"/>
