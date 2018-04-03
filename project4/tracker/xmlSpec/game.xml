@@ -6,7 +6,7 @@
 <period>17</period>
 
 <numClouds>7</numClouds>
-<numStickmans>1</numStickmans>
+<numEvilJetpackStickmans>1</numEvilJetpackStickmans>
 
 <view>
   <width>640</width>
@@ -114,5 +114,37 @@
   <slowDownFactor>0.60</slowDownFactor>
   <transparency>false</transparency>
 </Stickman>
+
+<JetpackStickman>
+  <file>assets/JetpackStickman.png</file>
+  <startPos x="30" y="280"/>
+  <startVel x="200" y="200"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="1000" y="400"/>
+  <frames>4</frames>
+  <rightFrames>2</rightFrames>
+  <leftFrames>2</leftFrames>
+  <frameInterval>200</frameInterval>
+  <imageWidth>64</imageWidth>
+  <imageHeight>64</imageHeight>
+  <slowDownFactor>0.30</slowDownFactor>
+  <transparency>false</transparency>
+</JetpackStickman>
+
+<EvilJetpackStickman>
+  <file>assets/EvilJetpackStickman.png</file>
+  <startPos x="60" y="100"/>
+  <startVel x="200" y="200"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="1000" y="400"/>
+  <frames>4</frames>
+  <rightFrames>2</rightFrames>
+  <leftFrames>2</leftFrames>
+  <frameInterval>200</frameInterval>
+  <imageWidth>64</imageWidth>
+  <imageHeight>64</imageHeight>
+  <slowDownFactor>0.30</slowDownFactor>
+  <transparency>false</transparency>
+</EvilJetpackStickman>
 
 </GameData>

@@ -28,11 +28,14 @@ Engine::Engine() :
   Road("Road", GameData::getInstance().getXmlInt("Road/factor") ),
   viewport( Viewport::getInstance() ),
   nonPlayerSprites(),
-  player(new Player("Stickman")),
+  player(new Player("JetpackStickman")),
   makeVideo( false )
 {
   for (int i = 0; i < GameData::getInstance().getXmlInt("numClouds"); i++) {
     nonPlayerSprites.push_back(new Sprite("Cloud"));
+  }
+  for (int i = 0; i < GameData::getInstance().getXmlInt("numEvilJetpackStickmans"); i++) {
+    nonPlayerSprites.push_back(new TwoWayMultiSprite("EvilJetpackStickman"));
   }
   Viewport::getInstance().setObjectToTrack(player);
   std::cout << "Loading complete" << std::endl;
