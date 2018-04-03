@@ -28,10 +28,9 @@ Engine::Engine() :
   Road("Road", GameData::getInstance().getXmlInt("Road/factor") ),
   viewport( Viewport::getInstance() ),
   nonPlayerSprites(),
+  player(new Player("Stickman")),
   makeVideo( false )
 {
-  player = new Player("Stickman");
-
   for (int i = 0; i < GameData::getInstance().getXmlInt("numClouds"); i++) {
     nonPlayerSprites.push_back(new Sprite("Cloud"));
   }
