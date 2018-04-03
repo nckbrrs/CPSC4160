@@ -11,10 +11,10 @@ public:
 
   virtual void update (Uint32 ticks);
 
-  void right();
-  void left();
-  void up();
-  void down();
+  void moveRight();
+  void moveLeft();
+  void moveUp();
+  void moveDown();
   void stop();
 
   void collided() { collision = true; }

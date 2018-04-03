@@ -14,7 +14,7 @@ protected:
   unsigned numLeftFrames;
   unsigned numRightFrames;
 
-  void advanceFrame(Uint32 ticks) override;
+  virtual void advanceFrame(Uint32 ticks) override;
   TwoWayMultiSprite& operator=(const TwoWayMultiSprite&);
 };
 #endif

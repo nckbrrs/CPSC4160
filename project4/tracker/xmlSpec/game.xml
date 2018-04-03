@@ -28,6 +28,18 @@
 </defaultFont>
 
 <text>
+  <name>
+    <locX>30</locX>
+    <locY>300</locY>
+    <font>
+      <file>fonts/arial.ttf</file>
+      <size>24</size>
+      <red>255</red>
+      <green>165</green>
+      <blue>0</blue>
+      <alpha>255</alpha>
+    </font>
+  </name>
   <tracking>
     <locX>30</locX>
     <locY>30</locY>
@@ -52,18 +64,6 @@
       <alpha>255</alpha>
     </font>
   </fps>
-  <name>
-    <locX>30</locX>
-    <locY>300</locY>
-    <font>
-      <file>fonts/arial.ttf</file>
-      <size>24</size>
-      <red>255</red>
-      <green>165</green>
-      <blue>0</blue>
-      <alpha>255</alpha>
-    </font>
-  </name>
 </text>
 
 <Sky>
@@ -101,9 +101,9 @@
 
 <Stickman>
   <file>assets/Stickman.png</file>
-  <startPos x="50" y="320"/>
+  <startPos x="50" y="330"/>
   <startVel x="200" y="200"/>
-  <minPosBoundary x="0" y="100"/>
+  <minPosBoundary x="0" y="290"/>
   <maxPosBoundary x="1000" y="400"/>
   <frames>16</frames>
   <rightFrames>8</rightFrames>
@@ -111,7 +111,7 @@
   <frameInterval>75</frameInterval>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
-  <slowDownFactor>0.5</slowDownFactor>
+  <slowDownFactor>0.60</slowDownFactor>
   <transparency>false</transparency>
 </Stickman>
 

@@ -97,16 +97,16 @@ void Engine::play() {
     if ( ticks > 0 ) {
       clock.incrFrame();
       if (keystate[SDL_SCANCODE_A]) {
-        static_cast<Player*>(player)->left();
+        static_cast<Player*>(player)->moveLeft();
       }
       if (keystate[SDL_SCANCODE_D]) {
-        static_cast<Player*>(player)->right();
+        static_cast<Player*>(player)->moveRight();
       }
       if (keystate[SDL_SCANCODE_W]) {
-        static_cast<Player*>(player)->up();
+        static_cast<Player*>(player)->moveUp();
       }
       if (keystate[SDL_SCANCODE_S]) {
-        static_cast<Player*>(player)->down();
+        static_cast<Player*>(player)->moveDown();
       }
       draw();
       update(ticks);

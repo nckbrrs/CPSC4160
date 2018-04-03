@@ -4,9 +4,9 @@
 Player::Player(const std::string& name) :
   TwoWayMultiSprite(name),
   collision(false),
-  slowDownFactor(GameData::getInstance().getXmlInt(name+"/slowDownFactor")),
+  slowDownFactor(GameData::getInstance().getXmlFloat(name+"/slowDownFactor")),
   startingVelocity(getVelocity())
-{ }
+{ setVelocityX(0); setVelocityY(0); }
 
 Player::Player(const Player& s) :
   TwoWayMultiSprite(s),
@@ -25,28 +25,28 @@ Player& Player::operator= (const Player& s) {
 
 void Player::stop() {
   setVelocityX(slowDownFactor * getVelocityX());
-  setVelocityY(0);
+  setVelocityY(slowDownFactor * getVelocityY());
 }
 
-void Player::right() {
+void Player::moveRight() {
   if (getPositionX() < getMaxPosBoundaryX() - getScaledWidth()) {
     setVelocityX(startingVelocity[0]);
   }
 }
 
-void Player::left() {
+void Player::moveLeft() {
   if (getPositionX() > getMinPosBoundaryX()) {
     setVelocityX(-startingVelocity[0]);
   }
 }
 
-void Player::up() {
+void Player::moveUp() {
   if (getPositionY() > getMinPosBoundaryY()) {
     setVelocityY(-startingVelocity[1]);
   }
 }
 
-void Player::down() {
+void Player::moveDown() {
   if (getPositionY() < getMaxPosBoundaryY() - getScaledHeight()) {
     setVelocityY(startingVelocity[1]);
   }
