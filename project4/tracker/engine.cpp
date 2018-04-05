@@ -4,15 +4,13 @@
 #include <string>
 #include <random>
 #include <iomanip>
-#include "sprite.h"
-#include "multiSprite.h"
-#include "twoWayMultiSprite.h"
-#include "player.h"
 #include "gameData.h"
 #include "engine.h"
+#include "dumbSprite.h"
+#include "smartSprite.h"
+#include "player.h"
 
 Engine::~Engine() {
-  nonPlayerSprites.clear();
   delete player;
   std::cout << "Terminating program" << std::endl;
 }
@@ -27,15 +25,15 @@ Engine::Engine() :
   FrontMtns("FrontMtns", GameData::getInstance().getXmlInt("FrontMtns/factor") ),
   Road("Road", GameData::getInstance().getXmlInt("Road/factor") ),
   viewport( Viewport::getInstance() ),
-  nonPlayerSprites(),
   player(new Player("JetpackStickman")),
-  makeVideo( false )
+  dumbSprites(),
+  smartSprites()
 {
-  for (int i = 0; i < GameData::getInstance().getXmlInt("numClouds"); i++) {
-    nonPlayerSprites.push_back(new Sprite("Cloud"));
-  }
-  for (int i = 0; i < GameData::getInstance().getXmlInt("numEvilJetpackStickmans"); i++) {
-    nonPlayerSprites.push_back(new TwoWayMultiSprite("EvilJetpackStickman"));
+  int n = GameData::getInstance().getXmlInt("numEvilJetpackStickmans");
+  smartSprites.reserve(n);
+  for (int i=0; i<n; i++) {
+    smartSprites.push_back(new SmartSprite("EvilJetpackStickman", player));
+    player->attach(smartSprites[i]);
   }
   Viewport::getInstance().setObjectToTrack(player);
   std::cout << "Loading complete" << std::endl;
@@ -46,29 +44,24 @@ void Engine::draw() const {
   BackMtns.draw();
   FrontMtns.draw();
   Road.draw();
-
   player->draw();
-
-  for (int i = 0; i < (int)nonPlayerSprites.size(); i++) {
-    nonPlayerSprites[i]->draw();
+  for (const SmartSprite* s : smartSprites) {
+    s->draw();
   }
-
   viewport.draw();
   SDL_RenderPresent(renderer);
 }
 
 void Engine::update(Uint32 ticks) {
   player->update(ticks);
-
-  for (int i = 0; i < (int)nonPlayerSprites.size(); i++) {
-    nonPlayerSprites[i]->update(ticks);
-  }
-
   Sky.update();
   BackMtns.update();
   FrontMtns.update();
   Road.update();
-  viewport.update(); // always update viewport last
+  for (SmartSprite* s : smartSprites) {
+    s->update(ticks);
+  }
+  viewport.update();
 }
 
 void Engine::play() {

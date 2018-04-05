@@ -15,10 +15,9 @@ OBJS = \
 	spriteSheet.o \
 	image.o \
 	imageFactory.o \
-	sprite.o \
-	multiSprite.o \
-	twoWayMultiSprite.o \
 	player.o \
+	dumbSprite.o \
+	smartSprite.o \
 	vector2f.o \
 	clock.o \
 	engine.o \

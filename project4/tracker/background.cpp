@@ -3,7 +3,7 @@
 #include "renderContext.h"
 
 Background::Background(const std::string& name, int fact) :
-  image( RenderContext::getInstance()->getImage(name) ),
+  image(RenderContext::getInstance()->getImage(name)),
   factor(fact),
     backgroundWidth( GameData::getInstance().getXmlInt("background/width") ),
     imageWidth( image->getWidth() ),

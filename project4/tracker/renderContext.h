@@ -1,3 +1,6 @@
+#ifndef RENDERCONTEXT__H
+#define RENDERCONTEXT__H
+
 #include <iostream>
 #include <SDL.h>
 #include "imageFactory.h"
@@ -26,3 +29,4 @@ private:
   RenderContext(const RenderContext&) = delete;
   RenderContext& operator=(const RenderContext&) = delete;
 };
+#endif

@@ -96,6 +96,9 @@
   <startVel x="50" y="50"/>
   <minPosBoundary x="0" y="0"/>
   <maxPosBoundary x="1000" y="200"/>
+  <imageWidth>64</imageWidth>
+  <imageHeight>32</imageHeight>
+  <scale>1.0</scale>
   <transparency>false</transparency>
 </Cloud>
 
@@ -106,11 +109,11 @@
   <minPosBoundary x="0" y="290"/>
   <maxPosBoundary x="1000" y="400"/>
   <frames>16</frames>
-  <rightFrames>8</rightFrames>
-  <leftFrames>8</leftFrames>
   <frameInterval>75</frameInterval>
+  <twoWay>true</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
+  <scale>1.0</scale>
   <slowDownFactor>0.60</slowDownFactor>
   <transparency>false</transparency>
 </Stickman>
@@ -122,11 +125,11 @@
   <minPosBoundary x="0" y="0"/>
   <maxPosBoundary x="1000" y="400"/>
   <frames>4</frames>
-  <rightFrames>2</rightFrames>
-  <leftFrames>2</leftFrames>
   <frameInterval>200</frameInterval>
+  <twoWay>true</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
+  <scale>1.0</scale>
   <slowDownFactor>0.30</slowDownFactor>
   <transparency>false</transparency>
 </JetpackStickman>
@@ -138,12 +141,13 @@
   <minPosBoundary x="0" y="0"/>
   <maxPosBoundary x="1000" y="400"/>
   <frames>4</frames>
-  <rightFrames>2</rightFrames>
-  <leftFrames>2</leftFrames>
   <frameInterval>200</frameInterval>
+  <twoWay>true</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
+  <scale>1.0</scale>
   <slowDownFactor>0.30</slowDownFactor>
+  <safeDistance>75</safeDistance>
   <transparency>false</transparency>
 </EvilJetpackStickman>
 

@@ -19,51 +19,18 @@ Viewport::Viewport() :
   objectToTrack(NULL)
 {}
 
-void Viewport::setObjectToTrack(const Drawable *obj) {
+void Viewport::setObjectToTrack(const Sprite *obj) {
   objectToTrack = obj;
   objWidth = objectToTrack->getScaledWidth();
   objHeight = objectToTrack->getScaledHeight();
 }
 
 void Viewport::draw() const {
-  /* color that "tracking" text will be printed in
-  SDL_Color trackingColor = {static_cast<Uint8>(gdata.getXmlInt("text/tracking/font/red")),
-                        static_cast<Uint8>(gdata.getXmlInt("text/tracking/font/green")),
-                        static_cast<Uint8>(gdata.getXmlInt("text/tracking/font/blue")),
-                        static_cast<Uint8>(gdata.getXmlInt("text/tracking/font/alpha"))};
-  */
-
-  /* color that "fps" text will be printed in
-  SDL_Color fpsColor = {static_cast<Uint8>(gdata.getXmlInt("text/fps/font/red")),
-                        static_cast<Uint8>(gdata.getXmlInt("text/fps/font/green")),
-                        static_cast<Uint8>(gdata.getXmlInt("text/fps/font/blue")),
-                        static_cast<Uint8>(gdata.getXmlInt("text/fps/font/alpha"))};
-  */
-
   SDL_Color nameColor = {static_cast<Uint8>(gdata.getXmlInt("text/name/font/red")),
                         static_cast<Uint8>(gdata.getXmlInt("text/name/font/green")),
                         static_cast<Uint8>(gdata.getXmlInt("text/name/font/blue")),
                         static_cast<Uint8>(gdata.getXmlInt("text/name/font/alpha"))};
 
-  /* print which object is being tracked
-  IoMod::getInstance().
-    writeText("Tracking: "+objectToTrack->getName(),
-              gdata.getXmlInt("text/tracking/locX"),
-              gdata.getXmlInt("text/tracking/locY"),
-              trackingColor);
-  */
-
-  /* print FPS
-  std::ostringstream fpsStream;
-  fpsStream << "FPS: " << Clock::getInstance().getFps() << std::endl;
-  IoMod::getInstance().
-    writeText(fpsStream.str(),
-              gdata.getXmlInt("text/fps/locX"),
-              gdata.getXmlInt("text/fps/locY"),
-              fpsColor);
-  */
-
-  /* print name */
   IoMod::getInstance().
     writeText("Nick Barrs",
               gdata.getXmlInt("text/name/locX"),

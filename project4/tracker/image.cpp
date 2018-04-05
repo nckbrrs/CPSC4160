@@ -1,5 +1,5 @@
-#include "drawable.h"
-#include "image.h"
+#include "sprite.h"
+#include "sprite.h"
 #include "ioMod.h"
 #include "viewport.h"
 #include "renderContext.h"
@@ -19,7 +19,6 @@ Image::Image( const Image& image ) :
   texture(image.texture),
   view(image.view)
 { }
-
 
 Image& Image::operator=(const Image& rhs) {
   renderer = rhs.renderer;

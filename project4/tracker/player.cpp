@@ -1,25 +1,29 @@
 #include "gameData.h"
 #include "player.h"
+#include "smartSprite.h"
 
 Player::Player(const std::string& name) :
-  TwoWayMultiSprite(name),
+  Sprite(name),
+  observers(),
   collision(false),
-  slowDownFactor(GameData::getInstance().getXmlFloat(name+"/slowDownFactor")),
-  startingVelocity(getVelocity())
+  startingVelocity(getVelocity()),
+  slowDownFactor(GameData::getInstance().getXmlFloat(name+"/slowDownFactor"))
 { setVelocityX(0); setVelocityY(0); }
 
 Player::Player(const Player& s) :
-  TwoWayMultiSprite(s),
+  Sprite(s),
+  observers(s.observers),
   collision(s.collision),
-  slowDownFactor(s.slowDownFactor),
-  startingVelocity(s.getVelocity())
-{ }
+  startingVelocity(s.getVelocity()),
+  slowDownFactor(s.slowDownFactor)
+{ setVelocityX(0); setVelocityY(0); }
 
 Player& Player::operator= (const Player& s) {
-  TwoWayMultiSprite::operator=(s);
+  Sprite::operator=(s);
+  observers = s.observers;
   collision = s.collision;
-  slowDownFactor = s.slowDownFactor;
   startingVelocity = s.startingVelocity;
+  slowDownFactor = s.slowDownFactor;
   return *this;
 }
 
@@ -53,6 +57,62 @@ void Player::moveDown() {
 }
 
 void Player::update(Uint32 ticks) {
-  if (!collision) TwoWayMultiSprite::update(ticks);
+  std::cout << "updating player!" << std::endl;
+  if (!collision) {
+    std::cout << "didn't collide!" << std::endl;
+    setTimeSinceLastFrame(getTimeSinceLastFrame() + ticks);
+    std::cout << "Frame interval: " << getFrameInterval() << std::endl;
+    std::cout << "time since last frame: " << getTimeSinceLastFrame() << std::endl;
+    if (getTimeSinceLastFrame() > getFrameInterval()) {
+      if (isTwoWay()) {
+        if (getVelocityX() >= 0) {
+          setCurrentFrame(((getCurrentFrame()+1) % (getNumFrames()/2)));
+        } else {
+          setCurrentFrame((getNumFrames()/2) + ((getCurrentFrame()+1) % (getNumFrames()/2)));
+        }
+      } else {
+        setCurrentFrame((getCurrentFrame()+1) % getNumFrames());
+      }
+      setTimeSinceLastFrame(0);
+    }
+
+    setPosition(getPosition() + (getVelocity() * static_cast<float>(ticks) * 0.001));
+
+    if (getPositionY() < getMinPosBoundaryY()) {
+      setVelocityY(std::abs(getVelocityY()));
+    }
+    if (getPositionY() > getMaxPosBoundaryY() - getScaledHeight()) {
+      setVelocityY(-std::abs(getVelocityY()));
+    }
+    if ( getPositionX() < getMinPosBoundaryX()) {
+      setVelocityX(std::abs(getVelocityX()));
+    }
+    if ( getPositionX() > getMaxPosBoundaryX() - getScaledWidth()) {
+      setVelocityX(-std::abs(getVelocityX()));
+    }
+  } else {
+    // COLLIDED!!!!!!
+  }
+
+  std::list<SmartSprite*>::iterator ptr = observers.begin();
+  while (ptr != observers.end()) {
+    (*ptr)->setPlayerPos(getPosition());
+    ++ptr;
+  }
   stop();
+}
+
+void Player::attach(SmartSprite* o) {
+  observers.push_back(o);
+}
+
+void Player::detach(SmartSprite* o) {
+  std::list<SmartSprite*>::iterator ptr = observers.begin();
+  while (ptr != observers.end()) {
+    if (*ptr == o) {
+      ptr = observers.erase(ptr);
+      return;
+    }
+    ++ptr;
+  }
 }
