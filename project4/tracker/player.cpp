@@ -57,12 +57,8 @@ void Player::moveDown() {
 }
 
 void Player::update(Uint32 ticks) {
-  std::cout << "updating player!" << std::endl;
   if (!collision) {
-    std::cout << "didn't collide!" << std::endl;
     setTimeSinceLastFrame(getTimeSinceLastFrame() + ticks);
-    std::cout << "Frame interval: " << getFrameInterval() << std::endl;
-    std::cout << "time since last frame: " << getTimeSinceLastFrame() << std::endl;
     if (getTimeSinceLastFrame() > getFrameInterval()) {
       if (isTwoWay()) {
         if (getVelocityX() >= 0) {
@@ -91,7 +87,7 @@ void Player::update(Uint32 ticks) {
       setVelocityX(-std::abs(getVelocityX()));
     }
   } else {
-    // COLLIDED!!!!!!
+    std::cout << "COLLIDED!" << std::endl;
   }
 
   std::list<SmartSprite*>::iterator ptr = observers.begin();

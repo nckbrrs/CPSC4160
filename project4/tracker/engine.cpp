@@ -9,9 +9,19 @@
 #include "dumbSprite.h"
 #include "smartSprite.h"
 #include "player.h"
+#include "collisionStrategy.h"
 
 Engine::~Engine() {
   delete player;
+  for (DumbSprite* ds : dumbSprites) {
+    delete ds;
+  }
+  for (SmartSprite* ss : smartSprites) {
+    delete ss;
+  }
+  for (CollisionStrategy* cs : collisionStrategies) {
+    delete cs;
+  }
   std::cout << "Terminating program" << std::endl;
 }
 
@@ -27,7 +37,10 @@ Engine::Engine() :
   viewport( Viewport::getInstance() ),
   player(new Player("JetpackStickman")),
   dumbSprites(),
-  smartSprites()
+  smartSprites(),
+  collisionStrategies(),
+  currentStrategy(0),
+  collision(false)
 {
   int n = GameData::getInstance().getXmlInt("numEvilJetpackStickmans");
   smartSprites.reserve(n);
@@ -35,6 +48,11 @@ Engine::Engine() :
     smartSprites.push_back(new SmartSprite("EvilJetpackStickman", player));
     player->attach(smartSprites[i]);
   }
+
+  collisionStrategies.push_back(new RectangularCollisionStrategy);
+  collisionStrategies.push_back(new PerPixelCollisionStrategy);
+  collisionStrategies.push_back(new MidpointCollisionStrategy);
+
   Viewport::getInstance().setObjectToTrack(player);
   std::cout << "Loading complete" << std::endl;
 }
@@ -44,23 +62,43 @@ void Engine::draw() const {
   BackMtns.draw();
   FrontMtns.draw();
   Road.draw();
-  player->draw();
+
   for (const SmartSprite* s : smartSprites) {
     s->draw();
   }
+
+  IoMod::getInstance().writeText("Press m to change collision strategy", 300, 60);
+  collisionStrategies[currentStrategy]->draw();
+
+  player->draw();
   viewport.draw();
   SDL_RenderPresent(renderer);
 }
 
+void Engine::checkForCollisions() {
+  auto it = smartSprites.begin();
+  while (it != smartSprites.end()) {
+    if (collisionStrategies[currentStrategy]->execute(*player, **it)) {
+      collision = true;
+      SmartSprite* doa = *it;
+      player->detach(doa);
+      delete doa;
+      it = smartSprites.erase(it);
+    }
+    else ++it;
+  }
+}
+
 void Engine::update(Uint32 ticks) {
+  checkForCollisions();
   player->update(ticks);
+  for (SmartSprite* s : smartSprites) {
+    s->update(ticks);
+  }
   Sky.update();
   BackMtns.update();
   FrontMtns.update();
   Road.update();
-  for (SmartSprite* s : smartSprites) {
-    s->update(ticks);
-  }
   viewport.update();
 }
 
@@ -70,9 +108,9 @@ void Engine::play() {
   bool done = false;
   Uint32 ticks = clock.getElapsedTicks();
 
-  while ( !done ) {
+  while (!done) {
     // The next loop polls for events, guarding against key bounce:
-    while ( SDL_PollEvent(&event) ) {
+    while (SDL_PollEvent(&event)) {
       keystate = SDL_GetKeyboardState(NULL);
       if (event.type ==  SDL_QUIT) { done = true; break; }
       if(event.type == SDL_KEYDOWN) {
@@ -80,9 +118,12 @@ void Engine::play() {
           done = true;
           break;
         }
-        if ( keystate[SDL_SCANCODE_P] ) {
-          if ( clock.isPaused() ) clock.unpause();
+        if (keystate[SDL_SCANCODE_P]) {
+          if (clock.isPaused()) clock.unpause();
           else clock.pause();
+        }
+        if (keystate[SDL_SCANCODE_M]) {
+          currentStrategy = (currentStrategy+1) % collisionStrategies.size();
         }
       }
     }
@@ -93,6 +134,7 @@ void Engine::play() {
       clock.incrFrame();
       if (keystate[SDL_SCANCODE_A]) {
         static_cast<Player*>(player)->moveLeft();
+        IoMod::getInstance().writeText("pressing A", 50, 50);
       }
       if (keystate[SDL_SCANCODE_D]) {
         static_cast<Player*>(player)->moveRight();

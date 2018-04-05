@@ -9,6 +9,7 @@
 class Player;
 class DumbSprite;
 class SmartSprite;
+class CollisionStrategy;
 
 class Engine {
 public:
@@ -16,11 +17,15 @@ public:
   ~Engine ();
   void play();
 
+  Engine(const Engine&) = delete;
+  Engine& operator=(const Engine&) = delete;
+
 private:
   const RenderContext* rc;
   const IoMod& io;
   Clock& clock;
   SDL_Renderer * const renderer;
+
   Background Sky;
   Background BackMtns;
   Background FrontMtns;
@@ -31,11 +36,12 @@ private:
   std::vector<DumbSprite*> dumbSprites;
   std::vector<SmartSprite*> smartSprites;
 
+  std::vector<CollisionStrategy*> collisionStrategies;
+  int currentStrategy;
+  bool collision;
+
   void draw() const;
   void update(Uint32);
 
-  Engine(const Engine&) = delete;
-  Engine& operator=(const Engine&) = delete;
-  void printScales() const;
   void checkForCollisions();
 };

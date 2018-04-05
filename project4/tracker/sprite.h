@@ -50,27 +50,27 @@ public:
   virtual void update(Uint32 ticks) = 0;
   virtual void draw() const { images[currentFrame]->draw(position[0], position[1], scale); }
 
-  int getScaledWidth() const           { return getScale()*images[currentFrame]->getWidth(); }
-  int getScaledHeight() const          { return getScale()*images[currentFrame]->getHeight(); }
-  const SDL_Surface* getSurface()      { return images[currentFrame]->getSurface(); }
-  const Image* getImage()              { return images[currentFrame]; }
-  float getScale() const               { return scale; }
-  const std::string& getName() const   { return name; }
-  const Vector2f& getVelocity() const  { return velocity; }
-  const Vector2f& getPosition() const  { return position; }
-  float getPositionX() const           { return position[0]; }
-  float getPositionY() const           { return position[1]; }
-  float getVelocityX() const           { return velocity[0]; }
-  float getVelocityY() const           { return velocity[1]; }
-  int getMinPosBoundaryX() const       { return minPosBoundary[0]; }
-  int getMinPosBoundaryY() const       { return minPosBoundary[1]; }
-  int getMaxPosBoundaryX() const       { return maxPosBoundary[0]; }
-  int getMaxPosBoundaryY() const       { return maxPosBoundary[1]; }
-  float getTimeSinceLastFrame() const  { return timeSinceLastFrame; }
-  unsigned getCurrentFrame() const     { return currentFrame; }
-  unsigned getNumFrames() const        { return numFrames; }
-  unsigned getFrameInterval() const    { return frameInterval; }
-  bool isTwoWay() const                { return twoWay; }
+  int getScaledWidth() const            { return getScale()*images[currentFrame]->getWidth(); }
+  int getScaledHeight() const           { return getScale()*images[currentFrame]->getHeight(); }
+  const SDL_Surface* getSurface() const { return images[currentFrame]->getSurface(); }
+  const Image* getImage()               { return images[currentFrame]; }
+  float getScale() const                { return scale; }
+  const std::string& getName() const    { return name; }
+  const Vector2f& getVelocity() const   { return velocity; }
+  const Vector2f& getPosition() const   { return position; }
+  float getPositionX() const            { return position[0]; }
+  float getPositionY() const            { return position[1]; }
+  float getVelocityX() const            { return velocity[0]; }
+  float getVelocityY() const            { return velocity[1]; }
+  int getMinPosBoundaryX() const        { return minPosBoundary[0]; }
+  int getMinPosBoundaryY() const        { return minPosBoundary[1]; }
+  int getMaxPosBoundaryX() const        { return maxPosBoundary[0]; }
+  int getMaxPosBoundaryY() const        { return maxPosBoundary[1]; }
+  float getTimeSinceLastFrame() const   { return timeSinceLastFrame; }
+  unsigned getCurrentFrame() const      { return currentFrame; }
+  unsigned getNumFrames() const         { return numFrames; }
+  unsigned getFrameInterval() const     { return frameInterval; }
+  bool isTwoWay() const                 { return twoWay; }
 
   void setScale(float s)                { scale = s; }
   void setName(const std::string& n)    { name = n; }
