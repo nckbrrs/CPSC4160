@@ -10,6 +10,7 @@ class Player;
 class DumbSprite;
 class SmartSprite;
 class CollisionStrategy;
+class Hud;
 
 class Engine {
 public:
@@ -35,13 +36,13 @@ private:
   Player* player;
   std::vector<DumbSprite*> dumbSprites;
   std::vector<SmartSprite*> smartSprites;
+  CollisionStrategy* collisionStrategy;
 
-  std::vector<CollisionStrategy*> collisionStrategies;
-  int currentStrategy;
+  Hud& hud;
+
   bool collision;
 
   void draw() const;
   void update(Uint32);
-
   void checkForCollisions();
 };

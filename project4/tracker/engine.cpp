@@ -10,6 +10,7 @@
 #include "smartSprite.h"
 #include "player.h"
 #include "collisionStrategy.h"
+#include "hud.h"
 
 Engine::~Engine() {
   delete player;
@@ -19,9 +20,7 @@ Engine::~Engine() {
   for (SmartSprite* ss : smartSprites) {
     delete ss;
   }
-  for (CollisionStrategy* cs : collisionStrategies) {
-    delete cs;
-  }
+  delete collisionStrategy;
   std::cout << "Terminating program" << std::endl;
 }
 
@@ -38,8 +37,8 @@ Engine::Engine() :
   player(new Player("JetpackStickman")),
   dumbSprites(),
   smartSprites(),
-  collisionStrategies(),
-  currentStrategy(0),
+  collisionStrategy(new MidpointCollisionStrategy),
+  hud(Hud::getInstance()),
   collision(false)
 {
   int n = GameData::getInstance().getXmlInt("numEvilJetpackStickmans");
@@ -48,10 +47,15 @@ Engine::Engine() :
     smartSprites.push_back(new SmartSprite("EvilJetpackStickman", player));
     player->attach(smartSprites[i]);
   }
+  for (int i=0; i<n; i++) {
+    dumbSprites.push_back(new DumbSprite("Cloud"));
+  }
 
+  /*
   collisionStrategies.push_back(new RectangularCollisionStrategy);
   collisionStrategies.push_back(new PerPixelCollisionStrategy);
   collisionStrategies.push_back(new MidpointCollisionStrategy);
+  */
 
   Viewport::getInstance().setObjectToTrack(player);
   std::cout << "Loading complete" << std::endl;
@@ -66,11 +70,12 @@ void Engine::draw() const {
   for (const SmartSprite* s : smartSprites) {
     s->draw();
   }
-
-  IoMod::getInstance().writeText("Press m to change collision strategy", 300, 60);
-  collisionStrategies[currentStrategy]->draw();
+  for (const DumbSprite* s : dumbSprites) {
+    s->draw();
+  }
 
   player->draw();
+  hud.draw();
   viewport.draw();
   SDL_RenderPresent(renderer);
 }
@@ -78,7 +83,7 @@ void Engine::draw() const {
 void Engine::checkForCollisions() {
   auto it = smartSprites.begin();
   while (it != smartSprites.end()) {
-    if (collisionStrategies[currentStrategy]->execute(*player, **it)) {
+    if (collisionStrategy->execute(*player, **it)) {
       collision = true;
       SmartSprite* doa = *it;
       player->detach(doa);
@@ -93,6 +98,9 @@ void Engine::update(Uint32 ticks) {
   checkForCollisions();
   player->update(ticks);
   for (SmartSprite* s : smartSprites) {
+    s->update(ticks);
+  }
+  for (DumbSprite* s : dumbSprites) {
     s->update(ticks);
   }
   Sky.update();
@@ -122,8 +130,8 @@ void Engine::play() {
           if (clock.isPaused()) clock.unpause();
           else clock.pause();
         }
-        if (keystate[SDL_SCANCODE_M]) {
-          currentStrategy = (currentStrategy+1) % collisionStrategies.size();
+        if (keystate[SDL_SCANCODE_F1]) {
+          hud.setVisibility(!hud.isVisible());
         }
       }
     }
@@ -134,7 +142,9 @@ void Engine::play() {
       clock.incrFrame();
       if (keystate[SDL_SCANCODE_A]) {
         static_cast<Player*>(player)->moveLeft();
-        IoMod::getInstance().writeText("pressing A", 50, 50);
+        for (int i=0; i<100; i++) {
+          IoMod::getInstance().writeText("pressing A", 50, 50);
+        }
       }
       if (keystate[SDL_SCANCODE_D]) {
         static_cast<Player*>(player)->moveRight();

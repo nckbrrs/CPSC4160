@@ -6,7 +6,7 @@
 <period>17</period>
 
 <numClouds>7</numClouds>
-<numEvilJetpackStickmans>1</numEvilJetpackStickmans>
+<numEvilJetpackStickmans>4</numEvilJetpackStickmans>
 
 <view>
   <width>640</width>
@@ -17,6 +17,16 @@
   <width>1000</width>
   <height>400</height>
 </background>
+
+<HUD>
+  <text>Welcome to my game! Use WASD to move up, left, down, and right, respectively!</text>
+  <width>165</width>
+  <height>160</height>
+  <position x="20" y="20"/>
+  <backgroundColor r="0" g="0" b="0" a="50."/>
+  <outlineColor r="0" g="0" b="0" a="255"/>
+  <textColor r="0" g="0" b="0" a="0"/>
+</HUD>
 
 <defaultFont>
   <file>fonts/arial.ttf</file>
@@ -29,7 +39,7 @@
 
 <text>
   <name>
-    <locX>30</locX>
+    <locX>20</locX>
     <locY>330</locY>
     <font>
       <file>fonts/arial.ttf</file>
@@ -95,7 +105,10 @@
   <startPos x="50" y="50"/>
   <startVel x="50" y="50"/>
   <minPosBoundary x="0" y="0"/>
-  <maxPosBoundary x="1000" y="200"/>
+  <maxPosBoundary x="1000" y="150"/>
+  <frames>1</frames>
+  <frameInterval>4294967295</frameInterval>
+  <twoWay>false</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>32</imageHeight>
   <scale>1.0</scale>
@@ -147,7 +160,7 @@
   <imageHeight>64</imageHeight>
   <scale>1.0</scale>
   <slowDownFactor>0.30</slowDownFactor>
-  <safeDistance>75</safeDistance>
+  <safeDistance>50</safeDistance>
   <transparency>false</transparency>
 </EvilJetpackStickman>
 

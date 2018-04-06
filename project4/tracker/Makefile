@@ -18,7 +18,7 @@ OBJS = \
 	player.o \
 	dumbSprite.o \
 	smartSprite.o \
-	collisionStrategy.o \
+	hud.o \
 	vector2f.o \
 	clock.o \
 	engine.o \

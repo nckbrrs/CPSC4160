@@ -12,7 +12,15 @@ SmartSprite::SmartSprite(const std::string& name, const Player* p) :
   playerWidth(p->getScaledWidth()),
   playerHeight(p->getScaledHeight()),
   safeDistance(GameData::getInstance().getXmlFloat(name+"/safeDistance"))
-{ }
+{
+  float vx = getVelocityX();
+  float vy = getVelocityY();
+  float newvx = GameData::getInstance().getRandFloat(vx-50, vx+50);
+  float newvy = GameData::getInstance().getRandFloat(vy-50, vy+50);
+  newvx *= [](){ if(rand()%2) return -1; else return 1; }();
+  newvy *= [](){ if(rand()%2) return -1; else return 1; }();
+  setVelocity(Vector2f(newvx, newvy));
+}
 
 SmartSprite::SmartSprite(const SmartSprite& s) :
   Sprite(s),
