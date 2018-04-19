@@ -5,8 +5,9 @@
 <frameCapOn>true</frameCapOn>
 <period>17</period>
 
-<numClouds>7</numClouds>
-<numEvilJetpackStickmans>4</numEvilJetpackStickmans>
+<numClouds>0</numClouds>
+<numExplosions>2</numExplosions>
+<numJetpackCats>4</numJetpackCats>
 
 <view>
   <width>640</width>
@@ -14,7 +15,7 @@
 </view>
 
 <background>
-  <width>1000</width>
+  <width>2000</width>
   <height>400</height>
 </background>
 
@@ -105,63 +106,81 @@
   <startPos x="50" y="50"/>
   <startVel x="50" y="50"/>
   <minPosBoundary x="0" y="0"/>
-  <maxPosBoundary x="1000" y="150"/>
+  <maxPosBoundary x="2000" y="150"/>
   <frames>1</frames>
   <frameInterval>4294967295</frameInterval>
   <twoWay>false</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>32</imageHeight>
-  <scale>1.0</scale>
+  <scale>2.0</scale>
   <transparency>false</transparency>
 </Cloud>
 
-<Stickman>
-  <file>assets/Stickman.png</file>
-  <startPos x="30" y="280"/>
-  <startVel x="200" y="200"/>
-  <minPosBoundary x="0" y="290"/>
-  <maxPosBoundary x="1000" y="400"/>
-  <frames>16</frames>
-  <frameInterval>75</frameInterval>
-  <twoWay>true</twoWay>
+<Explosion>
+  <file>assets/Explosion.png</file>
+  <startPos x="0" y="0"/>
+  <startVel x="0" y="0"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="2000" y="150"/>
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+  <twoWay>false</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
-  <scale>1.0</scale>
-  <slowDownFactor>0.60</slowDownFactor>
+  <scale>2.0</scale>
   <transparency>false</transparency>
-</Stickman>
+</Explosion>
 
-<JetpackStickman>
-  <file>assets/JetpackStickman.png</file>
+<JetpackCorgi>
+  <file>assets/JetpackCorgi.png</file>
   <startPos x="30" y="280"/>
   <startVel x="200" y="200"/>
   <minPosBoundary x="0" y="0"/>
-  <maxPosBoundary x="1000" y="400"/>
+  <maxPosBoundary x="2000" y="400"/>
   <frames>4</frames>
   <frameInterval>200</frameInterval>
   <twoWay>true</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
-  <scale>1.0</scale>
+  <scale>2.0</scale>
   <slowDownFactor>0.30</slowDownFactor>
   <transparency>false</transparency>
-</JetpackStickman>
+  <projectileName>Woof</projectileName>
+</JetpackCorgi>
 
-<EvilJetpackStickman>
-  <file>assets/EvilJetpackStickman.png</file>
+<JetpackCat>
+  <file>assets/JetpackCat.png</file>
   <startPos x="60" y="100"/>
   <startVel x="200" y="200"/>
   <minPosBoundary x="0" y="0"/>
-  <maxPosBoundary x="1000" y="400"/>
+  <maxPosBoundary x="2000" y="400"/>
   <frames>4</frames>
   <frameInterval>200</frameInterval>
   <twoWay>true</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
-  <scale>1.0</scale>
+  <scale>2.0</scale>
   <slowDownFactor>0.30</slowDownFactor>
-  <safeDistance>50</safeDistance>
+  <safeDistance>200</safeDistance>
   <transparency>false</transparency>
-</EvilJetpackStickman>
+</JetpackCat>
+
+<Woof>
+  <file>assets/Woof.png</file>
+  <startPos x="0" y="0"/>
+  <startVel x="0" y="0"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="2000" y="400"/>
+  <frames>2</frames>
+  <frameInterval>0</frameInterval>
+  <twoWay>true</twoWay>
+  <imageWidth>32</imageWidth>
+  <imageHeight>16</imageHeight>
+  <scale>2.0</scale>
+  <transparency>false</transparency>
+  <minSpeed>300</minSpeed>
+  <interval>0</interval>
+  <maxDistance>200</maxDistance>
+</Woof>
 
 </GameData>

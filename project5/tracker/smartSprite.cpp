@@ -1,7 +1,9 @@
 #include <cmath>
+#include <ctime>
 #include <random>
 #include <functional>
 #include "smartSprite.h"
+#include "dumbSprite.h"
 #include "gameData.h"
 #include "player.h"
 
@@ -11,7 +13,9 @@ SmartSprite::SmartSprite(const std::string& name, const Player* p) :
   playerPos(p->getPosition()),
   playerWidth(p->getScaledWidth()),
   playerHeight(p->getScaledHeight()),
-  safeDistance(GameData::getInstance().getXmlFloat(name+"/safeDistance"))
+  safeDistance(GameData::getInstance().getXmlFloat(name+"/safeDistance")),
+  explosion(nullptr),
+  explosionStartTime(-1)
 {
   float vx = getVelocityX();
   float vy = getVelocityY();
@@ -28,10 +32,28 @@ SmartSprite::SmartSprite(const SmartSprite& s) :
   playerPos(s.playerPos),
   playerWidth(s.playerWidth),
   playerHeight(s.playerHeight),
-  safeDistance(s.safeDistance)
+  safeDistance(s.safeDistance),
+  explosion(s.explosion),
+  explosionStartTime(s.explosionStartTime)
 { }
 
+void SmartSprite::draw() const {
+  if (isExploding()) explosion->draw();
+  else getImage()->draw(getPositionX(), getPositionY(), getScale());
+
+}
+
 void SmartSprite::update(Uint32 ticks) {
+  if (isExploding()) {
+    explosion->update(ticks);
+    if (((clock() - explosionStartTime) / (double)CLOCKS_PER_SEC) > 0.1) {
+      setExploding(false);
+      delete explosion;
+      explosion = NULL;
+    }
+    return;
+  }
+
   setTimeSinceLastFrame(getTimeSinceLastFrame() + ticks);
   if (getTimeSinceLastFrame() > getFrameInterval()) {
     if (isTwoWay()) {
@@ -81,4 +103,15 @@ void SmartSprite::update(Uint32 ticks) {
       if (y > ey) moveDown();
     }
   }
+}
+
+void SmartSprite::explode() {
+  setExploding(true);
+  setVelocityX(0);
+  setVelocityY(0);
+  explosion = new DumbSprite("Explosion");
+  explosion->setPosition(getPosition());
+  explosion->setVelocityX(0);
+  explosion->setVelocityY(0);
+  explosionStartTime = clock();
 }

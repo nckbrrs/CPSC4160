@@ -18,6 +18,7 @@ OBJS = \
 	player.o \
 	dumbSprite.o \
 	smartSprite.o \
+	projectile.o \
 	hud.o \
 	vector2f.o \
 	clock.o \

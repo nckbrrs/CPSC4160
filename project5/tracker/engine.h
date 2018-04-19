@@ -25,6 +25,7 @@ private:
   const RenderContext* rc;
   const IoMod& io;
   Clock& clock;
+  Hud& hud;
   SDL_Renderer * const renderer;
 
   Background Sky;
@@ -37,8 +38,6 @@ private:
   std::vector<DumbSprite*> dumbSprites;
   std::vector<SmartSprite*> smartSprites;
   CollisionStrategy* collisionStrategy;
-
-  Hud& hud;
 
   bool collision;
 

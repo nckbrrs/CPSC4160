@@ -28,34 +28,30 @@ Engine::Engine() :
   rc( RenderContext::getInstance() ),
   io( IoMod::getInstance() ),
   clock( Clock::getInstance() ),
+  hud(Hud::getInstance()),
   renderer( rc->getRenderer() ),
   Sky("Sky", GameData::getInstance().getXmlInt("Sky/factor") ),
   BackMtns("BackMtns", GameData::getInstance().getXmlInt("BackMtns/factor") ),
   FrontMtns("FrontMtns", GameData::getInstance().getXmlInt("FrontMtns/factor") ),
   Road("Road", GameData::getInstance().getXmlInt("Road/factor") ),
   viewport( Viewport::getInstance() ),
-  player(new Player("JetpackStickman")),
+  player(new Player("JetpackCorgi")),
   dumbSprites(),
   smartSprites(),
   collisionStrategy(new MidpointCollisionStrategy),
-  hud(Hud::getInstance()),
   collision(false)
 {
-  int n = GameData::getInstance().getXmlInt("numEvilJetpackStickmans");
+  int n = GameData::getInstance().getXmlInt("numJetpackCats");
   smartSprites.reserve(n);
   for (int i=0; i<n; i++) {
-    smartSprites.push_back(new SmartSprite("EvilJetpackStickman", player));
+    smartSprites.push_back(new SmartSprite("JetpackCat", player));
     player->attach(smartSprites[i]);
   }
+
+  n = GameData::getInstance().getXmlInt("numClouds");
   for (int i=0; i<n; i++) {
     dumbSprites.push_back(new DumbSprite("Cloud"));
   }
-
-  /*
-  collisionStrategies.push_back(new RectangularCollisionStrategy);
-  collisionStrategies.push_back(new PerPixelCollisionStrategy);
-  collisionStrategies.push_back(new MidpointCollisionStrategy);
-  */
 
   Viewport::getInstance().setObjectToTrack(player);
   std::cout << "Loading complete" << std::endl;
@@ -117,7 +113,7 @@ void Engine::play() {
   Uint32 ticks = clock.getElapsedTicks();
 
   while (!done) {
-    // The next loop polls for events, guarding against key bounce:
+    // In this section of the event loop we do not allow key bounce
     while (SDL_PollEvent(&event)) {
       keystate = SDL_GetKeyboardState(NULL);
       if (event.type ==  SDL_QUIT) { done = true; break; }
@@ -133,10 +129,16 @@ void Engine::play() {
         if (keystate[SDL_SCANCODE_F1]) {
           hud.setVisibility(!hud.isVisible());
         }
+        if (keystate[SDL_SCANCODE_E]) {
+          player->explode();
+        }
+        if (keystate[SDL_SCANCODE_SPACE]) {
+          player->shoot();
+        }
       }
     }
 
-    // In this section of the event loop we allow key bounce:
+    // In this section of the event loop we allow key bounce
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
       clock.incrFrame();

@@ -2,16 +2,21 @@
 #define SMARTSPRITE__H
 
 #include <string>
+#include <ctime>
 #include "sprite.h"
 
 class Player;
+class DumbSprite;
 
 class SmartSprite : public Sprite {
 public:
   SmartSprite(const std::string&, const Player*);
   SmartSprite(const SmartSprite&);
   virtual ~SmartSprite() { }
+
+  virtual void draw() const;
   virtual void update(Uint32 ticks);
+  virtual void explode();
 
   enum Mode {Normal, Evade};
 
@@ -33,6 +38,8 @@ private:
   int playerWidth;
   int playerHeight;
   float safeDistance;
+  DumbSprite* explosion;
+  clock_t explosionStartTime;
 
   void moveLeft()  { setVelocityX(-abs(getVelocityX()));  }
   void moveRight() { setVelocityX(fabs(getVelocityX()));  }

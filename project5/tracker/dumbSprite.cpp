@@ -55,3 +55,7 @@ void DumbSprite::update(Uint32 ticks) {
     setVelocityX(-std::abs(getVelocityX()));
   }
 }
+
+void DumbSprite::explode() {
+  std::cout << "dumb sprite " << getName() << "exloded" << std::endl;
+}
