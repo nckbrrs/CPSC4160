@@ -1,5 +1,6 @@
 #include <iostream>
 #include <algorithm>
+#include <ctime>
 #include <sstream>
 #include <string>
 #include <random>
@@ -17,9 +18,11 @@ Engine::~Engine() {
   for (DumbSprite* ds : dumbSprites) {
     delete ds;
   }
+  dumbSprites.clear();
   for (SmartSprite* ss : smartSprites) {
     delete ss;
   }
+  smartSprites.clear();
   delete collisionStrategy;
   std::cout << "Terminating program" << std::endl;
 }
@@ -38,8 +41,7 @@ Engine::Engine() :
   player(new Player("JetpackCorgi")),
   dumbSprites(),
   smartSprites(),
-  collisionStrategy(new MidpointCollisionStrategy),
-  collision(false)
+  collisionStrategy(new MidpointCollisionStrategy)
 {
   int n = GameData::getInstance().getXmlInt("numJetpackCats");
   smartSprites.reserve(n);
@@ -62,48 +64,40 @@ void Engine::draw() const {
   BackMtns.draw();
   FrontMtns.draw();
   Road.draw();
-
-  for (const SmartSprite* s : smartSprites) {
-    s->draw();
-  }
-  for (const DumbSprite* s : dumbSprites) {
-    s->draw();
-  }
-
+  for (const SmartSprite* s : smartSprites) s->draw();
+  for (const DumbSprite* s : dumbSprites) s->draw();
   player->draw();
-  hud.draw();
+  hud.draw(player->getActiveProjectiles().size(), player->getFreeProjectiles().size());
   viewport.draw();
   SDL_RenderPresent(renderer);
-}
-
-void Engine::checkForCollisions() {
-  auto it = smartSprites.begin();
-  while (it != smartSprites.end()) {
-    if (collisionStrategy->execute(*player, **it)) {
-      collision = true;
-      SmartSprite* doa = *it;
-      player->detach(doa);
-      delete doa;
-      it = smartSprites.erase(it);
-    }
-    else ++it;
-  }
 }
 
 void Engine::update(Uint32 ticks) {
   checkForCollisions();
   player->update(ticks);
-  for (SmartSprite* s : smartSprites) {
-    s->update(ticks);
-  }
-  for (DumbSprite* s : dumbSprites) {
-    s->update(ticks);
-  }
+  for (SmartSprite* s : smartSprites) s->update(ticks);
+  for (DumbSprite* s : dumbSprites) s->update(ticks);
   Sky.update();
   BackMtns.update();
   FrontMtns.update();
   Road.update();
   viewport.update();
+}
+
+void Engine::checkForCollisions() {
+  auto smartIt = smartSprites.begin();
+  while (smartIt != smartSprites.end()) {
+    if (collisionStrategy->execute(*player, **smartIt)) {
+      (*smartIt)->collided();
+      player->collided();
+      SmartSprite* deadSmartSprite = *smartIt;
+      player->detach(deadSmartSprite);
+      delete deadSmartSprite;
+      smartIt = smartSprites.erase(smartIt);
+    } else {
+      ++smartIt;
+    }
+  }
 }
 
 void Engine::play() {
@@ -130,7 +124,7 @@ void Engine::play() {
           hud.setVisibility(!hud.isVisible());
         }
         if (keystate[SDL_SCANCODE_E]) {
-          player->explode();
+          player->collided();
         }
         if (keystate[SDL_SCANCODE_SPACE]) {
           player->shoot();

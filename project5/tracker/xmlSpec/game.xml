@@ -20,9 +20,8 @@
 </background>
 
 <HUD>
-  <text>Welcome to my game! Use WASD to move up, left, down, and right, respectively!</text>
-  <width>165</width>
-  <height>160</height>
+  <width>180</width>
+  <height>130</height>
   <position x="20" y="20"/>
   <backgroundColor r="0" g="0" b="0" a="50."/>
   <outlineColor r="0" g="0" b="0" a="255"/>
@@ -134,7 +133,7 @@
 <JetpackCorgi>
   <file>assets/JetpackCorgi.png</file>
   <startPos x="30" y="280"/>
-  <startVel x="200" y="200"/>
+  <startVel x="300" y="400"/>
   <minPosBoundary x="0" y="0"/>
   <maxPosBoundary x="2000" y="400"/>
   <frames>4</frames>
@@ -150,7 +149,7 @@
 
 <JetpackCat>
   <file>assets/JetpackCat.png</file>
-  <startPos x="60" y="100"/>
+  <startPos x="500" y="100"/>
   <startVel x="200" y="200"/>
   <minPosBoundary x="0" y="0"/>
   <maxPosBoundary x="2000" y="400"/>
@@ -161,7 +160,7 @@
   <imageHeight>64</imageHeight>
   <scale>2.0</scale>
   <slowDownFactor>0.30</slowDownFactor>
-  <safeDistance>200</safeDistance>
+  <safeDistance>175</safeDistance>
   <transparency>false</transparency>
 </JetpackCat>
 
@@ -178,9 +177,9 @@
   <imageHeight>16</imageHeight>
   <scale>2.0</scale>
   <transparency>false</transparency>
-  <minSpeed>300</minSpeed>
-  <interval>0</interval>
-  <maxDistance>200</maxDistance>
+  <minSpeed>400</minSpeed>
+  <interval>500</interval>
+  <maxDistance>1100</maxDistance>
 </Woof>
 
 </GameData>

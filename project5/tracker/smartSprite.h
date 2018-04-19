@@ -16,7 +16,7 @@ public:
 
   virtual void draw() const;
   virtual void update(Uint32 ticks);
-  virtual void explode();
+  virtual void collided();
 
   enum Mode {Normal, Evade};
 
@@ -25,6 +25,7 @@ public:
   int getPlayerHeight() const          { return playerHeight; }
   float getSafeDistance() const        { return safeDistance; }
   Mode getCurrentMode() const          { return currentMode; }
+  bool isColliding() const             { return collision; }
 
   void setPlayerPos(const Vector2f& p) { playerPos = p; }
   void setPlayerWidth(int w)           { playerWidth = w; }
@@ -38,6 +39,7 @@ private:
   int playerWidth;
   int playerHeight;
   float safeDistance;
+  bool collision;
   DumbSprite* explosion;
   clock_t explosionStartTime;
 

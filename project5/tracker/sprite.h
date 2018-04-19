@@ -27,8 +27,7 @@ public:
     currentFrame(0),
     frameInterval(GameData::getInstance().getXmlInt(name+"/frameInterval")),
     timeSinceLastFrame(0),
-    twoWay(GameData::getInstance().getXmlBool(name+"/twoWay")),
-    exploding(false)
+    twoWay(GameData::getInstance().getXmlBool(name+"/twoWay"))
   { }
 
   Sprite(const Sprite& s):
@@ -43,14 +42,13 @@ public:
     currentFrame(s.currentFrame),
     frameInterval(s.frameInterval),
     timeSinceLastFrame(s.timeSinceLastFrame),
-    twoWay(s.twoWay),
-    exploding(s.exploding)
+    twoWay(s.twoWay)
   { }
 
   virtual ~Sprite() {}
 
   virtual void update(Uint32 ticks) = 0;
-  virtual void explode() = 0;
+  virtual void collided() = 0;
   virtual void draw() const { images[currentFrame]->draw(position[0], position[1], scale); }
 
   int getScaledWidth() const            { return getScale()*images[currentFrame]->getWidth(); }
@@ -74,7 +72,6 @@ public:
   unsigned getNumFrames() const         { return numFrames; }
   unsigned getFrameInterval() const     { return frameInterval; }
   bool isTwoWay() const                 { return twoWay; }
-  bool isExploding() const              { return exploding; }
 
   void setScale(float s)                { scale = s; }
   void setName(const std::string& n)    { name = n; }
@@ -90,7 +87,6 @@ public:
   void setMaxPosBoundaryY(float y)      { maxPosBoundary[1] = y; }
   void setTimeSinceLastFrame(float t)   { timeSinceLastFrame = t; }
   void setCurrentFrame(unsigned f)      { currentFrame = f; }
-  void setExploding(bool b)             { exploding = b; }
 
 private:
   std::string name;
@@ -105,6 +101,5 @@ private:
   unsigned frameInterval;
   float timeSinceLastFrame;
   bool twoWay;
-  bool exploding;
 };
 #endif

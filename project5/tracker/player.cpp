@@ -6,6 +6,7 @@
 
 Player::Player(const std::string& name) :
   Sprite(name),
+  facingRight(true),
   observers(),
   collision(false),
   startingVelocity(getVelocity()),
@@ -13,13 +14,16 @@ Player::Player(const std::string& name) :
   explosion(nullptr),
   explosionStartTime(-1),
   projectileName(GameData::getInstance().getXmlStr(name+"/projectileName")),
-  projectiles(),
+  activeProjectiles(),
+  freeProjectiles(),
   minSpeed(GameData::getInstance().getXmlInt(projectileName+"/minSpeed")),
-  projectileInterval(GameData::getInstance().getXmlInt(projectileName+"/interval"))
+  projectileInterval(GameData::getInstance().getXmlInt(projectileName+"/interval")),
+  timeSinceLastShot(4294967295)
 { setVelocityX(0); setVelocityY(0); }
 
 Player::Player(const Player& s) :
   Sprite(s),
+  facingRight(s.facingRight),
   observers(s.observers),
   collision(s.collision),
   startingVelocity(s.getVelocity()),
@@ -27,22 +31,27 @@ Player::Player(const Player& s) :
   explosion(s.explosion),
   explosionStartTime(s.explosionStartTime),
   projectileName(s.projectileName),
-  projectiles(s.projectiles),
+  activeProjectiles(s.activeProjectiles),
+  freeProjectiles(s.freeProjectiles),
   minSpeed(s.minSpeed),
-  projectileInterval(s.projectileInterval)
+  projectileInterval(s.projectileInterval),
+  timeSinceLastShot(s.timeSinceLastShot)
 { setVelocityX(0); setVelocityY(0); }
 
 Player& Player::operator= (const Player& s) {
   Sprite::operator=(s);
+  facingRight = s.facingRight;
   observers = s.observers;
   collision = s.collision;
   startingVelocity = s.startingVelocity;
   slowDownFactor = s.slowDownFactor;
   explosion = s.explosion;
   projectileName = s.projectileName;
-  projectiles = s.projectiles;
+  activeProjectiles = s.activeProjectiles;
+  freeProjectiles = s.freeProjectiles;
   minSpeed = s.minSpeed;
   projectileInterval = s.projectileInterval;
+  timeSinceLastShot = s.timeSinceLastShot;
   return *this;
 }
 
@@ -52,23 +61,25 @@ void Player::stop() {
 }
 
 void Player::moveRight() {
-  if (!isExploding()) {
+  if (!collision) {
     if (getPositionX() < getMaxPosBoundaryX() - getScaledWidth()) {
       setVelocityX(startingVelocity[0]);
     }
+    facingRight = true;
   }
 }
 
 void Player::moveLeft() {
-  if (!isExploding()) {
+  if (!collision) {
     if (getPositionX() > getMinPosBoundaryX()) {
       setVelocityX(-startingVelocity[0]);
     }
+    facingRight = false;
   }
 }
 
 void Player::moveUp() {
-  if (!isExploding()) {
+  if (!collision) {
     if (getPositionY() > getMinPosBoundaryY()) {
       setVelocityY(-startingVelocity[1]);
     }
@@ -76,7 +87,7 @@ void Player::moveUp() {
 }
 
 void Player::moveDown() {
-  if (!isExploding()) {
+  if (!collision) {
     if (getPositionY() < getMaxPosBoundaryY() - getScaledHeight()) {
       setVelocityY(startingVelocity[1]);
     }
@@ -84,31 +95,30 @@ void Player::moveDown() {
 }
 
 void Player::draw() const {
-  if (isExploding()) explosion->draw();
+  if (collision) explosion->draw();
   else getImage()->draw(getPositionX(), getPositionY(), getScale());
 
-  for (const Projectile& projectile : projectiles) {
-    projectile.draw();
+  for (const Projectile* projectile : activeProjectiles) {
+    projectile->draw();
   }
 }
 
 void Player::update(Uint32 ticks) {
-  if (isExploding()) {
+  if (collision) {
     explosion->update(ticks);
-    projectiles.clear();
-    if (((clock() - explosionStartTime) / (double)CLOCKS_PER_SEC) > 0.1) {
-      setExploding(false);
+    activeProjectiles.clear();
+    if (((clock() - explosionStartTime) / (double)CLOCKS_PER_SEC) > 0.5) {
+      collision = false;
       delete explosion;
       explosion = NULL;
     }
     return;
-  }
-
-  if (!collision) {
+  } else {
     setTimeSinceLastFrame(getTimeSinceLastFrame() + ticks);
+    timeSinceLastShot += ticks;
     if (getTimeSinceLastFrame() > getFrameInterval()) {
       if (isTwoWay()) {
-        if (getVelocityX() >= 0) {
+        if (getVelocityX() > 0 || (getVelocityX() == 0 && facingRight)) {
           setCurrentFrame(((getCurrentFrame()+1) % (getNumFrames()/2)));
         } else {
           setCurrentFrame((getNumFrames()/2) + ((getCurrentFrame()+1) % (getNumFrames()/2)));
@@ -133,15 +143,14 @@ void Player::update(Uint32 ticks) {
     if ( getPositionX() > getMaxPosBoundaryX() - getScaledWidth()) {
       setVelocityX(-std::abs(getVelocityX()));
     }
-  } else {
-    std::cout << "COLLIDED!" << std::endl;
   }
 
-  auto it = projectiles.begin();
-  while (it != projectiles.end()) {
-    (*it).update(ticks);
-    if ((*it).isTooFar()) {
-      it = projectiles.erase(it);
+  auto it = activeProjectiles.begin();
+  while (it != activeProjectiles.end()) {
+    (*it)->update(ticks);
+    if ((*it)->isTooFar()) {
+      freeProjectiles.push_back(*it);
+      it = activeProjectiles.erase(it);
     }
     it++;
   }
@@ -155,15 +164,14 @@ void Player::update(Uint32 ticks) {
   stop();
 }
 
-void Player::explode() {
-  setExploding(true);
+void Player::collided() {
+  collision = true;
   explosion = new DumbSprite("Explosion");
   explosion->setPosition(getPosition());
   explosion->setVelocityX(0);
   explosion->setVelocityY(0);
   explosionStartTime = clock();
 }
-
 
 void Player::attach(SmartSprite* o) {
   observers.push_back(o);
@@ -181,20 +189,39 @@ void Player::detach(SmartSprite* o) {
 }
 
 void Player::shoot() {
-  if (!isExploding()) {
-    if (getTimeSinceLastFrame() < projectileInterval) return;
-    float dx = getScaledWidth();
-    float dy = getScaledHeight()/2;
-    Projectile projectile(projectileName);
-    projectiles.push_back(projectile);
-    if (getVelocityX() >= 0) {
-      projectiles.back().setPosition(getPosition() + Vector2f(3*dx/4, dy));
-      projectiles.back().setStartingPos(projectiles.back().getPosition());
-      projectiles.back().setVelocity(getVelocity() + Vector2f(minSpeed, 0));
+  if (!collision) {
+    if (timeSinceLastShot < projectileInterval) return;
+    float x = getScaledWidth();
+    float y = getScaledHeight()/2;
+
+    // object pooling
+    if (freeProjectiles.empty()) {
+      Projectile *p = new Projectile(projectileName);
+      activeProjectiles.push_back(p);
+      if (getVelocityX() > 0 || (getVelocityX() == 0 && facingRight)) {
+        activeProjectiles.back()->setPosition(getPosition() + Vector2f(3*x/4, y));
+        activeProjectiles.back()->setStartingPos(activeProjectiles.back()->getPosition());
+        activeProjectiles.back()->setVelocity(getVelocity() + Vector2f(minSpeed, 0));
+      } else {
+        activeProjectiles.back()->setPosition(getPosition() + Vector2f(-x/4, y));
+        activeProjectiles.back()->setStartingPos(activeProjectiles.back()->getPosition());
+        activeProjectiles.back()->setVelocity(getVelocity() + Vector2f(-minSpeed, 0));
+      }
     } else {
-      projectiles.back().setPosition(getPosition() + Vector2f(-dx/4, dy));
-      projectiles.back().setStartingPos(projectiles.back().getPosition());
-      projectiles.back().setVelocity(getVelocity() + Vector2f(-minSpeed, 0));
+      Projectile *p = freeProjectiles.front();
+      freeProjectiles.pop_front();
+      p->reset();
+      if (getVelocityX() > 0 || (getVelocityX() == 0 && facingRight)) {
+        p->setPosition(getPosition()+Vector2f(3*x/4, y));
+        p->setStartingPos(p->getPosition());
+        p->setVelocity(getVelocity()+Vector2f(minSpeed,0));
+      } else {
+        p->setPosition(getPosition()+Vector2f(-x/4, y));
+        p->setStartingPos(p->getPosition());
+        p->setVelocity(getVelocity()+Vector2f(-minSpeed,0));
+      }
+      activeProjectiles.push_back(p);
     }
+    timeSinceLastShot = 0;
   }
 }

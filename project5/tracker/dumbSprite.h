@@ -9,6 +9,6 @@ public:
   DumbSprite(const DumbSprite&);
   virtual ~DumbSprite() { }
   virtual void update(Uint32 ticks);
-  virtual void explode();
+  virtual void collided();
 };
 #endif

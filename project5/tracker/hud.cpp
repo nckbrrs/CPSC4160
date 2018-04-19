@@ -1,5 +1,6 @@
 #include <SDL_image.h>
 #include <sstream>
+#include <string>
 #include <algorithm>
 #include "hud.h"
 #include "gameData.h"
@@ -11,7 +12,6 @@ Hud& Hud::getInstance() {
 }
 
 Hud::Hud() :
-  text(GameData::getInstance().getXmlStr("HUD/text")),
   width(GameData::getInstance().getXmlInt("HUD/width")),
   height(GameData::getInstance().getXmlInt("HUD/height")),
   pos(Vector2f(GameData::getInstance().getXmlInt("HUD/position/x"),
@@ -31,7 +31,7 @@ Hud::Hud() :
              static_cast<Uint8>(GameData::getInstance().getXmlInt("HUD/textColor/a"))})
 { }
 
-void Hud::draw() {
+void Hud::draw(int activeProj, int freeProj) {
   if (isVisible()) {
     SDL_Rect r;
     r.x = getPosition()[0];
@@ -46,17 +46,15 @@ void Hud::draw() {
     SDL_SetRenderDrawColor(renderer, outlineColor.r, outlineColor.g, outlineColor.b, outlineColor.a);
     SDL_RenderDrawRect(renderer, &r);
 
-    std::ostringstream hudStream;
-    hudStream << getText();
-    IoMod::getInstance().writeTextWrapped(hudStream.str(),
-                          getPosition()[0]+2, // +2 for padding
-                          getPosition()[1]+2, // +2 for padding
-                          getWidth(),
-                          getTextColor());
+    std::string textToWrite;
+    textToWrite += " - WASD to move\n - SPACE to shoot";
+    textToWrite += "\n - active WOOFs: " + std::to_string(activeProj);
+    textToWrite += "\n - free WOOFs: " + std::to_string(freeProj);
+    textToWrite += "\n\n - F1 to toggle this HUD";
 
-    IoMod::getInstance().writeTextWrapped("\n\n\n\n\n\nUse F1 to toggle this HUD!",
-                          getPosition()[0]+2, // +2 for padding
-                          getPosition()[1]+2, // +2 for padding
+    IoMod::getInstance().writeTextWrapped(textToWrite,
+                          getPosition()[0]+2,
+                          getPosition()[1]+2,
                           getWidth(),
                           getTextColor());
   }

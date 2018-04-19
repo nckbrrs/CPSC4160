@@ -19,23 +19,22 @@ public:
 
   virtual void draw() const;
   virtual void update (Uint32 ticks);
-  virtual void explode();
 
   void moveRight();
   void moveLeft();
   void moveUp();
   void moveDown();
   void stop();
-
   void attach(SmartSprite* o);
   void detach(SmartSprite* o);
-
-  void collided() { collision = true; }
-  void missed()   { collision = false; }
-
+  void collided();
   void shoot();
 
+  std::list<Projectile*> getActiveProjectiles() const { return activeProjectiles; }
+  std::list<Projectile*> getFreeProjectiles() const { return freeProjectiles; }
+
 private:
+  bool facingRight;
   std::list<SmartSprite*> observers;
   bool collision;
   Vector2f startingVelocity;
@@ -43,8 +42,11 @@ private:
   DumbSprite* explosion;
   clock_t explosionStartTime;
   std::string projectileName;
-  std::list<Projectile> projectiles;
+  std::list<Projectile*> activeProjectiles;
+  std::list<Projectile*> freeProjectiles;
+
   float minSpeed;
   float projectileInterval;
+  float timeSinceLastShot;
 };
 #endif

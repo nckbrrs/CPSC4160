@@ -39,8 +39,6 @@ private:
   std::vector<SmartSprite*> smartSprites;
   CollisionStrategy* collisionStrategy;
 
-  bool collision;
-
   void draw() const;
   void update(Uint32);
   void checkForCollisions();
