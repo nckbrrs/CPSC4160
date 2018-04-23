@@ -9,6 +9,7 @@
 #include "engine.h"
 #include "dumbSprite.h"
 #include "smartSprite.h"
+#include "fallingSprite.h"
 #include "player.h"
 #include "collisionStrategy.h"
 #include "hud.h"
@@ -39,20 +40,45 @@ Engine::Engine() :
   Road("Road", GameData::getInstance().getXmlInt("Road/factor") ),
   viewport( Viewport::getInstance() ),
   player(new Player("JetpackCorgi")),
+  farFallingSprites(),
+  middleFallingSprites(),
+  closeFallingSprites(),
   dumbSprites(),
   smartSprites(),
   collisionStrategy(new MidpointCollisionStrategy)
 {
-  int n = GameData::getInstance().getXmlInt("numJetpackCats");
+  int i, n = GameData::getInstance().getXmlInt("numJetpackCats");
   smartSprites.reserve(n);
-  for (int i=0; i<n; i++) {
+  for (i=0; i<n; i++) {
     smartSprites.push_back(new SmartSprite("JetpackCat", player));
+    smartSprites.back()->randomizeVelocity();
     player->attach(smartSprites[i]);
   }
 
   n = GameData::getInstance().getXmlInt("numClouds");
-  for (int i=0; i<n; i++) {
+  for (i=0; i<n; i++) {
     dumbSprites.push_back(new DumbSprite("Cloud"));
+    dumbSprites.back()->randomizeVelocity();
+    dumbSprites.back()->randomizePosition();
+  }
+
+  n = GameData::getInstance().getXmlInt("numDonuts");
+  for (i=0; i<(int)(n*0.33); i++) {
+    farFallingSprites.push_back(new FallingSprite("Donut"));
+    farFallingSprites.back()->setScale(farFallingSprites.back()->getScale() * 0.5);
+    farFallingSprites.back()->randomizePosition();
+    farFallingSprites.back()->randomizeVelocity();
+  }
+  for (i=(int)(n*0.33); i<(int)(n*0.66); i++) {
+    middleFallingSprites.push_back(new FallingSprite("Donut"));
+    middleFallingSprites.back()->setScale(middleFallingSprites.back()->getScale() * 0.8);
+    middleFallingSprites.back()->randomizePosition();
+    middleFallingSprites.back()->randomizeVelocity();
+  }
+  for (i=(int)(n*0.66); i<n; i++) {
+    closeFallingSprites.push_back(new FallingSprite("Donut"));
+    closeFallingSprites.back()->randomizePosition();
+    closeFallingSprites.back()->randomizeVelocity();
   }
 
   Viewport::getInstance().setObjectToTrack(player);
@@ -61,8 +87,11 @@ Engine::Engine() :
 
 void Engine::draw() const {
   Sky.draw();
+  for (const FallingSprite* s : farFallingSprites) s->draw();
   BackMtns.draw();
+  for (const FallingSprite* s : middleFallingSprites) s->draw();
   FrontMtns.draw();
+  for (const FallingSprite* s : closeFallingSprites) s->draw();
   Road.draw();
   for (const SmartSprite* s : smartSprites) s->draw();
   for (const DumbSprite* s : dumbSprites) s->draw();
@@ -75,6 +104,9 @@ void Engine::draw() const {
 void Engine::update(Uint32 ticks) {
   checkForCollisions();
   player->update(ticks);
+  for (FallingSprite* s : farFallingSprites) s->update(ticks);
+  for (FallingSprite* s : middleFallingSprites) s->update(ticks);
+  for (FallingSprite* s : closeFallingSprites) s->update(ticks);
   for (SmartSprite* s : smartSprites) s->update(ticks);
   for (DumbSprite* s : dumbSprites) s->update(ticks);
   Sky.update();

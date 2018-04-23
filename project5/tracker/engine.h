@@ -9,6 +9,7 @@
 class Player;
 class DumbSprite;
 class SmartSprite;
+class FallingSprite;
 class CollisionStrategy;
 class Hud;
 
@@ -35,6 +36,9 @@ private:
   Viewport& viewport;
 
   Player* player;
+  std::vector<FallingSprite*> farFallingSprites;
+  std::vector<FallingSprite*> middleFallingSprites;
+  std::vector<FallingSprite*> closeFallingSprites;
   std::vector<DumbSprite*> dumbSprites;
   std::vector<SmartSprite*> smartSprites;
   CollisionStrategy* collisionStrategy;

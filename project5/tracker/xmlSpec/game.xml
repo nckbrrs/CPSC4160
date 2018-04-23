@@ -6,6 +6,7 @@
 <period>17</period>
 
 <numClouds>0</numClouds>
+<numDonuts>25</numDonuts>
 <numExplosions>2</numExplosions>
 <numJetpackCats>4</numJetpackCats>
 
@@ -79,25 +80,25 @@
 <Sky>
   <file>assets/Sky.bmp</file>
   <factor>1</factor>
-  <transparency>false</transparency>
+  <transparency>true</transparency>
 </Sky>
 
 <BackMtns>
   <file>assets/BackMtns.bmp</file>
   <factor>3</factor>
-  <transparency>false</transparency>
+  <transparency>true</transparency>
 </BackMtns>
 
 <FrontMtns>
   <file>assets/FrontMtns.bmp</file>
   <factor>2</factor>
-  <transparency>false</transparency>
+  <transparency>true</transparency>
 </FrontMtns>
 
 <Road>
   <file>assets/Road.bmp</file>
   <factor>1</factor>
-  <transparency>false</transparency>
+  <transparency>true</transparency>
 </Road>
 
 <Cloud>
@@ -114,6 +115,21 @@
   <scale>2.0</scale>
   <transparency>false</transparency>
 </Cloud>
+
+<Donut>
+  <file>assets/Donut.png</file>
+  <startPos x="50" y="50"/>
+  <startVel x="0" y="50"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="2000" y="400"/>
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+  <twoWay>false</twoWay>
+  <imageWidth>64</imageWidth>
+  <imageHeight>64</imageHeight>
+  <scale>1.0</scale>
+  <transparency>false</transparency>
+</Donut>
 
 <Explosion>
   <file>assets/Explosion.png</file>

@@ -17,15 +17,7 @@ SmartSprite::SmartSprite(const std::string& name, const Player* p) :
   collision(false),
   explosion(nullptr),
   explosionStartTime(-1)
-{
-  float vx = getVelocityX();
-  float vy = getVelocityY();
-  float newvx = GameData::getInstance().getRandFloat(vx-50, vx+50);
-  float newvy = GameData::getInstance().getRandFloat(vy-50, vy+50);
-  newvx *= [](){ if(rand()%2) return -1; else return 1; }();
-  newvy *= [](){ if(rand()%2) return -1; else return 1; }();
-  setVelocity(Vector2f(newvx, newvy));
-}
+{ }
 
 SmartSprite::SmartSprite(const SmartSprite& s) :
   Sprite(s),
@@ -38,6 +30,16 @@ SmartSprite::SmartSprite(const SmartSprite& s) :
   explosion(s.explosion),
   explosionStartTime(s.explosionStartTime)
 { }
+
+void SmartSprite::randomizeVelocity() {
+  float vx = getVelocityX();
+  float vy = getVelocityY();
+  float newvx = GameData::getInstance().getRandFloat(vx-50, vx+50);
+  float newvy = GameData::getInstance().getRandFloat(vy-50, vy+50);
+  newvx *= [](){ if(rand()%2) return -1; else return 1; }();
+  newvy *= [](){ if(rand()%2) return -1; else return 1; }();
+  setVelocity(Vector2f(newvx, newvy));
+}
 
 void SmartSprite::draw() const {
   if (collision) explosion->draw();

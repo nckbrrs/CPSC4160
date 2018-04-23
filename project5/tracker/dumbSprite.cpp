@@ -5,7 +5,7 @@
 #include "gameData.h"
 #include "renderContext.h"
 
-DumbSprite::DumbSprite(const std::string& name) : Sprite(name) {
+void DumbSprite::randomizeVelocity() {
   float vx = getVelocityX();
   float vy = getVelocityY();
   float newvx = GameData::getInstance().getRandFloat(vx-50, vx+50);
@@ -15,14 +15,14 @@ DumbSprite::DumbSprite(const std::string& name) : Sprite(name) {
   setVelocity(Vector2f(newvx, newvy));
 }
 
-DumbSprite::DumbSprite(const DumbSprite& s) : Sprite(s) {
-  float vx = getVelocityX();
-  float vy = getVelocityY();
-  float newvx = GameData::getInstance().getRandFloat(vx-50, vx+50);
-  float newvy = GameData::getInstance().getRandFloat(vy-50, vy+50);
-  newvx *= [](){ if(rand()%2) return -1; else return 1; }();
-  newvy *= [](){ if(rand()%2) return -1; else return 1; }();
-  setVelocity(Vector2f(newvx, newvy));
+void DumbSprite::randomizePosition() {
+  float px = getPositionX();
+  float py = getPositionY();
+  float newpx = GameData::getInstance().getRandFloat(px-50, px+50);
+  float newpy = GameData::getInstance().getRandFloat(py-50, py+50);
+  newpx *= [](){ if(rand()%2) return -1; else return 1; }();
+  newpy *= [](){ if(rand()%2) return -1; else return 1; }();
+  setPosition(Vector2f(newpx, newpy));
 }
 
 void DumbSprite::update(Uint32 ticks) {

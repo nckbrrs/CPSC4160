@@ -5,10 +5,12 @@
 
 class DumbSprite : public Sprite {
 public:
-  DumbSprite(const std::string&);
-  DumbSprite(const DumbSprite&);
+  DumbSprite(const std::string& name) : Sprite(name) { }
+  DumbSprite(const DumbSprite& s) : Sprite(s) { }
   virtual ~DumbSprite() { }
   virtual void update(Uint32 ticks);
   virtual void collided();
+  void randomizeVelocity();
+  void randomizePosition();
 };
 #endif

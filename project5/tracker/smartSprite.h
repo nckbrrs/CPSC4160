@@ -30,8 +30,9 @@ public:
   void setPlayerPos(const Vector2f& p) { playerPos = p; }
   void setPlayerWidth(int w)           { playerWidth = w; }
   void setPlayerHeight(int h)          { playerHeight = h; }
-  void setSafeDistance(float sd)      { safeDistance = sd; }
+  void setSafeDistance(float sd)       { safeDistance = sd; }
   void setCurrentMode(Mode m)          { currentMode = m; }
+  void randomizeVelocity();
 
 private:
   Mode currentMode;
