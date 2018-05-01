@@ -118,8 +118,8 @@ void Engine::draw() const {
 }
 
 void Engine::update(Uint32 ticks) {
-  std::cout << "num cats remaining: " << smartSprites.size() << std::endl;
-  std::cout << "num woofs existing: " << player->getActiveProjectiles().size() + player->getFreeProjectiles().size() << std::endl;
+  //std::cout << "num cats remaining: " << smartSprites.size() << std::endl;
+  //std::cout << "num woofs existing: " << player->getActiveProjectiles().size() + player->getFreeProjectiles().size() << std::endl;
   checkForCollisions();
   player->update(ticks);
   for (FallingSprite* s : farFallingSprites) s->update(ticks);
@@ -135,6 +135,7 @@ void Engine::update(Uint32 ticks) {
 }
 
 void Engine::checkForCollisions() {
+  bool updateIterator = true;
   auto smartIt = smartSprites.begin();
   while (smartIt != smartSprites.end()) {
     if (!(player->getActiveProjectiles().empty())) {
@@ -149,10 +150,12 @@ void Engine::checkForCollisions() {
           player->detach(deadSmartSprite);
           smartIt = smartSprites.erase(smartIt);
           delete deadSmartSprite;
+          updateIterator = false;
         }
       }
     }
-    ++smartIt;
+    if ( updateIterator ) ++smartIt;
+    updateIterator = true;
   }
 }
 
