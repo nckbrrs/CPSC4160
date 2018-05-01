@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include "ioMod.h"
 #include "clock.h"
+#include "hud.h"
 #include "background.h"
 #include "viewport.h"
 #include "renderContext.h"
@@ -12,13 +13,12 @@ class DumbSprite;
 class SmartSprite;
 class FallingSprite;
 class CollisionStrategy;
-class Hud;
 
 class Engine {
 public:
   Engine ();
   ~Engine ();
-  void play();
+  bool play();
 
   Engine(const Engine&) = delete;
   Engine& operator=(const Engine&) = delete;
@@ -29,13 +29,13 @@ private:
   Clock& clock;
   Hud& hud;
   SDL_Renderer * const renderer;
-  SDL_Sound sound;
 
   Background Sky;
   Background BackMtns;
   Background FrontMtns;
   Background Road;
   Viewport& viewport;
+  SDL_Sound& sound;
 
   Player* player;
   std::vector<FallingSprite*> farFallingSprites;

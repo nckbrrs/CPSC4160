@@ -3,6 +3,11 @@
 #include "sound.h"
 using std::string;
 
+SDL_Sound& SDL_Sound::getInstance() {
+  static SDL_Sound sound;
+  return sound;
+}
+
 SDL_Sound::~SDL_Sound() {
   Mix_HaltMusic();
   Mix_FreeMusic(music);

@@ -21,6 +21,7 @@ public:
   { }
 
   virtual void update(Uint32 ticks);
+  void collide() { setPositionY(-1000); }
   bool isTooFar() const { return tooFar; }
   void setStartingPos(const Vector2f& v) { startingPos = v; }
   void reset() {

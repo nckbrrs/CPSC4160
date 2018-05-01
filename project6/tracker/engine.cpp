@@ -28,16 +28,17 @@ Engine::~Engine() {
 }
 
 Engine::Engine() :
-  rc( RenderContext::getInstance() ),
-  io( IoMod::getInstance() ),
-  clock( Clock::getInstance() ),
+  rc(RenderContext::getInstance()),
+  io(IoMod::getInstance()),
+  clock(Clock::getInstance()),
   hud(Hud::getInstance()),
-  renderer( rc->getRenderer() ),
-  Sky("Sky", GameData::getInstance().getXmlInt("Sky/factor") ),
-  BackMtns("BackMtns", GameData::getInstance().getXmlInt("BackMtns/factor") ),
-  FrontMtns("FrontMtns", GameData::getInstance().getXmlInt("FrontMtns/factor") ),
-  Road("Road", GameData::getInstance().getXmlInt("Road/factor") ),
-  viewport( Viewport::getInstance() ),
+  renderer(rc->getRenderer()),
+  Sky("Sky", GameData::getInstance().getXmlInt("Sky/factor")),
+  BackMtns("BackMtns", GameData::getInstance().getXmlInt("BackMtns/factor")),
+  FrontMtns("FrontMtns", GameData::getInstance().getXmlInt("FrontMtns/factor")),
+  Road("Road", GameData::getInstance().getXmlInt("Road/factor")),
+  viewport(Viewport::getInstance()),
+  sound(SDL_Sound::getInstance()),
   player(new Player("JetpackCorgi")),
   farFallingSprites(),
   middleFallingSprites(),
@@ -102,6 +103,7 @@ void Engine::draw() const {
 }
 
 void Engine::update(Uint32 ticks) {
+  std::cout << "seconds: " << clock.getSeconds() << std::endl;
   checkForCollisions();
   player->update(ticks);
   for (FallingSprite* s : farFallingSprites) s->update(ticks);
@@ -123,7 +125,6 @@ void Engine::checkForCollisions() {
       for (auto proj : player->getActiveProjectiles()) {
         if (collisionStrategy->execute(*proj, **smartIt)) {
           std::cout << "woof and cat collided" << std::endl;
-          sound[0];
           (*smartIt)->collide();
           (*proj).collide();
         } else if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
@@ -136,7 +137,6 @@ void Engine::checkForCollisions() {
     }
     if (collisionStrategy->execute(*player, **smartIt)) {
       std::cout << "player and cat collided" << std::endl;
-      sound[0];
       (*smartIt)->collide();
       player->collide();
     } else if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
@@ -150,7 +150,7 @@ void Engine::checkForCollisions() {
   }
 }
 
-void Engine::play() {
+bool Engine::play() {
   SDL_Event event;
   const Uint8* keystate;
   bool done = false;
@@ -174,11 +174,14 @@ void Engine::play() {
           hud.setVisibility(!hud.isVisible());
         }
         if (keystate[SDL_SCANCODE_SPACE]) {
-          sound[1];
           player->shoot();
         }
         if (keystate[SDL_SCANCODE_M]) {
           sound.toggleMusic();
+        }
+        if (keystate[SDL_SCANCODE_R]) {
+          clock.unpause();
+          return true;
         }
       }
     }
@@ -203,4 +206,5 @@ void Engine::play() {
       update(ticks);
     }
   }
+  return false;
 }

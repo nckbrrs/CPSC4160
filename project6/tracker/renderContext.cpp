@@ -19,7 +19,7 @@ RenderContext::~RenderContext() {
 }
 
 RenderContext* RenderContext::getInstance() {
-  if ( instance ) return instance;
+  if (instance) return instance;
   instance = new RenderContext;
   return instance;
 }

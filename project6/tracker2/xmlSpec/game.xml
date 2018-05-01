@@ -1,0 +1,188 @@
+<?xml version = "1.0"?>
+<GameData>
+
+<title>Jetpack Corgi | Nick Barrs</title>
+<frameCapOn>true</frameCapOn>
+<period>17</period>
+
+<numClouds>3</numClouds>
+<numDonuts>15</numDonuts>
+<numJetpackCats>10</numJetpackCats>
+
+<view>
+  <width>800</width>
+  <height>400</height>
+</view>
+
+<background>
+  <width>2000</width>
+  <height>400</height>
+</background>
+
+<HUD>
+  <width>180</width>
+  <height>85</height>
+  <position x="20" y="20"/>
+  <backgroundColor r="0" g="0" b="0" a="50."/>
+  <outlineColor r="0" g="0" b="0" a="255"/>
+  <textColor r="0" g="0" b="0" a="0"/>
+</HUD>
+
+<defaultFont>
+  <file>fonts/helvetica.ttf</file>
+  <size>16</size>
+  <red>255</red>
+  <green>255</green>
+  <blue>255</blue>
+  <alpha>255</alpha>
+</defaultFont>
+
+<text>
+  <name>
+    <locX>20</locX>
+    <locY>370</locY>
+    <font>
+      <file>fonts/helvetica.ttf</file>
+      <size>20</size>
+      <red>255</red>
+      <green>165</green>
+      <blue>0</blue>
+      <alpha>255</alpha>
+    </font>
+  </name>
+  <fps>
+    <locX>30</locX>
+    <locY>60</locY>
+    <font>
+      <file>fonts/helvetica.ttf</file>
+      <size>24</size>
+      <red>255</red>
+      <green>165</green>
+      <blue>0</blue>
+      <alpha>255</alpha>
+    </font>
+  </fps>
+</text>
+
+<Sky>
+  <file>images/Sky.bmp</file>
+  <factor>1</factor>
+  <transparency>true</transparency>
+</Sky>
+
+<BackMtns>
+  <file>images/BackMtns.bmp</file>
+  <factor>3</factor>
+  <transparency>true</transparency>
+</BackMtns>
+
+<FrontMtns>
+  <file>images/FrontMtns.bmp</file>
+  <factor>2</factor>
+  <transparency>true</transparency>
+</FrontMtns>
+
+<Road>
+  <file>images/Road.bmp</file>
+  <factor>1</factor>
+  <transparency>true</transparency>
+</Road>
+
+<Cloud>
+  <file>images/Cloud.png</file>
+  <startPos x="50" y="50"/>
+  <startVel x="50" y="50"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="2000" y="150"/>
+  <frames>1</frames>
+  <frameInterval>4294967295</frameInterval>
+  <twoWay>false</twoWay>
+  <imageWidth>64</imageWidth>
+  <imageHeight>32</imageHeight>
+  <scale>2.0</scale>
+  <transparency>false</transparency>
+</Cloud>
+
+<Donut>
+  <file>images/Donut.png</file>
+  <startPos x="50" y="50"/>
+  <startVel x="0" y="50"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="2000" y="400"/>
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+  <twoWay>false</twoWay>
+  <imageWidth>64</imageWidth>
+  <imageHeight>64</imageHeight>
+  <scale>1.0</scale>
+  <transparency>false</transparency>
+</Donut>
+
+<Explosion>
+  <file>images/Explosion.png</file>
+  <startPos x="0" y="0"/>
+  <startVel x="0" y="0"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="2000" y="150"/>
+  <frames>4</frames>
+  <frameInterval>100</frameInterval>
+  <twoWay>false</twoWay>
+  <imageWidth>64</imageWidth>
+  <imageHeight>64</imageHeight>
+  <scale>2.0</scale>
+  <transparency>false</transparency>
+</Explosion>
+
+<JetpackCorgi>
+  <file>images/JetpackCorgi.png</file>
+  <startPos x="30" y="280"/>
+  <startVel x="300" y="400"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="2000" y="400"/>
+  <frames>4</frames>
+  <frameInterval>200</frameInterval>
+  <twoWay>true</twoWay>
+  <imageWidth>64</imageWidth>
+  <imageHeight>64</imageHeight>
+  <scale>2.0</scale>
+  <slowDownFactor>0.30</slowDownFactor>
+  <transparency>false</transparency>
+  <projectileName>Woof</projectileName>
+</JetpackCorgi>
+
+<JetpackCat>
+  <file>images/JetpackCat.png</file>
+  <startPos x="500" y="100"/>
+  <startVel x="200" y="200"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="2000" y="400"/>
+  <frames>4</frames>
+  <frameInterval>200</frameInterval>
+  <twoWay>true</twoWay>
+  <imageWidth>64</imageWidth>
+  <imageHeight>64</imageHeight>
+  <scale>1.5</scale>
+  <slowDownFactor>0.30</slowDownFactor>
+  <safeDistance>175</safeDistance>
+  <transparency>false</transparency>
+</JetpackCat>
+
+<Woof>
+  <file>images/Woof.png</file>
+  <startPos x="0" y="0"/>
+  <startVel x="0" y="0"/>
+  <minPosBoundary x="0" y="0"/>
+  <maxPosBoundary x="2000" y="400"/>
+  <frames>2</frames>
+  <frameInterval>0</frameInterval>
+  <twoWay>true</twoWay>
+  <imageWidth>32</imageWidth>
+  <imageHeight>16</imageHeight>
+  <scale>2.0</scale>
+  <transparency>false</transparency>
+  <minSpeed>400</minSpeed>
+  <interval>500</interval>
+  <maxDistance>400</maxDistance>
+</Woof>
+
+</GameData>

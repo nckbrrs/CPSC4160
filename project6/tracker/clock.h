@@ -8,6 +8,7 @@ public:
   static Clock& getInstance();
   unsigned int getTicks() const;
   unsigned int getSeconds() const { return getTicks()/1000;  }
+  void startClock();
 
 private:
   friend class Engine;
@@ -36,7 +37,6 @@ private:
   unsigned int capFrameRate() const;
   int getFps() const;
 
-  void startClock();
   void pause();
   void unpause();
 

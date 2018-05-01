@@ -6,6 +6,7 @@
 #include "gameData.h"
 #include "player.h"
 #include "clock.h"
+#include "sound.h"
 
 SmartSprite::SmartSprite(const std::string& name, const Player* p) :
   Sprite(name),
@@ -46,8 +47,8 @@ void SmartSprite::randomizeVelocity() {
 void SmartSprite::randomizePosition() {
   float px = getPositionX();
   float py = getPositionY();
-  float newpx = GameData::getInstance().getRandFloat(px-50, px+50);
-  float newpy = GameData::getInstance().getRandFloat(py-50, py+50);
+  float newpx = GameData::getInstance().getRandFloat(px-200, px+200);
+  float newpy = GameData::getInstance().getRandFloat(py-200, py+200);
   newpx *= [](){ if(rand()%2) return -1; else return 1; }();
   newpy *= [](){ if(rand()%2) return -1; else return 1; }();
   setPosition(Vector2f(newpx, newpy));
@@ -121,6 +122,7 @@ void SmartSprite::update(Uint32 ticks) {
 }
 
 void SmartSprite::collide() {
+  SDL_Sound::getInstance()[0];
   collided = true;
   colliding = true;
   setVelocityX(0);

@@ -7,7 +7,6 @@
 
 <numClouds>3</numClouds>
 <numDonuts>15</numDonuts>
-<numExplosions>2</numExplosions>
 <numJetpackCats>10</numJetpackCats>
 
 <view>
@@ -41,7 +40,7 @@
 <text>
   <name>
     <locX>20</locX>
-    <locY>330</locY>
+    <locY>370</locY>
     <font>
       <file>fonts/arial.ttf</file>
       <size>20</size>
@@ -51,18 +50,6 @@
       <alpha>255</alpha>
     </font>
   </name>
-  <tracking>
-    <locX>30</locX>
-    <locY>30</locY>
-    <font>
-      <file>fonts/arial.ttf</file>
-      <size>24</size>
-      <red>255</red>
-      <green>165</green>
-      <blue>0</blue>
-      <alpha>255</alpha>
-    </font>
-  </tracking>
   <fps>
     <locX>30</locX>
     <locY>60</locY>

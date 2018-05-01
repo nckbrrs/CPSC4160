@@ -20,7 +20,7 @@ Clock::Clock() :
   timeAtStart(0),
   timeAtPause(0),
   currTicks(0), prevTicks(0), ticks(0)
-  {
+{
   startClock();
 }
 

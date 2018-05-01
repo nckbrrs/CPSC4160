@@ -18,7 +18,7 @@
 
 class SDL_Sound {
 public:
-  SDL_Sound();
+  static SDL_Sound& getInstance();
   ~SDL_Sound();
 
   void startMusic();
@@ -35,6 +35,8 @@ private:
   int audioBuffers;
   std::vector<Mix_Chunk*> sounds;
   std::vector<int> channels;
+
+  SDL_Sound();
   SDL_Sound(const SDL_Sound&);
   SDL_Sound& operator=(const SDL_Sound&);
 };

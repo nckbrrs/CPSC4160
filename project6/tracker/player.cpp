@@ -3,6 +3,7 @@
 #include "smartSprite.h"
 #include "dumbSprite.h"
 #include "clock.h"
+#include "sound.h"
 
 Player::Player(const std::string& name) :
   Sprite(name),
@@ -165,6 +166,7 @@ void Player::update(Uint32 ticks) {
 }
 
 void Player::collide() {
+  SDL_Sound::getInstance()[0];
   collision = true;
   explosion = new DumbSprite("Explosion");
   explosion->setPosition(getPosition());
@@ -191,6 +193,7 @@ void Player::detach(SmartSprite* o) {
 void Player::shoot() {
   if (!collision) {
     if (timeSinceLastShot < projectileInterval) return;
+    SDL_Sound::getInstance()[1];
     float x = getScaledWidth();
     float y = getScaledHeight()/2;
 
