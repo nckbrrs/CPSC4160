@@ -1,14 +1,14 @@
-#ifndef HUD__H
-#define HUD__H
+#ifndef HudMainMAIN__H
+#define HudMainMAIN__H
 
 #include <iostream>
 #include <string>
 #include <SDL.h>
 #include "vector2f.h"
 
-class Hud {
+class HudMain {
 public:
-  static Hud& getInstance();
+  static HudMain& getInstance();
 
   int getWidth() const { return width; }
   int getHeight() const { return height; }
@@ -37,8 +37,8 @@ private:
   SDL_Color outlineColor;
   SDL_Color textColor;
 
-  Hud();
-  Hud(const Hud&);
-  Hud& operator=(const Hud&);
+  HudMain();
+  HudMain(const HudMain&);
+  HudMain& operator=(const HudMain&);
 };
 #endif

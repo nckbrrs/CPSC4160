@@ -19,14 +19,14 @@
   <height>400</height>
 </background>
 
-<HUD>
+<hudMain>
   <width>180</width>
   <height>85</height>
   <position x="20" y="20"/>
   <backgroundColor r="0" g="0" b="0" a="50."/>
   <outlineColor r="0" g="0" b="0" a="255"/>
   <textColor r="0" g="0" b="0" a="0"/>
-</HUD>
+</hudMain>
 
 <defaultFont>
   <file>fonts/helvetica.ttf</file>

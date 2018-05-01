@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include "ioMod.h"
 #include "clock.h"
-#include "hud.h"
+#include "hudMain.h"
 #include "background.h"
 #include "viewport.h"
 #include "renderContext.h"
@@ -27,15 +27,15 @@ private:
   const RenderContext* rc;
   const IoMod& io;
   Clock& clock;
-  Hud& hud;
+  HudMain& hudMain;
+  Viewport& viewport;
+  SDL_Sound& sound;
   SDL_Renderer * const renderer;
 
   Background Sky;
   Background BackMtns;
   Background FrontMtns;
   Background Road;
-  Viewport& viewport;
-  SDL_Sound& sound;
 
   Player* player;
   std::vector<FallingSprite*> farFallingSprites;
