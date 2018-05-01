@@ -37,7 +37,7 @@ Engine::~Engine() {
   closeFallingSprites.clear();
 
   delete collisionStrategy;
-  std::cout << "Terminating program" << std::endl;
+  std::cout << "terminating program..." << std::endl;
 }
 
 Engine::Engine() :
@@ -97,7 +97,7 @@ Engine::Engine() :
   }
 
   Viewport::getInstance().setObjectToTrack(player);
-  std::cout << "Loading complete" << std::endl;
+  std::cout << "loading complete!" << std::endl;
 }
 
 void Engine::draw() const {
@@ -113,13 +113,11 @@ void Engine::draw() const {
   player->draw();
   hudMain.draw();
   hudObjPool.draw(player->getActiveProjectiles().size(), player->getFreeProjectiles().size());
-  viewport.draw();
+  viewport.draw(player->getLivesLeft(), smartSprites.size());
   SDL_RenderPresent(renderer);
 }
 
 void Engine::update(Uint32 ticks) {
-  //std::cout << "num cats remaining: " << smartSprites.size() << std::endl;
-  //std::cout << "num woofs existing: " << player->getActiveProjectiles().size() + player->getFreeProjectiles().size() << std::endl;
   checkForCollisions();
   player->update(ticks);
   for (FallingSprite* s : farFallingSprites) s->update(ticks);
@@ -135,27 +133,27 @@ void Engine::update(Uint32 ticks) {
 }
 
 void Engine::checkForCollisions() {
-  bool updateIterator = true;
   auto smartIt = smartSprites.begin();
   while (smartIt != smartSprites.end()) {
     if (!(player->getActiveProjectiles().empty())) {
       for (auto proj : player->getActiveProjectiles()) {
         if (collisionStrategy->execute(*proj, **smartIt)) {
-          std::cout << "woof hit cat!" << std::endl;
           (*smartIt)->collide();
           (*proj).collide();
         }
-        if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
-          SmartSprite* deadSmartSprite = *smartIt;
-          player->detach(deadSmartSprite);
-          smartIt = smartSprites.erase(smartIt);
-          delete deadSmartSprite;
-          updateIterator = false;
-        }
       }
     }
-    if ( updateIterator ) ++smartIt;
-    updateIterator = true;
+    if ((collisionStrategy->execute(*player, **smartIt))) {
+      player->collide();
+    }
+    if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
+      SmartSprite* deadSmartSprite = *smartIt;
+      player->detach(deadSmartSprite);
+      smartIt = smartSprites.erase(smartIt);
+      delete deadSmartSprite;
+    } else {
+      ++smartIt;;
+    }
   }
 }
 
@@ -178,6 +176,7 @@ bool Engine::play() {
         if (keystate[SDL_SCANCODE_P]) {
           if (clock.isPaused()) clock.unpause();
           else clock.pause();
+          sound.toggleMusic();
         }
         if (keystate[SDL_SCANCODE_F1]) {
           hudMain.setVisibility(!hudMain.isVisible());

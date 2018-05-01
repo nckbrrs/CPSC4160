@@ -31,6 +31,7 @@ public:
 
   std::list<Projectile*> getActiveProjectiles() const { return activeProjectiles; }
   std::list<Projectile*> getFreeProjectiles() const { return freeProjectiles; }
+  unsigned int getLivesLeft() const { return livesLeft; }
 
 private:
   bool facingRight;
@@ -43,6 +44,7 @@ private:
   std::string projectileName;
   std::list<Projectile*> activeProjectiles;
   std::list<Projectile*> freeProjectiles;
+  unsigned int livesLeft;
 
   float minSpeed;
   float projectileInterval;

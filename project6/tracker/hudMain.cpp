@@ -47,11 +47,14 @@ void HudMain::draw() {
     SDL_RenderDrawRect(renderer, &r);
 
     std::string textToWrite;
-    textToWrite += "- WASD to move";
-    textToWrite += "\n- SPACE to shoot";
-    textToWrite += "\n- M to toggle music";
-    textToWrite += "\n- F1 to toggle this HUD";
-    textToWrite += "\n- R to restart";
+    textToWrite += "         CONTROLS";
+    textToWrite += "\n ---------------------------";
+    textToWrite += "\n - WASD to move";
+    textToWrite += "\n - SPACE to bark";
+    textToWrite += "\n - F1 to toggle this HUD";
+    textToWrite += "\n - M to toggle music";
+    textToWrite += "\n - P to pause";
+    textToWrite += "\n - R to restart";
 
     IoMod::getInstance().writeTextWrapped(textToWrite,
                           getPosition()[0]+5,

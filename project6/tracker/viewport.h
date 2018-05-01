@@ -6,7 +6,7 @@
 class Viewport {
 public:
   static Viewport& getInstance();
-  void draw() const;
+  void draw(int, int) const;
   void update();
 
   Vector2f getPosition() const { return position; }

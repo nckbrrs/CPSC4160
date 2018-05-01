@@ -17,6 +17,7 @@ Player::Player(const std::string& name) :
   projectileName(GameData::getInstance().getXmlStr(name+"/projectileName")),
   activeProjectiles(),
   freeProjectiles(),
+  livesLeft(3),
   minSpeed(GameData::getInstance().getXmlInt(projectileName+"/minSpeed")),
   projectileInterval(GameData::getInstance().getXmlInt(projectileName+"/interval")),
   timeSinceLastShot(4294967295)
@@ -34,6 +35,7 @@ Player::Player(const Player& s) :
   projectileName(s.projectileName),
   activeProjectiles(s.activeProjectiles),
   freeProjectiles(s.freeProjectiles),
+  livesLeft(s.livesLeft),
   minSpeed(s.minSpeed),
   projectileInterval(s.projectileInterval),
   timeSinceLastShot(s.timeSinceLastShot)
@@ -50,6 +52,7 @@ Player& Player::operator= (const Player& s) {
   projectileName = s.projectileName;
   activeProjectiles = s.activeProjectiles;
   freeProjectiles = s.freeProjectiles;
+  livesLeft = s.livesLeft;
   minSpeed = s.minSpeed;
   projectileInterval = s.projectileInterval;
   timeSinceLastShot = s.timeSinceLastShot;
@@ -168,11 +171,16 @@ void Player::update(Uint32 ticks) {
 void Player::collide() {
   SDL_Sound::getInstance()[0];
   collision = true;
+  livesLeft--;
   explosion = new DumbSprite("Explosion");
   explosion->setPosition(getPosition());
   explosion->setVelocityX(0);
   explosion->setVelocityY(0);
   explosionStartTime = Clock::getInstance().getSeconds();
+
+  if (livesLeft == 0) {
+    std::cout << "Oh no! You died!" << std::endl;
+  }
 }
 
 void Player::attach(SmartSprite* o) {
@@ -200,7 +208,6 @@ void Player::shoot() {
     // object pooling
     if (freeProjectiles.empty()) {
       Projectile *p = new Projectile(projectileName);
-      //activeProjectiles.push_back(p);
       if (getVelocityX() > 0 || (getVelocityX() == 0 && facingRight)) {
         p->setPosition(getPosition() + Vector2f(3*x/4, y));
         p->setStartingPos(p->getPosition());
@@ -211,16 +218,7 @@ void Player::shoot() {
         p->setVelocity(getVelocity() + Vector2f(-minSpeed, 0));
       }
       activeProjectiles.push_back(p);
-      /*
-      if (getVelocityX() > 0 || (getVelocityX() == 0 && facingRight)) {
-        activeProjectiles.back()->setPosition(getPosition() + Vector2f(3*x/4, y));
-        activeProjectiles.back()->setStartingPos(activeProjectiles.back()->getPosition());
-        activeProjectiles.back()->setVelocity(getVelocity() + Vector2f(minSpeed, 0));
-      } else {
-        activeProjectiles.back()->setPosition(getPosition() + Vector2f(-x/4, y));
-        activeProjectiles.back()->setStartingPos(activeProjectiles.back()->getPosition());
-        activeProjectiles.back()->setVelocity(getVelocity() + Vector2f(-minSpeed, 0));
-      }*/
+
     } else {
       Projectile *p = freeProjectiles.front();
       freeProjectiles.pop_front();

@@ -47,6 +47,8 @@ void HudObjPool::draw(int activeProj, int freeProj) {
     SDL_RenderDrawRect(renderer, &r);
 
     std::string textToWrite;
+    textToWrite += "        OBJECT POOL";
+    textToWrite += "\n --------------------------";
     textToWrite += "\n - active WOOFs: " + std::to_string(activeProj);
     textToWrite += "\n - free WOOFs: " + std::to_string(freeProj);
 

@@ -24,17 +24,41 @@ void Viewport::setObjectToTrack(const Sprite *obj) {
   objHeight = objectToTrack->getScaledHeight();
 }
 
-void Viewport::draw() const {
-  SDL_Color nameColor = {static_cast<Uint8>(gdata.getXmlInt("text/name/font/red")),
-                        static_cast<Uint8>(gdata.getXmlInt("text/name/font/green")),
-                        static_cast<Uint8>(gdata.getXmlInt("text/name/font/blue")),
-                        static_cast<Uint8>(gdata.getXmlInt("text/name/font/alpha"))};
+void Viewport::draw(int numLivesLeft, int numCatsLeft) const {
+  SDL_Color black = {static_cast<Uint8>(0), static_cast<Uint8>(0), static_cast<Uint8>(0), static_cast<Uint8>(255)};
 
-  IoMod::getInstance().
-    writeText("Nick Barrs",
-              gdata.getXmlInt("text/name/locX"),
-              gdata.getXmlInt("text/name/locY"),
-              nameColor);
+  // drop shadow
+  IoMod::getInstance().writeText("NICK BARRS",
+    gdata.getXmlInt("text/name/locX")-1,
+    gdata.getXmlInt("text/name/locY")+1,
+    black);
+
+  // regular text
+  IoMod::getInstance().writeText("NICK BARRS",
+    gdata.getXmlInt("text/name/locX"),
+    gdata.getXmlInt("text/name/locY"));
+
+  // drop shadow
+  IoMod::getInstance().writeText("LIVES LEFT: " + std::to_string(numLivesLeft),
+    gdata.getXmlInt("text/livesLeft/locX")-1,
+    gdata.getXmlInt("text/livesLeft/locY")+1,
+    black);
+
+  // regular text
+  IoMod::getInstance().writeText("LIVES LEFT: " + std::to_string(numLivesLeft),
+    gdata.getXmlInt("text/livesLeft/locX"),
+    gdata.getXmlInt("text/livesLeft/locY"));
+
+  // drop shadow
+  IoMod::getInstance().writeText("CATS REMAINING: " + std::to_string(numCatsLeft),
+    gdata.getXmlInt("text/catsRemaining/locX")-1,
+    gdata.getXmlInt("text/catsRemaining/locY")+1,
+    black);
+
+  // regular text
+  IoMod::getInstance().writeText("CATS REMAINING: " + std::to_string(numCatsLeft),
+    gdata.getXmlInt("text/catsRemaining/locX"),
+    gdata.getXmlInt("text/catsRemaining/locY"));
 }
 
 void Viewport::update() {
