@@ -1,7 +1,6 @@
 #include <sstream>
 #include "viewport.h"
 #include "ioMod.h"
-#include "clock.h"
 
 Viewport& Viewport::getInstance() {
   static Viewport viewport;

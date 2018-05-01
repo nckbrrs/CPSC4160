@@ -7,10 +7,10 @@ class Clock {
 public:
   static Clock& getInstance();
   unsigned int getTicks() const;
+  unsigned int getSeconds() const { return getTicks()/1000;  }
 
 private:
   friend class Engine;
-  friend class Viewport; // added in order to write FPS to screen in Viewport
 
   bool started;
   bool paused;
@@ -33,7 +33,6 @@ private:
   bool isStarted() const { return started; }
   bool isPaused() const  { return paused;  }
   unsigned int getFrames() const  { return frames;  }
-  unsigned int getSeconds() const { return getTicks()/1000;  }
   unsigned int capFrameRate() const;
   int getFps() const;
 

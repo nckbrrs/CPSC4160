@@ -1,6 +1,5 @@
 #include <iostream>
 #include <algorithm>
-#include <ctime>
 #include <sstream>
 #include <string>
 #include <random>
@@ -52,6 +51,7 @@ Engine::Engine() :
   for (i=0; i<n; i++) {
     smartSprites.push_back(new SmartSprite("JetpackCat", player));
     smartSprites.back()->randomizeVelocity();
+    smartSprites.back()->randomizePosition();
     player->attach(smartSprites[i]);
   }
 
@@ -119,9 +119,27 @@ void Engine::update(Uint32 ticks) {
 void Engine::checkForCollisions() {
   auto smartIt = smartSprites.begin();
   while (smartIt != smartSprites.end()) {
+    if (!(player->getActiveProjectiles().empty())) {
+      for (auto proj : player->getActiveProjectiles()) {
+        if (collisionStrategy->execute(*proj, **smartIt)) {
+          std::cout << "woof and cat collided" << std::endl;
+          sound[0];
+          (*smartIt)->collide();
+          (*proj).collide();
+        } else if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
+          SmartSprite* deadSmartSprite = *smartIt;
+          player->detach(deadSmartSprite);
+          delete deadSmartSprite;
+          smartIt = smartSprites.erase(smartIt);
+        }
+      }
+    }
     if (collisionStrategy->execute(*player, **smartIt)) {
-      (*smartIt)->collided();
-      player->collided();
+      std::cout << "player and cat collided" << std::endl;
+      sound[0];
+      (*smartIt)->collide();
+      player->collide();
+    } else if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
       SmartSprite* deadSmartSprite = *smartIt;
       player->detach(deadSmartSprite);
       delete deadSmartSprite;
@@ -155,11 +173,12 @@ void Engine::play() {
         if (keystate[SDL_SCANCODE_F1]) {
           hud.setVisibility(!hud.isVisible());
         }
-        if (keystate[SDL_SCANCODE_E]) {
-          player->collided();
-        }
         if (keystate[SDL_SCANCODE_SPACE]) {
+          sound[1];
           player->shoot();
+        }
+        if (keystate[SDL_SCANCODE_M]) {
+          sound.toggleMusic();
         }
       }
     }
@@ -168,19 +187,16 @@ void Engine::play() {
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
       clock.incrFrame();
-      if (keystate[SDL_SCANCODE_A]) {
+      if (keystate[SDL_SCANCODE_A] && !keystate[SDL_SCANCODE_D]) {
         static_cast<Player*>(player)->moveLeft();
-        for (int i=0; i<100; i++) {
-          IoMod::getInstance().writeText("pressing A", 50, 50);
-        }
       }
-      if (keystate[SDL_SCANCODE_D]) {
+      if (keystate[SDL_SCANCODE_D] && !keystate[SDL_SCANCODE_A]) {
         static_cast<Player*>(player)->moveRight();
       }
-      if (keystate[SDL_SCANCODE_W]) {
+      if (keystate[SDL_SCANCODE_W] && !keystate[SDL_SCANCODE_S]) {
         static_cast<Player*>(player)->moveUp();
       }
-      if (keystate[SDL_SCANCODE_S]) {
+      if (keystate[SDL_SCANCODE_S] && !keystate[SDL_SCANCODE_W]) {
         static_cast<Player*>(player)->moveDown();
       }
       draw();

@@ -2,7 +2,6 @@
 #define SMARTSPRITE__H
 
 #include <string>
-#include <ctime>
 #include "sprite.h"
 
 class Player;
@@ -16,7 +15,7 @@ public:
 
   virtual void draw() const;
   virtual void update(Uint32 ticks);
-  virtual void collided();
+  virtual void collide();
 
   enum Mode {Normal, Evade};
 
@@ -25,7 +24,8 @@ public:
   int getPlayerHeight() const          { return playerHeight; }
   float getSafeDistance() const        { return safeDistance; }
   Mode getCurrentMode() const          { return currentMode; }
-  bool isColliding() const             { return collision; }
+  bool hasCollided() const             { return collided; }
+  bool isColliding() const             { return colliding; }
 
   void setPlayerPos(const Vector2f& p) { playerPos = p; }
   void setPlayerWidth(int w)           { playerWidth = w; }
@@ -33,6 +33,7 @@ public:
   void setSafeDistance(float sd)       { safeDistance = sd; }
   void setCurrentMode(Mode m)          { currentMode = m; }
   void randomizeVelocity();
+  void randomizePosition();
 
 private:
   Mode currentMode;
@@ -40,9 +41,10 @@ private:
   int playerWidth;
   int playerHeight;
   float safeDistance;
-  bool collision;
+  bool collided;
+  bool colliding;
   DumbSprite* explosion;
-  clock_t explosionStartTime;
+  unsigned int explosionStartTime;
 
   void moveLeft()  { setVelocityX(-abs(getVelocityX()));  }
   void moveRight() { setVelocityX(fabs(getVelocityX()));  }

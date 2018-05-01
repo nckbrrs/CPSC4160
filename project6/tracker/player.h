@@ -3,7 +3,6 @@
 
 #include <list>
 #include <cmath>
-#include <ctime>
 #include "sprite.h"
 #include "projectile.h"
 
@@ -27,7 +26,7 @@ public:
   void stop();
   void attach(SmartSprite* o);
   void detach(SmartSprite* o);
-  void collided();
+  void collide();
   void shoot();
 
   std::list<Projectile*> getActiveProjectiles() const { return activeProjectiles; }
@@ -40,7 +39,7 @@ private:
   Vector2f startingVelocity;
   float slowDownFactor;
   DumbSprite* explosion;
-  clock_t explosionStartTime;
+  unsigned int explosionStartTime;
   std::string projectileName;
   std::list<Projectile*> activeProjectiles;
   std::list<Projectile*> freeProjectiles;

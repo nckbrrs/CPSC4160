@@ -1,18 +1,18 @@
 <?xml version = "1.0"?>
 <GameData>
 
-<title>Nick Barrs's Tracker Framework</title>
+<title>Jetpack Corgi | Nick Barrs</title>
 <frameCapOn>true</frameCapOn>
 <period>17</period>
 
-<numClouds>0</numClouds>
-<numDonuts>25</numDonuts>
+<numClouds>3</numClouds>
+<numDonuts>15</numDonuts>
 <numExplosions>2</numExplosions>
-<numJetpackCats>4</numJetpackCats>
+<numJetpackCats>10</numJetpackCats>
 
 <view>
-  <width>640</width>
-  <height>360</height>
+  <width>800</width>
+  <height>400</height>
 </view>
 
 <background>
@@ -78,31 +78,31 @@
 </text>
 
 <Sky>
-  <file>assets/Sky.bmp</file>
+  <file>images/Sky.bmp</file>
   <factor>1</factor>
   <transparency>true</transparency>
 </Sky>
 
 <BackMtns>
-  <file>assets/BackMtns.bmp</file>
+  <file>images/BackMtns.bmp</file>
   <factor>3</factor>
   <transparency>true</transparency>
 </BackMtns>
 
 <FrontMtns>
-  <file>assets/FrontMtns.bmp</file>
+  <file>images/FrontMtns.bmp</file>
   <factor>2</factor>
   <transparency>true</transparency>
 </FrontMtns>
 
 <Road>
-  <file>assets/Road.bmp</file>
+  <file>images/Road.bmp</file>
   <factor>1</factor>
   <transparency>true</transparency>
 </Road>
 
 <Cloud>
-  <file>assets/Cloud.png</file>
+  <file>images/Cloud.png</file>
   <startPos x="50" y="50"/>
   <startVel x="50" y="50"/>
   <minPosBoundary x="0" y="0"/>
@@ -117,7 +117,7 @@
 </Cloud>
 
 <Donut>
-  <file>assets/Donut.png</file>
+  <file>images/Donut.png</file>
   <startPos x="50" y="50"/>
   <startVel x="0" y="50"/>
   <minPosBoundary x="0" y="0"/>
@@ -132,7 +132,7 @@
 </Donut>
 
 <Explosion>
-  <file>assets/Explosion.png</file>
+  <file>images/Explosion.png</file>
   <startPos x="0" y="0"/>
   <startVel x="0" y="0"/>
   <minPosBoundary x="0" y="0"/>
@@ -147,7 +147,7 @@
 </Explosion>
 
 <JetpackCorgi>
-  <file>assets/JetpackCorgi.png</file>
+  <file>images/JetpackCorgi.png</file>
   <startPos x="30" y="280"/>
   <startVel x="300" y="400"/>
   <minPosBoundary x="0" y="0"/>
@@ -164,7 +164,7 @@
 </JetpackCorgi>
 
 <JetpackCat>
-  <file>assets/JetpackCat.png</file>
+  <file>images/JetpackCat.png</file>
   <startPos x="500" y="100"/>
   <startVel x="200" y="200"/>
   <minPosBoundary x="0" y="0"/>
@@ -174,14 +174,14 @@
   <twoWay>true</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
-  <scale>2.0</scale>
+  <scale>1.5</scale>
   <slowDownFactor>0.30</slowDownFactor>
   <safeDistance>175</safeDistance>
   <transparency>false</transparency>
 </JetpackCat>
 
 <Woof>
-  <file>assets/Woof.png</file>
+  <file>images/Woof.png</file>
   <startPos x="0" y="0"/>
   <startVel x="0" y="0"/>
   <minPosBoundary x="0" y="0"/>
@@ -195,7 +195,7 @@
   <transparency>false</transparency>
   <minSpeed>400</minSpeed>
   <interval>500</interval>
-  <maxDistance>1100</maxDistance>
+  <maxDistance>400</maxDistance>
 </Woof>
 
 </GameData>

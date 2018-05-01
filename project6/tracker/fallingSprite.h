@@ -9,7 +9,7 @@ public:
   FallingSprite(const FallingSprite& s) : Sprite(s) { }
   virtual ~FallingSprite() { }
   virtual void update(Uint32 ticks);
-  virtual void collided();
+  virtual void collide();
   void randomizeVelocity();
   void randomizePosition();
 };

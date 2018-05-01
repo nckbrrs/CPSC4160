@@ -14,7 +14,7 @@ public:
   Sprite(const std::string& n) :
     name(n),
     images(RenderContext::getInstance()->getImages(name)),
-    scale(GameData::getInstance().getXmlInt(name+"/scale")),
+    scale(GameData::getInstance().getXmlFloat(name+"/scale")),
     position(Vector2f(GameData::getInstance().getXmlInt(name+"/startPos/x"),
                       GameData::getInstance().getXmlInt(name+"/startPos/y"))),
     velocity(Vector2f(GameData::getInstance().getXmlInt(name+"/startVel/x"),
@@ -48,7 +48,7 @@ public:
   virtual ~Sprite() {}
 
   virtual void update(Uint32 ticks) = 0;
-  virtual void collided() = 0;
+  virtual void collide() = 0;
   virtual void draw() const { images[currentFrame]->draw(position[0], position[1], scale); }
 
   int getScaledWidth() const            { return getScale()*images[currentFrame]->getWidth(); }

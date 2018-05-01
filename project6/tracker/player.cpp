@@ -1,8 +1,8 @@
-#include <ctime>
 #include "gameData.h"
 #include "player.h"
 #include "smartSprite.h"
 #include "dumbSprite.h"
+#include "clock.h"
 
 Player::Player(const std::string& name) :
   Sprite(name),
@@ -107,7 +107,7 @@ void Player::update(Uint32 ticks) {
   if (collision) {
     explosion->update(ticks);
     activeProjectiles.clear();
-    if (((clock() - explosionStartTime) / (double)CLOCKS_PER_SEC) > 0.5) {
+    if ((Clock::getInstance().getSeconds() - explosionStartTime) >= 2) {
       collision = false;
       delete explosion;
       explosion = NULL;
@@ -132,16 +132,16 @@ void Player::update(Uint32 ticks) {
     setPosition(getPosition() + (getVelocity() * static_cast<float>(ticks) * 0.001));
 
     if (getPositionY() < getMinPosBoundaryY()) {
-      setVelocityY(std::abs(getVelocityY()));
+      setVelocityY(0);
     }
     if (getPositionY() > getMaxPosBoundaryY() - getScaledHeight()) {
-      setVelocityY(-std::abs(getVelocityY()));
+      setVelocityY(0);
     }
     if ( getPositionX() < getMinPosBoundaryX()) {
-      setVelocityX(std::abs(getVelocityX()));
+      setVelocityX(0);
     }
     if ( getPositionX() > getMaxPosBoundaryX() - getScaledWidth()) {
-      setVelocityX(-std::abs(getVelocityX()));
+      setVelocityX(0);
     }
   }
 
@@ -164,13 +164,13 @@ void Player::update(Uint32 ticks) {
   stop();
 }
 
-void Player::collided() {
+void Player::collide() {
   collision = true;
   explosion = new DumbSprite("Explosion");
   explosion->setPosition(getPosition());
   explosion->setVelocityX(0);
   explosion->setVelocityY(0);
-  explosionStartTime = clock();
+  explosionStartTime = Clock::getInstance().getSeconds();
 }
 
 void Player::attach(SmartSprite* o) {

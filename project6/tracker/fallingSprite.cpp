@@ -39,6 +39,6 @@ void FallingSprite::update(Uint32 ticks) {
   }
 }
 
-void FallingSprite::collided() {
-  std::cout << "falling sprite " << getName() << "collided who cares" << std::endl;
+void FallingSprite::collide() {
+  std::cout << "fallingSprite " << getName() << "collided" << std::endl;
 }

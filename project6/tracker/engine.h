@@ -5,6 +5,7 @@
 #include "background.h"
 #include "viewport.h"
 #include "renderContext.h"
+#include "sound.h"
 
 class Player;
 class DumbSprite;
@@ -28,6 +29,7 @@ private:
   Clock& clock;
   Hud& hud;
   SDL_Renderer * const renderer;
+  SDL_Sound sound;
 
   Background Sky;
   Background BackMtns;

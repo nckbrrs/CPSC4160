@@ -56,6 +56,6 @@ void DumbSprite::update(Uint32 ticks) {
   }
 }
 
-void DumbSprite::collided() {
-  std::cout << "dumb sprite " << getName() << "collided who cares" << std::endl;
+void DumbSprite::collide() {
+  std::cout << "dumbSprite " << getName() << " collided" << std::endl;
 }

@@ -9,7 +9,7 @@ public:
   DumbSprite(const DumbSprite& s) : Sprite(s) { }
   virtual ~DumbSprite() { }
   virtual void update(Uint32 ticks);
-  virtual void collided();
+  virtual void collide();
   void randomizeVelocity();
   void randomizePosition();
 };
