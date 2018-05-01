@@ -13,7 +13,7 @@ int main(int, char*[]) {
        delete engine;
        Clock::getInstance().startClock();
        SDL_Sound::getInstance().startMusic();
-       HudMain::getInstance().setVisibility(true);
+       Hud::getInstance().setVisibility(true);
      }
      delete RenderContext::getInstance();
 

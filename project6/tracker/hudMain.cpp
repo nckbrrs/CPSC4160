@@ -31,7 +31,7 @@ HudMain::HudMain() :
              static_cast<Uint8>(GameData::getInstance().getXmlInt("hudMain/textColor/a"))})
 { }
 
-void HudMain::draw(int activeProj, int freeProj) {
+void HudMain::draw() {
   if (isVisible()) {
     SDL_Rect r;
     r.x = getPosition()[0];
@@ -52,11 +52,6 @@ void HudMain::draw(int activeProj, int freeProj) {
     textToWrite += "\n- M to toggle music";
     textToWrite += "\n- F1 to toggle this HUD";
     textToWrite += "\n- R to restart";
-
-    /*
-    textToWrite += "\n - active WOOFs: " + std::to_string(activeProj);
-    textToWrite += "\n - free WOOFs: " + std::to_string(freeProj);
-    */
 
     IoMod::getInstance().writeTextWrapped(textToWrite,
                           getPosition()[0]+5,

@@ -37,6 +37,7 @@ SDL_Sound::SDL_Sound() :
   sounds.push_back(Mix_LoadWAV("sounds/explosion.wav"));
   sounds.push_back(Mix_LoadWAV("sounds/woof.wav"));
   for (unsigned int i = 0; i < sounds.size(); ++i) channels.push_back(i);
+  std::cout << "Music and Sound is loaded" << std::endl;
 }
 
 void SDL_Sound::toggleMusic() {

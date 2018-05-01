@@ -11,10 +11,10 @@
 #include "fallingSprite.h"
 #include "player.h"
 #include "collisionStrategy.h"
+#include "hud.h"
 
 Engine::~Engine() {
   delete player;
-
   for (DumbSprite* ds : dumbSprites) {
     delete ds;
   }
@@ -23,19 +23,6 @@ Engine::~Engine() {
     delete ss;
   }
   smartSprites.clear();
-  for (FallingSprite* fs : farFallingSprites) {
-    delete fs;
-  }
-  farFallingSprites.clear();
-  for (FallingSprite* fs : middleFallingSprites) {
-    delete fs;
-  }
-  middleFallingSprites.clear();
-  for (FallingSprite* fs : closeFallingSprites) {
-    delete fs;
-  }
-  closeFallingSprites.clear();
-
   delete collisionStrategy;
   std::cout << "Terminating program" << std::endl;
 }
@@ -44,14 +31,14 @@ Engine::Engine() :
   rc(RenderContext::getInstance()),
   io(IoMod::getInstance()),
   clock(Clock::getInstance()),
-  hudMain(HudMain::getInstance()),
-  viewport(Viewport::getInstance()),
-  sound(SDL_Sound::getInstance()),
+  hud(Hud::getInstance()),
   renderer(rc->getRenderer()),
   Sky("Sky", GameData::getInstance().getXmlInt("Sky/factor")),
   BackMtns("BackMtns", GameData::getInstance().getXmlInt("BackMtns/factor")),
   FrontMtns("FrontMtns", GameData::getInstance().getXmlInt("FrontMtns/factor")),
   Road("Road", GameData::getInstance().getXmlInt("Road/factor")),
+  viewport(Viewport::getInstance()),
+  sound(SDL_Sound::getInstance()),
   player(new Player("JetpackCorgi")),
   farFallingSprites(),
   middleFallingSprites(),
@@ -110,12 +97,13 @@ void Engine::draw() const {
   for (const SmartSprite* s : smartSprites) s->draw();
   for (const DumbSprite* s : dumbSprites) s->draw();
   player->draw();
-  hudMain.draw(player->getActiveProjectiles().size(), player->getFreeProjectiles().size());
+  hud.draw(player->getActiveProjectiles().size(), player->getFreeProjectiles().size());
   viewport.draw();
   SDL_RenderPresent(renderer);
 }
 
 void Engine::update(Uint32 ticks) {
+  std::cout << "seconds: " << clock.getSeconds() << std::endl;
   checkForCollisions();
   player->update(ticks);
   for (FallingSprite* s : farFallingSprites) s->update(ticks);
@@ -139,19 +127,26 @@ void Engine::checkForCollisions() {
           std::cout << "woof and cat collided" << std::endl;
           (*smartIt)->collide();
           (*proj).collide();
-        }
-        if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
-          /*SmartSprite* deadSmartSprite = *smartIt;
+        } else if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
+          SmartSprite* deadSmartSprite = *smartIt;
           player->detach(deadSmartSprite);
-          delete deadSmartSprite;*/
-
-          player->detach(*smartIt);
-          delete *smartIt;
+          delete deadSmartSprite;
           smartIt = smartSprites.erase(smartIt);
         }
       }
     }
-    ++smartIt;
+    if (collisionStrategy->execute(*player, **smartIt)) {
+      std::cout << "player and cat collided" << std::endl;
+      (*smartIt)->collide();
+      player->collide();
+    } else if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
+      SmartSprite* deadSmartSprite = *smartIt;
+      player->detach(deadSmartSprite);
+      delete deadSmartSprite;
+      smartIt = smartSprites.erase(smartIt);
+    } else {
+      ++smartIt;
+    }
   }
 }
 
@@ -176,7 +171,7 @@ bool Engine::play() {
           else clock.pause();
         }
         if (keystate[SDL_SCANCODE_F1]) {
-          hudMain.setVisibility(!hudMain.isVisible());
+          hud.setVisibility(!hud.isVisible());
         }
         if (keystate[SDL_SCANCODE_SPACE]) {
           player->shoot();

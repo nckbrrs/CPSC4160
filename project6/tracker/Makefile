@@ -21,7 +21,8 @@ OBJS = \
 	smartSprite.o \
 	fallingSprite.o \
 	projectile.o \
-	hud.o \
+	hudMain.o \
+	hudObjPool.o \
 	vector2f.o \
 	clock.o \
 	engine.o \

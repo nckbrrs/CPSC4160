@@ -200,7 +200,18 @@ void Player::shoot() {
     // object pooling
     if (freeProjectiles.empty()) {
       Projectile *p = new Projectile(projectileName);
+      //activeProjectiles.push_back(p);
+      if (getVelocityX() > 0 || (getVelocityX() == 0 && facingRight)) {
+        p->setPosition(getPosition() + Vector2f(3*x/4, y));
+        p->setStartingPos(p->getPosition());
+        p->setVelocity(getVelocity() + Vector2f(minSpeed, 0));
+      } else {
+        p->setPosition(getPosition() + Vector2f(-x/4, y));
+        p->setStartingPos(p->getPosition());
+        p->setVelocity(getVelocity() + Vector2f(-minSpeed, 0));
+      }
       activeProjectiles.push_back(p);
+      /*
       if (getVelocityX() > 0 || (getVelocityX() == 0 && facingRight)) {
         activeProjectiles.back()->setPosition(getPosition() + Vector2f(3*x/4, y));
         activeProjectiles.back()->setStartingPos(activeProjectiles.back()->getPosition());
@@ -209,7 +220,7 @@ void Player::shoot() {
         activeProjectiles.back()->setPosition(getPosition() + Vector2f(-x/4, y));
         activeProjectiles.back()->setStartingPos(activeProjectiles.back()->getPosition());
         activeProjectiles.back()->setVelocity(getVelocity() + Vector2f(-minSpeed, 0));
-      }
+      }*/
     } else {
       Projectile *p = freeProjectiles.front();
       freeProjectiles.pop_front();

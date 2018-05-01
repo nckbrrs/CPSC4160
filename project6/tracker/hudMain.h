@@ -1,5 +1,5 @@
-#ifndef HudMainMAIN__H
-#define HudMainMAIN__H
+#ifndef HUDMAIN__H
+#define HUDMAIN__H
 
 #include <iostream>
 #include <string>
@@ -26,7 +26,7 @@ public:
   void setTextColor(const SDL_Color& c) { textColor = c; }
   void setVisibility(bool v) { visible = v; }
 
-  void draw(int, int);
+  void draw();
 
 private:
   int width;

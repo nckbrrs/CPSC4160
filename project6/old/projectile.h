@@ -1,7 +1,6 @@
 #include "sprite.h"
 #include "dumbSprite.h"
 #include "gameData.h"
-#include "vector2f.h"
 
 class Projectile : public DumbSprite {
 public:
@@ -22,7 +21,7 @@ public:
   { }
 
   virtual void update(Uint32 ticks);
-  void collide() { setPosition(Vector2f(-200, -200)); setVelocity(Vector2f(0, 0)); }
+  void collide() { setPositionY(-1000); }
   bool isTooFar() const { return tooFar; }
   void setStartingPos(const Vector2f& v) { startingPos = v; }
   void reset() {
