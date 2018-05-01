@@ -139,10 +139,14 @@ void Engine::checkForCollisions() {
           std::cout << "woof and cat collided" << std::endl;
           (*smartIt)->collide();
           (*proj).collide();
-        } else if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
-          SmartSprite* deadSmartSprite = *smartIt;
+        }
+        if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
+          /*SmartSprite* deadSmartSprite = *smartIt;
           player->detach(deadSmartSprite);
-          delete deadSmartSprite;
+          delete deadSmartSprite;*/
+
+          player->detach(*smartIt);
+          delete *smartIt;
           smartIt = smartSprites.erase(smartIt);
         }
       }
