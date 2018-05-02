@@ -2,6 +2,7 @@
 #include <iostream>
 #include <limits>
 #include <cmath>
+#include <ctime>
 #include "gameData.h"
 
 GameData& GameData::getInstance() {

@@ -11,8 +11,12 @@ public:
   SDL_Surface* readSurface(const std::string& filename);
   void writeText(const std::string&, int, int) const;
   void writeText(const std::string&, int, int, SDL_Color) const;
+  void writeTextBold(const std::string&, int, int) const;
+  void writeTextBold(const std::string&, int, int, SDL_Color) const;
   void writeTextWrapped(const std::string&, int, int, int) const;
   void writeTextWrapped(const std::string&, int, int, int, SDL_Color) const;
+  void writeTextWrappedBold(const std::string&, int, int, int) const;
+  void writeTextWrappedBold(const std::string&, int, int, int, SDL_Color) const;
   SDL_Renderer* getRenderer() const { return renderer; }
 
 private:

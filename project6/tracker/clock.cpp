@@ -52,7 +52,6 @@ unsigned int Clock::getElapsedTicks() {
   ticks = currTicks-prevTicks;
 
   if ( FRAME_CAP_ON ) {
-    // DO DELAY SO NOT TO OCCUPY CPU
     if ( ticks < PERIOD ) return 0;
     prevTicks = currTicks;
     return ticks;

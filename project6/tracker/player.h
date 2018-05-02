@@ -36,7 +36,9 @@ public:
   bool hasCollided() const { return collided; }
   bool isColliding() const { return colliding; }
   void setCollided(bool b) { collided = b; }
-  void loseLife() { livesLeft--; }
+  void loseLife() { --livesLeft; }
+  bool isGodMode() const { return godMode; }
+  void toggleGodMode() { godMode = !godMode; }
 
 private:
   bool facingRight;
@@ -55,6 +57,7 @@ private:
   std::list<Projectile*> freeProjectiles;
   unsigned int initNumLives;
   unsigned int livesLeft;
+  bool godMode;
 
   float minSpeed;
   float projectileInterval;

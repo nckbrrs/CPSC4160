@@ -20,7 +20,8 @@ Player::Player(const std::string& name) :
   activeProjectiles(),
   freeProjectiles(),
   initNumLives(GameData::getInstance().getXmlInt("numLives")),
-  livesLeft(3),
+  livesLeft(GameData::getInstance().getXmlInt("numLives")),
+  godMode(true),
   minSpeed(GameData::getInstance().getXmlInt(projectileName+"/minSpeed")),
   projectileInterval(GameData::getInstance().getXmlInt(projectileName+"/interval")),
   timeSinceLastShot(4294967295)
@@ -41,6 +42,7 @@ Player::Player(const Player& s) :
   activeProjectiles(s.activeProjectiles),
   freeProjectiles(s.freeProjectiles),
   livesLeft(s.livesLeft),
+  godMode(s.godMode),
   minSpeed(s.minSpeed),
   projectileInterval(s.projectileInterval),
   timeSinceLastShot(s.timeSinceLastShot)
@@ -60,6 +62,7 @@ Player& Player::operator= (const Player& s) {
   activeProjectiles = s.activeProjectiles;
   freeProjectiles = s.freeProjectiles;
   livesLeft = s.livesLeft;
+  godMode = s.godMode;
   minSpeed = s.minSpeed;
   projectileInterval = s.projectileInterval;
   timeSinceLastShot = s.timeSinceLastShot;
@@ -72,7 +75,7 @@ void Player::stop() {
 }
 
 void Player::moveRight() {
-  if (!colliding) {
+  if (livesLeft > 0) {
     if (getPositionX() < getMaxPosBoundaryX() - getScaledWidth()) {
       setVelocityX(startingVelocity[0]);
     }
@@ -81,7 +84,7 @@ void Player::moveRight() {
 }
 
 void Player::moveLeft() {
-  if (!colliding) {
+  if (livesLeft > 0) {
     if (getPositionX() > getMinPosBoundaryX()) {
       setVelocityX(-startingVelocity[0]);
     }
@@ -90,7 +93,7 @@ void Player::moveLeft() {
 }
 
 void Player::moveUp() {
-  if (!colliding) {
+  if (livesLeft > 0) {
     if (getPositionY() > getMinPosBoundaryY()) {
       setVelocityY(-startingVelocity[1]);
     }
@@ -98,7 +101,7 @@ void Player::moveUp() {
 }
 
 void Player::moveDown() {
-  if (!colliding) {
+  if (livesLeft > 0) {
     if (getPositionY() < getMaxPosBoundaryY() - getScaledHeight()) {
       setVelocityY(startingVelocity[1]);
     }
@@ -108,13 +111,15 @@ void Player::moveDown() {
 void Player::draw() const {
   if (colliding) explosion->draw();
   else getImage()->draw(getPositionX(), getPositionY(), getScale());
-
   for (const Projectile* projectile : activeProjectiles) {
     projectile->draw();
   }
 }
 
 void Player::update(Uint32 ticks) {
+  if (livesLeft <= 0) {
+    setPositionY(-300);
+  }
   if (collided && colliding) {
     explosion->update(ticks);
     activeProjectiles.clear();
@@ -171,22 +176,19 @@ void Player::update(Uint32 ticks) {
     (*ptr)->setPlayerPos(getPosition());
     ++ptr;
   }
-
   stop();
 }
 
 void Player::collide() {
-  SDL_Sound::getInstance()[0];
-  collided = true;
-  colliding = true;
-  explosion = new DumbSprite("Explosion");
-  explosion->setPosition(getPosition());
-  explosion->setVelocityX(0);
-  explosion->setVelocityY(0);
-  explosionStartTime = Clock::getInstance().getSeconds();
-
-  if (livesLeft == 0) {
-    std::cout << "Oh no! You died!" << std::endl;
+  if (!godMode) {
+    SDL_Sound::getInstance()[0];
+    collided = true;
+    colliding = true;
+    explosion = new DumbSprite("Explosion");
+    explosion->setPosition(getPosition());
+    explosion->setVelocityX(0);
+    explosion->setVelocityY(0);
+    explosionStartTime = Clock::getInstance().getSeconds();
   }
 }
 
@@ -212,7 +214,6 @@ void Player::shoot() {
     float x = getScaledWidth();
     float y = getScaledHeight()/2;
 
-    // object pooling
     if (freeProjectiles.empty()) {
       Projectile *p = new Projectile(projectileName);
       if (getVelocityX() > 0 || (getVelocityX() == 0 && facingRight)) {

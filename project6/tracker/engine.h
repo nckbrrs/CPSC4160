@@ -4,6 +4,9 @@
 #include "clock.h"
 #include "hudMain.h"
 #include "hudObjPool.h"
+#include "gameOver.h"
+#include "gameStart.h"
+#include "hudTip.h"
 #include "healthBar.h"
 #include "background.h"
 #include "viewport.h"
@@ -31,7 +34,10 @@ private:
   Clock& clock;
   HudMain& hudMain;
   HudObjPool& hudObjPool;
+  HudTip& hudTip;
   HealthBar& healthBar;
+  GameOver& gameOver;
+  GameStart& gameStart;
   Viewport& viewport;
   SDL_Sound& sound;
   SDL_Renderer * const renderer;

@@ -4,6 +4,7 @@
 #include "fallingSprite.h"
 #include "gameData.h"
 #include "renderContext.h"
+#include <time.h>
 
 void FallingSprite::randomizeVelocity() {
   float vy = getVelocityY();

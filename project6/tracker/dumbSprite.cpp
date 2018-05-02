@@ -4,6 +4,7 @@
 #include "dumbSprite.h"
 #include "gameData.h"
 #include "renderContext.h"
+#include <time.h>
 
 void DumbSprite::randomizeVelocity() {
   float vx = getVelocityX();

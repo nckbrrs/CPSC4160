@@ -1,14 +1,14 @@
-#ifndef HUDMAIN__H
-#define HUDMAIN__H
+#ifndef HUDTIPPOOL__H
+#define HUDTIPPOOL__H
 
 #include <iostream>
 #include <string>
 #include <SDL.h>
 #include "vector2f.h"
 
-class HudMain {
+class HudTip {
 public:
-  static HudMain& getInstance();
+  static HudTip& getInstance();
   bool isVisible() const { return visible; }
   void setVisibility(bool v) { visible = v; }
   void draw();
@@ -22,8 +22,8 @@ private:
   SDL_Color outlineColor;
   SDL_Color textColor;
 
-  HudMain();
-  HudMain(const HudMain&);
-  HudMain& operator=(const HudMain&);
+  HudTip();
+  HudTip(const HudTip&);
+  HudTip& operator=(const HudTip&);
 };
 #endif

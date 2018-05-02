@@ -88,9 +88,7 @@ void ParseXML::stripTrailWhiteSpace(string& str) const {
 }
 
 void ParseXML::chars(const char *text, int textlen) {
-  // The text is not zero terminated; thus we need the  length:
   string str(text, textlen);
-  // The text is likely to have trailing white space, e.g. newline, etc
   stripTrailWhiteSpace(str);
   if ( str.size() ) {
     xmlData.insert(std::pair<string,string>(makeTag(), str));

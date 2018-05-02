@@ -71,9 +71,7 @@ Image* ImageFactory::getImage(const std::string& name) {
 
 
 std::vector<Image*> ImageFactory::getImages(const std::string& name) {
-  // First search map to see if we've already made it:
-  std::map<std::string, std::vector<Image*> >::const_iterator
-    pos = multiImages.find(name);
+  std::map<std::string, std::vector<Image*> >::const_iterator pos = multiImages.find(name);
   if ( pos != multiImages.end() ) {
     return pos->second;
   }
@@ -84,7 +82,6 @@ std::vector<Image*> ImageFactory::getImages(const std::string& name) {
   SDL_Surface* spriteSurface = iomod.readSurface(sheetPath);
   bool transparency = gdata.getXmlBool(name+"/transparency");
 
-  // It wasn't in the map, so we have to make the vector of Images:
   unsigned numberOfFrames = gdata.getXmlInt(name+"/frames");
   std::vector<Image*> images;
   std::vector<SDL_Surface*> surfaces;

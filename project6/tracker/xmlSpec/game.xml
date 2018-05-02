@@ -7,7 +7,7 @@
 
 <numClouds>3</numClouds>
 <numDonuts>15</numDonuts>
-<numJetpackCats>1</numJetpackCats>
+<numJetpackCats>3</numJetpackCats>
 <numLives>3</numLives>
 
 <view>
@@ -21,10 +21,10 @@
 </background>
 
 <hudMain>
-  <width>180</width>
-  <height>135</height>
+  <width>185</width>
+  <height>150</height>
   <position x="20" y="20"/>
-  <backgroundColor r="220" g="220" b="220" a="255"/>
+  <backgroundColor r="255" g="255" b="255" a="255"/>
   <outlineColor r="0" g="0" b="0" a="255"/>
   <textColor r="0" g="0" b="0" a="255"/>
 </hudMain>
@@ -33,14 +33,48 @@
   <width>180</width>
   <height>75</height>
   <position x="600" y="20"/>
-  <backgroundColor r="220" g="220" b="220" a="255"/>
+  <backgroundColor r="255" g="255" b="255" a="255"/>
   <outlineColor r="0" g="0" b="0" a="255"/>
   <textColor r="0" g="0" b="0" a="255"/>
 </hudObjPool>
 
+<hudTip>
+  <width>180</width>
+  <height>60</height>
+  <position x="600" y="100"/>
+  <backgroundColor r="255" g="255" b="255" a="255"/>
+  <outlineColor r="0" g="0" b="0" a="255"/>
+  <textColor r="0" g="0" b="0" a="255"/>
+</hudTip>
+
+<gameOver>
+  <width>200</width>
+  <height>200</height>
+  <position x="300" y="100"/>
+  <win>
+    <backgroundColor r="255" g="255" b="255" a="255"/>
+    <outlineColor r="0" g="0" b="0" a="255"/>
+    <textColor r="0" g="0" b="0" a="255"/>
+  </win>
+  <lose>
+    <backgroundColor r="0" g="0" b="0" a="255"/>
+    <outlineColor r="255" g="50" b="50" a="255"/>
+    <textColor r="255" g="0" b="0" a="255"/>
+  </lose>
+</gameOver>
+
+<gameStart>
+  <width>200</width>
+  <height>200</height>
+  <position x="300" y="100"/>
+  <backgroundColor r="245" g="245" b="245" a="255"/>
+  <outlineColor r="0" g="255" b="255" a="255"/>
+  <textColor r="0" g="206" b="209" a="255"/>
+</gameStart>
+
 <healthBar>
-  <width>100</width>
-  <height>10</height>
+  <width>50</width>
+  <height>5</height>
   <barColor r="0" g="255" b="0" a="255"/>
   <backColor r="0" g="0" b="2" a="255"/>
 </healthBar>
@@ -59,10 +93,10 @@
     <locX>30</locX>
     <locY>370</locY>
   </name>
-  <livesLeft>
-    <locX>350</locX>
+  <godMode>
+    <locX>310</locX>
     <locY>370</locY>
-  </livesLeft>
+  </godMode>
   <catsRemaining>
     <locX>610</locX>
     <locY>370</locY>
@@ -104,7 +138,7 @@
   <twoWay>false</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>32</imageHeight>
-  <scale>2.0</scale>
+  <scale>1.0</scale>
   <transparency>false</transparency>
 </Cloud>
 
@@ -119,7 +153,7 @@
   <twoWay>false</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
-  <scale>1.0</scale>
+  <scale>1</scale>
   <transparency>false</transparency>
 </Donut>
 
@@ -134,7 +168,7 @@
   <twoWay>false</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
-  <scale>2.0</scale>
+  <scale>1.5</scale>
   <transparency>false</transparency>
 </Explosion>
 
@@ -143,13 +177,13 @@
   <startPos x="30" y="200"/>
   <startVel x="300" y="400"/>
   <minPosBoundary x="0" y="0"/>
-  <maxPosBoundary x="2000" y="400"/>
+  <maxPosBoundary x="2000" y="395"/>
   <frames>4</frames>
   <frameInterval>200</frameInterval>
   <twoWay>true</twoWay>
   <imageWidth>64</imageWidth>
   <imageHeight>64</imageHeight>
-  <scale>2.0</scale>
+  <scale>1.5</scale>
   <slowDownFactor>0.30</slowDownFactor>
   <transparency>false</transparency>
   <projectileName>Woof</projectileName>
@@ -160,7 +194,7 @@
   <startPos x="500" y="100"/>
   <startVel x="200" y="200"/>
   <minPosBoundary x="0" y="0"/>
-  <maxPosBoundary x="2000" y="400"/>
+  <maxPosBoundary x="2000" y="290"/>
   <frames>4</frames>
   <frameInterval>200</frameInterval>
   <twoWay>true</twoWay>
@@ -183,7 +217,7 @@
   <twoWay>true</twoWay>
   <imageWidth>32</imageWidth>
   <imageHeight>16</imageHeight>
-  <scale>2.0</scale>
+  <scale>1.5</scale>
   <transparency>false</transparency>
   <minSpeed>400</minSpeed>
   <interval>250</interval>

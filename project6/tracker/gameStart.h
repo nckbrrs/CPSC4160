@@ -1,14 +1,14 @@
-#ifndef HUDMAIN__H
-#define HUDMAIN__H
+#ifndef GameStart__H
+#define GameStart__H
 
 #include <iostream>
 #include <string>
 #include <SDL.h>
 #include "vector2f.h"
 
-class HudMain {
+class GameStart {
 public:
-  static HudMain& getInstance();
+  static GameStart& getInstance();
   bool isVisible() const { return visible; }
   void setVisibility(bool v) { visible = v; }
   void draw();
@@ -18,12 +18,13 @@ private:
   int height;
   Vector2f pos;
   bool visible;
+
   SDL_Color backgroundColor;
   SDL_Color outlineColor;
   SDL_Color textColor;
 
-  HudMain();
-  HudMain(const HudMain&);
-  HudMain& operator=(const HudMain&);
+  GameStart();
+  GameStart(const GameStart&);
+  GameStart& operator=(const GameStart&);
 };
 #endif

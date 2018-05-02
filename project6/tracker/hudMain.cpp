@@ -16,7 +16,7 @@ HudMain::HudMain() :
   height(GameData::getInstance().getXmlInt("hudMain/height")),
   pos(Vector2f(GameData::getInstance().getXmlInt("hudMain/position/x"),
                GameData::getInstance().getXmlInt("hudMain/position/y"))),
-  visible(true),
+  visible(false),
   backgroundColor({static_cast<Uint8>(GameData::getInstance().getXmlInt("hudMain/backgroundColor/r")),
                    static_cast<Uint8>(GameData::getInstance().getXmlInt("hudMain/backgroundColor/g")),
                    static_cast<Uint8>(GameData::getInstance().getXmlInt("hudMain/backgroundColor/b")),
@@ -34,10 +34,10 @@ HudMain::HudMain() :
 void HudMain::draw() {
   if (isVisible()) {
     SDL_Rect r;
-    r.x = getPosition()[0];
-    r.y = getPosition()[1];
-    r.w = getWidth();
-    r.h = getHeight();
+    r.x = pos[0];
+    r.y = pos[1];
+    r.w = width;
+    r.h = height;
 
     SDL_Renderer* renderer = IoMod::getInstance().getRenderer();
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
@@ -51,15 +51,12 @@ void HudMain::draw() {
     textToWrite += "\n ---------------------------";
     textToWrite += "\n - WASD to move";
     textToWrite += "\n - SPACE to bark";
-    textToWrite += "\n - F1 to toggle this HUD";
+    textToWrite += "\n - F1 to toggle HUDs";
     textToWrite += "\n - M to toggle music";
     textToWrite += "\n - P to pause";
     textToWrite += "\n - R to restart";
+    textToWrite += "\n - G to toggle God Mode";
 
-    IoMod::getInstance().writeTextWrapped(textToWrite,
-                          getPosition()[0]+5,
-                          getPosition()[1]+5,
-                          getWidth(),
-                          getTextColor());
+    IoMod::getInstance().writeTextWrapped(textToWrite, pos[0]+5, pos[1]+5, width, textColor);
   }
 }

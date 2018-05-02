@@ -24,6 +24,9 @@ OBJS = \
 	projectile.o \
 	hudMain.o \
 	hudObjPool.o \
+	hudTip.o \
+	gameOver.o \
+	gameStart.o \
 	vector2f.o \
 	clock.o \
 	engine.o \

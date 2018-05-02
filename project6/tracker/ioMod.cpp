@@ -63,6 +63,20 @@ void IoMod::writeText(const std::string& msg, int x, int y) const {
 
 void IoMod::writeText(const std::string& msg, int x, int y, SDL_Color customColor) const {
   SDL_Surface* surface = TTF_RenderText_Blended(defaultFont, msg.c_str(), customColor);
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+  int textWidth = surface->w;
+  int textHeight = surface->h;
+
+  SDL_FreeSurface(surface);
+  SDL_Rect dst = {x, y, textWidth, textHeight};
+  SDL_RenderCopy(renderer, texture, NULL, &dst);
+  SDL_DestroyTexture(texture);
+}
+
+void IoMod::writeTextBold(const std::string& msg, int x, int y) const {
+  TTF_SetFontStyle(defaultFont, TTF_STYLE_BOLD);
+  SDL_Surface* surface = TTF_RenderText_Blended(defaultFont, msg.c_str(), textColor);
+  TTF_SetFontStyle(defaultFont, TTF_STYLE_NORMAL);
 
   SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
   int textWidth = surface->w;
@@ -72,7 +86,21 @@ void IoMod::writeText(const std::string& msg, int x, int y, SDL_Color customColo
   SDL_Rect dst = {x, y, textWidth, textHeight};
   SDL_RenderCopy(renderer, texture, NULL, &dst);
   SDL_DestroyTexture(texture);
+}
 
+void IoMod::writeTextBold(const std::string& msg, int x, int y, SDL_Color customColor) const {
+  TTF_SetFontStyle(defaultFont, TTF_STYLE_BOLD);
+  SDL_Surface* surface = TTF_RenderText_Blended(defaultFont, msg.c_str(), customColor);
+  TTF_SetFontStyle(defaultFont, TTF_STYLE_NORMAL);
+
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+  int textWidth = surface->w;
+  int textHeight = surface->h;
+
+  SDL_FreeSurface(surface);
+  SDL_Rect dst = {x, y, textWidth, textHeight};
+  SDL_RenderCopy(renderer, texture, NULL, &dst);
+  SDL_DestroyTexture(texture);
 }
 
 void IoMod::writeTextWrapped(const std::string& msg, int x, int y, int wrapWidth) const {
@@ -90,6 +118,36 @@ void IoMod::writeTextWrapped(const std::string& msg, int x, int y, int wrapWidth
 
 void IoMod::writeTextWrapped(const std::string& msg, int x, int y, int wrapWidth, SDL_Color customColor) const {
   SDL_Surface* surface = TTF_RenderText_Blended_Wrapped(defaultFont, msg.c_str(), customColor, wrapWidth);
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+  int textWidth = surface->w;
+  int textHeight = surface->h;
+
+  SDL_FreeSurface(surface);
+  SDL_Rect dst = {x, y, textWidth, textHeight};
+  SDL_RenderCopy(renderer, texture, NULL, &dst);
+  SDL_DestroyTexture(texture);
+}
+
+void IoMod::writeTextWrappedBold(const std::string& msg, int x, int y, int wrapWidth) const {
+  TTF_SetFontStyle(defaultFont, TTF_STYLE_BOLD);
+  SDL_Surface* surface = TTF_RenderText_Blended_Wrapped(defaultFont, msg.c_str(), textColor, wrapWidth);
+  TTF_SetFontStyle(defaultFont, TTF_STYLE_NORMAL);
+
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+  int textWidth = surface->w;
+  int textHeight = surface->h;
+
+  SDL_FreeSurface(surface);
+  SDL_Rect dst = {x, y, textWidth, textHeight};
+  SDL_RenderCopy(renderer, texture, NULL, &dst);
+  SDL_DestroyTexture(texture);
+}
+
+void IoMod::writeTextWrappedBold(const std::string& msg, int x, int y, int wrapWidth, SDL_Color customColor) const {
+  TTF_SetFontStyle(defaultFont, TTF_STYLE_BOLD);
+  SDL_Surface* surface = TTF_RenderText_Blended_Wrapped(defaultFont, msg.c_str(), customColor, wrapWidth);
+  TTF_SetFontStyle(defaultFont, TTF_STYLE_NORMAL);
+
   SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
   int textWidth = surface->w;
   int textHeight = surface->h;

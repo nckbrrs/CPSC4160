@@ -34,15 +34,12 @@ void HealthBar::draw(int playerX, int playerY, int playerWidth, int playerHeight
     }
   }
 
-  // First set the blend mode so that alpha blending will work
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-  // Set the background bar color and draw the background rect
   SDL_SetRenderDrawColor(renderer, backColor.r, backColor.g, backColor.b, backColor.a);
   SDL_Rect backBarRect = {playerX+10, playerY+playerHeight-10, backBarWidth, backBarHeight};
   SDL_RenderFillRect(renderer, &backBarRect);
 
-  // Set the health bar color and draw the actual health rectangle
   SDL_SetRenderDrawColor(renderer, barColor.r, barColor.g, barColor.b, barColor.a);
   SDL_Rect healthBarRect = {playerX+12, playerY+playerHeight-8, (int)(currentLength * backBarWidth)-4, backBarHeight-4};
   SDL_RenderFillRect(renderer, &healthBarRect);

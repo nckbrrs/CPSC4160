@@ -46,7 +46,10 @@ Engine::Engine() :
   clock(Clock::getInstance()),
   hudMain(HudMain::getInstance()),
   hudObjPool(HudObjPool::getInstance()),
+  hudTip(HudTip::getInstance()),
   healthBar(HealthBar::getInstance()),
+  gameOver(GameOver::getInstance()),
+  gameStart(GameStart::getInstance()),
   viewport(Viewport::getInstance()),
   sound(SDL_Sound::getInstance()),
   renderer(rc->getRenderer()),
@@ -114,24 +117,41 @@ void Engine::draw() const {
   player->draw();
   hudMain.draw();
   hudObjPool.draw(player->getActiveProjectiles().size(), player->getFreeProjectiles().size());
+  hudTip.draw();
   healthBar.draw(player->getPositionX(), player->getPositionY(), player->getScaledWidth(), player->getScaledHeight());
-  viewport.draw(smartSprites.size());
+  gameStart.draw();
+  viewport.draw(player->isGodMode(), smartSprites.size());
+  if (player->getLivesLeft() <= 0) {
+    hudMain.setVisibility(false);
+    hudObjPool.setVisibility(false);
+    hudTip.setVisibility(false);
+    gameOver.setVisibility(true);
+    gameOver.draw(false);
+
+  }
+  else if (smartSprites.size() <= 0) {
+    hudMain.setVisibility(false);
+    hudObjPool.setVisibility(false);
+    hudTip.setVisibility(false);
+    gameOver.setVisibility(true);
+    gameOver.draw(true);
+  }
   SDL_RenderPresent(renderer);
 }
 
 void Engine::update(Uint32 ticks) {
-  checkForCollisions();
-  player->update(ticks);
-  for (FallingSprite* s : farFallingSprites) s->update(ticks);
-  for (FallingSprite* s : middleFallingSprites) s->update(ticks);
-  for (FallingSprite* s : closeFallingSprites) s->update(ticks);
-  for (SmartSprite* s : smartSprites) s->update(ticks);
-  for (DumbSprite* s : dumbSprites) s->update(ticks);
-  Sky.update();
-  BackMtns.update();
-  FrontMtns.update();
-  Road.update();
-  viewport.update();
+    checkForCollisions();
+    player->update(ticks);
+    for (FallingSprite* s : farFallingSprites) s->update(ticks);
+    for (FallingSprite* s : middleFallingSprites) s->update(ticks);
+    for (FallingSprite* s : closeFallingSprites) s->update(ticks);
+    for (SmartSprite* s : smartSprites) s->update(ticks);
+    for (DumbSprite* s : dumbSprites) s->update(ticks);
+    Sky.update();
+    BackMtns.update();
+    FrontMtns.update();
+    Road.update();
+    viewport.update();
 }
 
 void Engine::checkForCollisions() {
@@ -145,7 +165,7 @@ void Engine::checkForCollisions() {
         }
       }
     }
-    if ((collisionStrategy->execute(*player, **smartIt))) {
+    if ((collisionStrategy->execute(*player, **smartIt)) && !(player->isColliding())) {
       player->collide();
     }
     if (player->hasCollided() && !(player->isColliding())) {
@@ -171,7 +191,6 @@ bool Engine::play() {
   Uint32 ticks = clock.getElapsedTicks();
 
   while (!done) {
-    // In this section of the event loop we do not allow key bounce
     while (SDL_PollEvent(&event)) {
       keystate = SDL_GetKeyboardState(NULL);
       if (event.type ==  SDL_QUIT) { done = true; break; }
@@ -180,6 +199,14 @@ bool Engine::play() {
           done = true;
           break;
         }
+        if (keystate[SDL_SCANCODE_RETURN]) {
+          if (gameStart.isVisible()) {
+            gameStart.setVisibility(false);
+            hudMain.setVisibility(true);
+            hudObjPool.setVisibility(true);
+            hudTip.setVisibility(true);
+          }
+        }
         if (keystate[SDL_SCANCODE_P]) {
           if (clock.isPaused()) clock.unpause();
           else clock.pause();
@@ -187,9 +214,8 @@ bool Engine::play() {
         }
         if (keystate[SDL_SCANCODE_F1]) {
           hudMain.setVisibility(!hudMain.isVisible());
-        }
-        if (keystate[SDL_SCANCODE_F2]) {
           hudObjPool.setVisibility(!hudObjPool.isVisible());
+          hudTip.setVisibility(!hudTip.isVisible());
         }
         if (keystate[SDL_SCANCODE_SPACE]) {
           player->shoot();
@@ -201,10 +227,11 @@ bool Engine::play() {
           clock.unpause();
           return true;
         }
+        if (keystate[SDL_SCANCODE_G]) {
+          player->toggleGodMode();
+        }
       }
     }
-
-    // In this section of the event loop we allow key bounce
     ticks = clock.getElapsedTicks();
     if ( ticks > 0 ) {
       clock.incrFrame();

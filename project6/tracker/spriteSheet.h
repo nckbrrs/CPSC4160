@@ -5,20 +5,6 @@
 #include <SDL2/SDL_surface.h>
 #include <SDL2/SDL_image.h>
 
-//Use:
-//
-// Create spritesheet that owns surface:
-// SpriteSheet sheet(surface, imageWidth, imageHeight);
-//
-// Create spritesheet that DOES NOT own surface:
-// SpriteSheet sheet(surface, imageWidth, imageHeight, NonOwning);
-//
-// Get image 7 (altogether and assuming Z-order):
-// auto image7 = sheet[7];
-//
-// Get the image in row 5, column 3:
-// auto image53 = sheet(5,3);
-
 class SpriteSheet{
 public:
   static const struct NonOwningT{} NonOwning;
@@ -53,7 +39,7 @@ public:
   inline SDL_Surface* operator()(unsigned i, unsigned j) {
     return get(i,j);
   }
-  
+
   inline SDL_Surface* operator[](unsigned c){
     return get(c);
   }
