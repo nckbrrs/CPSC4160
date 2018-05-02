@@ -7,7 +7,8 @@
 
 <numClouds>3</numClouds>
 <numDonuts>15</numDonuts>
-<numJetpackCats>25</numJetpackCats>
+<numJetpackCats>1</numJetpackCats>
+<numLives>3</numLives>
 
 <view>
   <width>800</width>
@@ -36,6 +37,13 @@
   <outlineColor r="0" g="0" b="0" a="255"/>
   <textColor r="0" g="0" b="0" a="255"/>
 </hudObjPool>
+
+<healthBar>
+  <width>100</width>
+  <height>10</height>
+  <barColor r="0" g="255" b="0" a="255"/>
+  <backColor r="0" g="0" b="2" a="255"/>
+</healthBar>
 
 <defaultFont>
   <file>fonts/helvetica.ttf</file>
@@ -160,7 +168,7 @@
   <imageHeight>64</imageHeight>
   <scale>1.5</scale>
   <slowDownFactor>0.30</slowDownFactor>
-  <safeDistance>175</safeDistance>
+  <safeDistance>0</safeDistance>
   <transparency>false</transparency>
 </JetpackCat>
 

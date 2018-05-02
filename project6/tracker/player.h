@@ -32,11 +32,20 @@ public:
   std::list<Projectile*> getActiveProjectiles() const { return activeProjectiles; }
   std::list<Projectile*> getFreeProjectiles() const { return freeProjectiles; }
   unsigned int getLivesLeft() const { return livesLeft; }
+  unsigned int getInitNumLives() const { return initNumLives; }
+  bool hasCollided() const { return collided; }
+  bool isColliding() const { return colliding; }
+  void setCollided(bool b) { collided = b; }
+  void loseLife() { livesLeft--; }
 
 private:
   bool facingRight;
   std::list<SmartSprite*> observers;
   bool collision;
+
+  bool collided;
+  bool colliding;
+
   Vector2f startingVelocity;
   float slowDownFactor;
   DumbSprite* explosion;
@@ -44,6 +53,7 @@ private:
   std::string projectileName;
   std::list<Projectile*> activeProjectiles;
   std::list<Projectile*> freeProjectiles;
+  unsigned int initNumLives;
   unsigned int livesLeft;
 
   float minSpeed;

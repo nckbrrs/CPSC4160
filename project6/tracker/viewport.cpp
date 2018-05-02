@@ -24,7 +24,7 @@ void Viewport::setObjectToTrack(const Sprite *obj) {
   objHeight = objectToTrack->getScaledHeight();
 }
 
-void Viewport::draw(int numLivesLeft, int numCatsLeft) const {
+void Viewport::draw(int numCatsLeft) const {
   SDL_Color black = {static_cast<Uint8>(0), static_cast<Uint8>(0), static_cast<Uint8>(0), static_cast<Uint8>(255)};
 
   // drop shadow
@@ -37,17 +37,6 @@ void Viewport::draw(int numLivesLeft, int numCatsLeft) const {
   IoMod::getInstance().writeText("NICK BARRS",
     gdata.getXmlInt("text/name/locX"),
     gdata.getXmlInt("text/name/locY"));
-
-  // drop shadow
-  IoMod::getInstance().writeText("LIVES LEFT: " + std::to_string(numLivesLeft),
-    gdata.getXmlInt("text/livesLeft/locX")-1,
-    gdata.getXmlInt("text/livesLeft/locY")+1,
-    black);
-
-  // regular text
-  IoMod::getInstance().writeText("LIVES LEFT: " + std::to_string(numLivesLeft),
-    gdata.getXmlInt("text/livesLeft/locX"),
-    gdata.getXmlInt("text/livesLeft/locY"));
 
   // drop shadow
   IoMod::getInstance().writeText("CATS REMAINING: " + std::to_string(numCatsLeft),

@@ -10,6 +10,8 @@ Player::Player(const std::string& name) :
   facingRight(true),
   observers(),
   collision(false),
+  collided(false),
+  colliding(false),
   startingVelocity(getVelocity()),
   slowDownFactor(GameData::getInstance().getXmlFloat(name+"/slowDownFactor")),
   explosion(nullptr),
@@ -17,6 +19,7 @@ Player::Player(const std::string& name) :
   projectileName(GameData::getInstance().getXmlStr(name+"/projectileName")),
   activeProjectiles(),
   freeProjectiles(),
+  initNumLives(GameData::getInstance().getXmlInt("numLives")),
   livesLeft(3),
   minSpeed(GameData::getInstance().getXmlInt(projectileName+"/minSpeed")),
   projectileInterval(GameData::getInstance().getXmlInt(projectileName+"/interval")),
@@ -28,6 +31,8 @@ Player::Player(const Player& s) :
   facingRight(s.facingRight),
   observers(s.observers),
   collision(s.collision),
+  collided(s.collided),
+  colliding(s.colliding),
   startingVelocity(s.getVelocity()),
   slowDownFactor(s.slowDownFactor),
   explosion(s.explosion),
@@ -46,6 +51,8 @@ Player& Player::operator= (const Player& s) {
   facingRight = s.facingRight;
   observers = s.observers;
   collision = s.collision;
+  collided = s.collided;
+  colliding = s.colliding;
   startingVelocity = s.startingVelocity;
   slowDownFactor = s.slowDownFactor;
   explosion = s.explosion;
@@ -65,7 +72,7 @@ void Player::stop() {
 }
 
 void Player::moveRight() {
-  if (!collision) {
+  if (!colliding) {
     if (getPositionX() < getMaxPosBoundaryX() - getScaledWidth()) {
       setVelocityX(startingVelocity[0]);
     }
@@ -74,7 +81,7 @@ void Player::moveRight() {
 }
 
 void Player::moveLeft() {
-  if (!collision) {
+  if (!colliding) {
     if (getPositionX() > getMinPosBoundaryX()) {
       setVelocityX(-startingVelocity[0]);
     }
@@ -83,7 +90,7 @@ void Player::moveLeft() {
 }
 
 void Player::moveUp() {
-  if (!collision) {
+  if (!colliding) {
     if (getPositionY() > getMinPosBoundaryY()) {
       setVelocityY(-startingVelocity[1]);
     }
@@ -91,7 +98,7 @@ void Player::moveUp() {
 }
 
 void Player::moveDown() {
-  if (!collision) {
+  if (!colliding) {
     if (getPositionY() < getMaxPosBoundaryY() - getScaledHeight()) {
       setVelocityY(startingVelocity[1]);
     }
@@ -99,7 +106,7 @@ void Player::moveDown() {
 }
 
 void Player::draw() const {
-  if (collision) explosion->draw();
+  if (colliding) explosion->draw();
   else getImage()->draw(getPositionX(), getPositionY(), getScale());
 
   for (const Projectile* projectile : activeProjectiles) {
@@ -108,11 +115,11 @@ void Player::draw() const {
 }
 
 void Player::update(Uint32 ticks) {
-  if (collision) {
+  if (collided && colliding) {
     explosion->update(ticks);
     activeProjectiles.clear();
     if ((Clock::getInstance().getSeconds() - explosionStartTime) >= 2) {
-      collision = false;
+      colliding = false;
       delete explosion;
       explosion = NULL;
     }
@@ -170,8 +177,8 @@ void Player::update(Uint32 ticks) {
 
 void Player::collide() {
   SDL_Sound::getInstance()[0];
-  collision = true;
-  livesLeft--;
+  collided = true;
+  colliding = true;
   explosion = new DumbSprite("Explosion");
   explosion->setPosition(getPosition());
   explosion->setVelocityX(0);

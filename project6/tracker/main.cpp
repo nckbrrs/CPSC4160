@@ -14,6 +14,8 @@ int main(int, char*[]) {
        Clock::getInstance().startClock();
        SDL_Sound::getInstance().startMusic();
        HudMain::getInstance().setVisibility(true);
+       HudObjPool::getInstance().setVisibility(true);
+       HealthBar::getInstance().reset();
      }
      delete RenderContext::getInstance();
 

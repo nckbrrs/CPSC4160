@@ -46,6 +46,7 @@ Engine::Engine() :
   clock(Clock::getInstance()),
   hudMain(HudMain::getInstance()),
   hudObjPool(HudObjPool::getInstance()),
+  healthBar(HealthBar::getInstance()),
   viewport(Viewport::getInstance()),
   sound(SDL_Sound::getInstance()),
   renderer(rc->getRenderer()),
@@ -113,7 +114,8 @@ void Engine::draw() const {
   player->draw();
   hudMain.draw();
   hudObjPool.draw(player->getActiveProjectiles().size(), player->getFreeProjectiles().size());
-  viewport.draw(player->getLivesLeft(), smartSprites.size());
+  healthBar.draw(player->getPositionX(), player->getPositionY(), player->getScaledWidth(), player->getScaledHeight());
+  viewport.draw(smartSprites.size());
   SDL_RenderPresent(renderer);
 }
 
@@ -145,6 +147,11 @@ void Engine::checkForCollisions() {
     }
     if ((collisionStrategy->execute(*player, **smartIt))) {
       player->collide();
+    }
+    if (player->hasCollided() && !(player->isColliding())) {
+      player->loseLife();
+      healthBar.setCurrentLength(healthBar.getCurrentLength() - (1.0 / player->getInitNumLives()));
+      player->setCollided(false);
     }
     if ((*smartIt)->hasCollided() && (!((*smartIt)->isColliding()))) {
       SmartSprite* deadSmartSprite = *smartIt;

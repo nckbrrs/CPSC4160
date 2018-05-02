@@ -12,6 +12,7 @@ OBJS = \
 	gameData.o \
 	viewport.o \
 	sound.o \
+	healthBar.o \
 	background.o \
 	spriteSheet.o \
 	image.o \
