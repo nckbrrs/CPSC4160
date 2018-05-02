@@ -1,0 +1,26 @@
+Name:
+	- Nick Barrs
+
+Course:
+	- CPSC 4160
+
+Clemson Email Address:
+	- nbarrs@g.clemson.edu
+
+Project no:
+	- 6 (FINAL)
+
+Project due date:
+	- 8:00AM May 2 2018
+
+Project description:
+	- Give the game a conclusion
+  - Include music and sound effects
+	- Include a "restart" option
+  - Include a "god" mode
+
+Pizzazz / Personal Notes:
+  - I drew everything you see from scratch (all sprites and animations, including explosions)
+  - I created the song that is playing in the background from scratch
+  - I implemented a health bar that follows the player and updates when the player is hit
+  - I implemented a starting screen, as well as "You Win!" and "You Lose!" screens
